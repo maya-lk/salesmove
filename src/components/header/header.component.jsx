@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { selectSiteLogo } from '../../redux/common/common.selectors';
 
 import './header.styles.scss';
 
-const Header = () => (
+const Header = ({ logo }) => (
     <div className="headerWrap">
         <div className="topWrap">
             <div className="container d-flex justify-content-end">
@@ -19,10 +23,23 @@ const Header = () => (
         </div>
         <div className="bottomWrap">
             <div className="container d-flex justify-content-between">
-                <Link to="/" className="navbar-brand"></Link>
+                <Link to="/" className="navbar-brand">
+                    <img src={logo} alt="Sales Moves"/>
+                </Link>
+                <div className="naviWrap">
+                    <div className="accountWrap"></div>
+                    <ul className="navbar-nav socialMedia">
+                        <li className="nav-item"><a href="http://" target="_blank" rel="noopener noreferrer">#</a></li>
+                    </ul>
+                    <Link className="btn postAdBtn">Post Free Ad Now</Link>
+                </div>
             </div>
         </div>
     </div>
 );
 
-export default Header;
+const mapStateToProps = createStructuredSelector({
+    logo : selectSiteLogo
+});
+
+export default connect(mapStateToProps)(Header);
