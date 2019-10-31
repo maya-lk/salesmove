@@ -1,0 +1,6 @@
+export const commonActionTypes = {
+    SET_SITE_LOGO : 'SET_SITE_LOGO',
+    SET_SOCIAL_MEDIA : 'SET_SOCIAL_MEDIA',
+    SET_MAIN_BANNER : 'SET_MAIN_BANNER',
+    SET_COUNTRIES : 'SET_COUNTRIES'
+}
