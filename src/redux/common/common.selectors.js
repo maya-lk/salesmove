@@ -21,3 +21,18 @@ export const selectCountries = createSelector(
     [selectCommonAPI],
     (commonParams) => commonParams.countries
 );
+
+export const selectCountyObj = createSelector(
+    [selectCountries],
+    (countries) => (countries) ? countries.map( (country) => ({ value: country.name , flagPath: country.flag  }) ) : ''
+);
+
+export const selectSigninModalHidden = createSelector(
+    [selectCommonAPI],
+    (commonParams) => commonParams.loginModal
+);
+
+export const selectSignupModalHidden = createSelector(
+    [selectCommonAPI],
+    (commonParams) => commonParams.registerModal
+);

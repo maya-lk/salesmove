@@ -19,3 +19,11 @@ export const setCountries = countries => ({
     type : commonActionTypes.SET_COUNTRIES,
     payload : countries
 });
+
+export const toggleSigninHidden = () => ({
+    type : commonActionTypes.SET_SIGNIN_MODAL_TOGGLE
+});
+
+export const toggleSignupHidden = () => ({
+    type : commonActionTypes.SET_SIGNUP_MODAL_TOGGLE
+});

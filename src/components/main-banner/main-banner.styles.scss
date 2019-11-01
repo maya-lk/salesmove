@@ -1,0 +1,25 @@
+.mainBannerWrap{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #161f47;
+    width: 100%;
+    height: 100%;
+
+    .imageOverlay{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        background-size: cover;
+        opacity: 0.16;
+    }
+
+    .searchWrap{
+        position: relative;
+        width: 80%;
+    }
+}

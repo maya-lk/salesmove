@@ -4,7 +4,9 @@ const INITIAL_STATE = {
     logo : null,
     socialMedia : null,
     mainBanner : null,
-    countries : null
+    countries : null,
+    loginModal: false,
+    registerModal : false
 }
 
 const commonReducer = ( state = INITIAL_STATE , action ) => {
@@ -28,6 +30,16 @@ const commonReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 countries : action.payload
+            }
+        case commonActionTypes.SET_SIGNIN_MODAL_TOGGLE:
+            return {
+                ...state,
+                loginModal : !state.loginModal
+            }
+        case commonActionTypes.SET_SIGNUP_MODAL_TOGGLE:
+            return{
+                ...state,
+                registerModal : !state.registerModal
             }
         default:
             return state;

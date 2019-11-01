@@ -1,0 +1,162 @@
+.searchForm {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 66px;
+    -webkit-border-radius: 66px;
+    -moz-border-radius: 66px;
+    -ms-border-radius: 66px;
+    -o-border-radius: 66px;
+
+    .labelWrap {
+        color: #fff;
+        background-color: #4359ea;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 2rem;
+        font-weight: 600;
+        font-size: 1.2rem;
+        border-radius: 66px 0 0 66px;
+        -webkit-border-radius: 66px 0 0 66px;
+        -moz-border-radius: 66px 0 0 66px;
+        -ms-border-radius: 66px 0 0 66px;
+        -o-border-radius: 66px 0 0 66px;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+        background-color:#e3e4e8;
+        width: 20%;
+        padding: 0.5rem;
+
+        &.item {
+            width: 40%;
+
+            .form-control {
+                background-color: transparent !important;
+                border-radius: 0;
+                border: none !important;
+                box-shadow: 0 0 0 !important;
+                height: 63px;
+                color: #3d3d3f;
+                font-weight: 600;
+                font-size: 1.2rem;
+
+                &::placeholder {
+                    color: #3d3d3f;
+                }
+            }
+        }
+
+        .Select {
+
+            .Select-control {
+                background-color: transparent;
+                border: none;
+                height: 62px;
+                box-shadow: 0 0 0 !important;
+
+                .Select-placeholder {
+                    display: flex;
+                    align-items: center;
+                    color: #3d3d3f;
+                    font-weight: 600;
+                }
+
+                .Select-input {
+                    width: 100%;
+                    height: 62px;
+
+                    input {
+                        height: 62px;
+                        width: 100% !important;
+                    }
+                }
+
+                .Select-value {
+                    display: flex;
+                    align-items: center;
+                    color: #3d3d3f;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .input-group {
+        width: 30%;
+        background-color:#d9d8dd;
+
+        .input-group-text {
+            background-color: #d9d8dd;
+            border: none;
+            color: #363e6e;
+        }
+
+        &.category {
+            width: 20%;
+        }
+
+        .Select {
+            flex: 1;
+            padding: 0.5rem;
+
+            .Select-control {
+                background-color: transparent;
+                border: none;
+                height: 62px;
+                box-shadow: 0 0 0 !important;
+
+                .Select-placeholder {
+                    display: flex;
+                    align-items: center;
+                    color: #3d3d3f;
+                    font-weight: 600;
+                }
+
+                .Select-input {
+                    width: 100%;
+                    height: 62px;
+
+                    input {
+                        height: 62px;
+                        width: 100% !important;
+                    }
+                }
+
+                .Select-value {
+                    display: flex;
+                    align-items: center;
+                    color: #3d3d3f;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    .submitWrap {
+        background-color: #e6e6eb;
+        padding: 0.5rem;
+        border-radius: 0 66px 66px 0;
+
+        .btn.searchSubmit {
+            background-color: #2643ff;
+            color: #fff;
+            font-family: "Lato";
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: 1.2rem;
+            padding: 1rem 2rem;
+            margin-left: 1rem;
+            border-radius: 33px;
+            -webkit-border-radius: 33px;
+            -moz-border-radius: 33px;
+            -ms-border-radius: 33px;
+            -o-border-radius: 33px;
+        }
+    }
+
+    .select__single-value {
+        color: #3d3d3f;
+        font-weight: 600;
+    }
+}
