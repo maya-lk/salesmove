@@ -1,0 +1,105 @@
+.headerWrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+
+    .container {
+        max-width: 1400px;
+    }
+
+    .topWrap {
+        background-color: rgba(0,0,0,0.8);
+        margin-bottom: 2px;
+        padding: 0.5rem 0;
+
+        .navbar-nav {
+            flex-direction: unset;
+
+            .nav-link {
+                color:  #7d7c7f;
+                font-size: 0.9rem;
+                padding: 0 6px;
+                border-right: 1px solid #7d7c7f;
+            }
+
+            .nav-item:last-child .nav-link {
+                border-right: none;
+            }
+        }
+    }
+
+    .bottomWrap {
+        background-color: #fff;
+        padding: 0.75rem 0;
+
+        .naviWrap {
+            display: flex;
+
+            .navbar-nav {
+                flex-direction: unset;
+
+                &.accountWrap {
+                    margin-right: 1rem;
+
+                    .nav-link {
+                        color: #585858;
+                        font-size: 1rem;
+                        margin-right: 2rem;
+
+                        span {
+                            display: inline-flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin-right: 0.5rem;
+                            border: 1px solid #585858;
+                            border-radius: 100%;
+                            font-size: 0.9rem;
+                            width: 30px;
+                            height: 30px;
+                        }
+                    }
+                }
+
+                &.socialMedia {
+                    align-items: center;
+
+                    .nav-link {
+                        border: 1px solid currentColor;
+                        display: inline-flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 100%;
+                        width: 30px;
+                        height: 30px;
+                        margin: 0 6px;
+
+                        &.linkedin {
+                            color: #067ab4; 
+                        }
+
+                        &.twitter {
+                            color:#27a7e2;
+                        }
+
+                        &.facebook {
+                            color: #345292;
+                        }
+                    }
+                }
+            }
+
+            .btn.postAdBtn {
+                background-color: #2643ff;            
+                border-radius: 0;
+                margin-left: 2rem;
+                padding: 0.6rem 2rem;
+                color: #fff;
+                text-transform: uppercase;
+                font-family: 'Lato', sans-serif;
+                font-weight: 600;
+            
+            }
+        }
+    }
+}
