@@ -1,0 +1,6 @@
+export const userActionTypes = {
+    SET_USER: 'SET_USER',
+    USER_SIGNIN_FAIL : 'USER_SIGNIN_FAIL',
+    USER_SIGNOUT: 'USER_SIGNOUT',
+    VALIDATE_TOKEN: 'VALIDATE_TOKEN'
+}

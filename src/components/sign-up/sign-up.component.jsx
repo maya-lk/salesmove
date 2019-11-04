@@ -3,6 +3,9 @@ import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Select from 'react-virtualized-select';
+//import axios from 'axios';
+
+import API from '../../lib/api';
 
 import { selectSignupModalHidden , selectCountyObj } from '../../redux/common/common.selectors';
 import { toggleSignupHidden } from '../../redux/common/common.actions';
@@ -61,10 +64,22 @@ class SignUp extends React.Component {
         }else if( password.length < 6 ){
             errorsArr.push('Password is too short.');
         }else {
-
+            const user = {
+                'business' : business,
+                'fname' : fname,
+                'email' : email,
+                'password' : password,
+                'contactNo' : contactNo,
+                'website' : website,
+                'country' : country
+            };
+            API.post("register", user )
+            .then(response => {
+                console.log('response' , response);
+            }).catch(err => {
+                console.log('err' , err);
+            });
         }
-
-        console.log(errorsArr);
 
         this.setState({ errors : errorsArr });
 

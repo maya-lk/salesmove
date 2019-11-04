@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Switch , Route } from 'react-router-dom';
+import axios from 'axios';
 
 import API from './lib/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { setSiteLogo , setSocialMedia , setMainBanner , setCountries } from './redux/common/common.actions';
+import { validateToken } from './redux/user/user.actions';
 
 import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
@@ -15,7 +17,7 @@ import './App.css';
 class App extends React.Component {
 
   componentDidMount(){
-    const { setSiteLogo , setSocialMedia , setMainBanner , setCountries } = this.props;
+    const { setSiteLogo , setSocialMedia , setMainBanner , setCountries , validateToken } = this.props;
 
     //Common API
     API.get('common')
@@ -25,6 +27,30 @@ class App extends React.Component {
       setMainBanner(response.data.mainBanner);
       setCountries(response.data.countries);
     });
+
+    let token = null, email = null;
+    if(localStorage.getItem("token")){
+      token = localStorage.getItem("token");
+      email = localStorage.getItem("email");
+    }
+    if(token){
+      axios.post("https://mayaprojects.net/salesmove/wp-json/simple-jwt-authentication/v1/token/validate", {},{
+        headers: {"Authorization": "Bearer " + token
+      }})
+      .then(res => {
+        if(res.data.data.status === 200){
+          const userDetails = {
+            token : token,
+            user_email : email
+          }
+          validateToken(userDetails);
+        }
+      }).catch(err => {
+        //TODO: HANDLE VALIDATION ERROR
+      });
+    }else{
+      //TODO: HANDLE NO TOKEN
+    }
 
   }
 
@@ -45,6 +71,7 @@ const mapDispatchToProps = dispatch => ({
   setSocialMedia : (socialMedia) => dispatch(setSocialMedia(socialMedia)),
   setMainBanner : (mainBanner) => dispatch(setMainBanner(mainBanner)),
   setCountries : (countries) => dispatch(setCountries(countries)),
+  validateToken: (user) => dispatch(validateToken(user)),
 });
 
 export default connect(null , mapDispatchToProps)(App);

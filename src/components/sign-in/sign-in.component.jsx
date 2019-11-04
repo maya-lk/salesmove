@@ -2,9 +2,11 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import axios from 'axios';
 
 import { selectSigninModalHidden } from '../../redux/common/common.selectors';
 import { toggleSigninHidden } from '../../redux/common/common.actions';
+import { setUser , setUserError } from '../../redux/user/user.actions';
 
 import './sign-in.styles.scss';
 
@@ -19,7 +21,23 @@ class SignIn extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        //const { email , password } = this.state;
+        const { setUser , setUserError } = this.props;
+        const { email , password } = this.state;
+
+        let user = {
+            username: email,
+            password: password
+        };
+
+        axios.post("https://mayaprojects.net/salesmove/wp-json/simple-jwt-authentication/v1/token", user)
+        .then(response => {
+            setUser(response.data);
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("email", response.data.user_email);
+            this.props.toggleSigninHidden();
+        }).catch(err => {
+            setUserError(err);
+        });
 
     }
 
@@ -79,7 +97,9 @@ class SignIn extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    toggleSigninHidden : () => dispatch(toggleSigninHidden())
+    toggleSigninHidden : () => dispatch(toggleSigninHidden()),
+    setUser: (user) => dispatch(setUser(user)),
+    setUserError: (error) => dispatch(setUserError(error))
 })
 
 const mapStateToProps = createStructuredSelector({
