@@ -27,3 +27,18 @@ export const toggleSigninHidden = () => ({
 export const toggleSignupHidden = () => ({
     type : commonActionTypes.SET_SIGNUP_MODAL_TOGGLE
 });
+
+export const setProductCategory = productCategory => ({
+    type : commonActionTypes.SET_PRODUCTS_CATEGORY,
+    payload : productCategory
+});
+
+export const setServiceCategory = serviceCategory => ({
+    type : commonActionTypes.SET_SERVICES_CATEGORY,
+    payload : serviceCategory
+});
+
+export const setInvestmentCategory = investmentCategory => ({
+    type : commonActionTypes.SET_INVESTMENTS_CATEGORY,
+    payload : investmentCategory
+});

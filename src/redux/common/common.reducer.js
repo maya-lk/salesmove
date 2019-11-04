@@ -6,7 +6,10 @@ const INITIAL_STATE = {
     mainBanner : null,
     countries : null,
     loginModal: false,
-    registerModal : false
+    registerModal : false,
+    productCategory : null,
+    serviceCategory : null,
+    investmentCategory : null
 }
 
 const commonReducer = ( state = INITIAL_STATE , action ) => {
@@ -40,6 +43,21 @@ const commonReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 registerModal : !state.registerModal
+            }
+        case commonActionTypes.SET_PRODUCTS_CATEGORY:
+            return{
+                ...state,
+                productCategory : action.payload
+            }
+        case commonActionTypes.SET_SERVICES_CATEGORY:
+            return{
+                ...state,
+                serviceCategory : action.payload
+            }
+        case commonActionTypes.SET_INVESTMENTS_CATEGORY:
+            return{
+                ...state,
+                investmentCategory : action.payload
             }
         default:
             return state;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserLock , faKey } from '@fortawesome/free-solid-svg-icons';
+import { faUserLock , faKey , faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter , faFacebookF , faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 
@@ -59,14 +59,8 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                             (<ul className="navbar-nav accountWrap">                        
                                 <li className="nav-item">
                                     <span className="nav-link">
-                                        <span><FontAwesomeIcon icon={faKey} onClick={handalSignout}/></span>
+                                        <span><FontAwesomeIcon icon={faSignOutAlt} onClick={handalSignout}/></span>
                                         Sign Out
-                                    </span>
-                                </li>
-                                <li className="nav-item">
-                                    <span className="nav-link" >
-                                        <span><FontAwesomeIcon icon={faUserLock} /></span>
-                                        My Account
                                     </span>
                                 </li>
                             </ul>)
@@ -103,8 +97,12 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                                 </ul>
                             )
                             : ''
-                        }                    
-                        <Link className="btn postAdBtn" to="/">Post Free Ad Now</Link>
+                        } 
+                        {
+                            (userDetails)?
+                            <Link className="btn postAdBtn" to="/post-new-ad">Post Free Ad Now</Link>
+                            : <span className="btn postAdBtn" onClick={toggleSigninHidden}>Post Free Ad Now</span>
+                        }
                     </div>
                 </div>
             </div>

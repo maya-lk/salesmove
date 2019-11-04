@@ -6,18 +6,36 @@ import axios from 'axios';
 import API from './lib/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { setSiteLogo , setSocialMedia , setMainBanner , setCountries } from './redux/common/common.actions';
+import { 
+  setSiteLogo , 
+  setSocialMedia , 
+  setMainBanner , 
+  setCountries , 
+  setProductCategory , 
+  setServiceCategory , 
+  setInvestmentCategory 
+} from './redux/common/common.actions';
 import { validateToken } from './redux/user/user.actions';
 
 import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
+import PostAdComponent from './pages/post-ad/post-ad.component';
 
 import './App.css';
 
 class App extends React.Component {
 
   componentDidMount(){
-    const { setSiteLogo , setSocialMedia , setMainBanner , setCountries , validateToken } = this.props;
+    const { 
+      setSiteLogo , 
+      setSocialMedia , 
+      setMainBanner , 
+      setCountries , 
+      validateToken , 
+      setProductCategory , 
+      setServiceCategory , 
+      setInvestmentCategory 
+    } = this.props;
 
     //Common API
     API.get('common')
@@ -26,6 +44,10 @@ class App extends React.Component {
       setSocialMedia(response.data.socialMedia);
       setMainBanner(response.data.mainBanner);
       setCountries(response.data.countries);
+
+      setProductCategory(response.data.productCategory);
+      setServiceCategory(response.data.serviceCategory);
+      setInvestmentCategory(response.data.investmentCategory);
     });
 
     let token = null, email = null;
@@ -60,6 +82,7 @@ class App extends React.Component {
         <Header/>
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/post-new-ad" component={PostAdComponent} />
         </Switch>
       </div>
     )
@@ -72,6 +95,9 @@ const mapDispatchToProps = dispatch => ({
   setMainBanner : (mainBanner) => dispatch(setMainBanner(mainBanner)),
   setCountries : (countries) => dispatch(setCountries(countries)),
   validateToken: (user) => dispatch(validateToken(user)),
+  setProductCategory: (productCategory) => dispatch(setProductCategory(productCategory)),
+  setServiceCategory: (serviceCategory) => dispatch(setServiceCategory(serviceCategory)),
+  setInvestmentCategory: (investmentCategory) => dispatch(setInvestmentCategory(investmentCategory)),
 });
 
 export default connect(null , mapDispatchToProps)(App);

@@ -3,12 +3,11 @@ import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Select from 'react-virtualized-select';
-//import axios from 'axios';
 
 import API from '../../lib/api';
 
 import { selectSignupModalHidden , selectCountyObj } from '../../redux/common/common.selectors';
-import { toggleSignupHidden } from '../../redux/common/common.actions';
+import { toggleSignupHidden , toggleSigninHidden } from '../../redux/common/common.actions';
 
 import './sign-up.styles.scss';
 
@@ -57,6 +56,7 @@ class SignUp extends React.Component {
     handleSubmit = async event => {
         event.preventDefault();
         const { business , fname , email , password , contactNo , website , country } = this.state;
+        const { toggleSignupHidden , toggleSigninHidden } = this.props;
         const errorsArr = [];
 
         if( business === '' || fname === '' || email === '' || password === '' || contactNo === '' || website === '' || country === '' ){
@@ -73,11 +73,17 @@ class SignUp extends React.Component {
                 'website' : website,
                 'country' : country
             };
+        
             API.post("register", user )
             .then(response => {
-                console.log('response' , response);
+                if( response.data.status ){
+                    toggleSignupHidden();
+                    toggleSigninHidden();
+                }else{
+                    errorsArr.push(response.data.message);
+                }
             }).catch(err => {
-                console.log('err' , err);
+                //console.log('err' , err);
             });
         }
 
@@ -209,7 +215,8 @@ class SignUp extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    toggleSignupHidden : () => dispatch(toggleSignupHidden())
+    toggleSignupHidden : () => dispatch(toggleSignupHidden()),
+    toggleSigninHidden : () => dispatch(toggleSigninHidden())
 })
 
 const mapStateToProps = createStructuredSelector({
