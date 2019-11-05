@@ -1,0 +1,47 @@
+.sidebarWrap{
+    width: 25%;
+
+    h3 {
+        background-color: #45454c;
+        margin-bottom: 0;
+        color: #fff;
+        font-weight: 500;
+        font-size: 0.9rem;
+        padding: 1.2rem;
+    }
+
+    .list-group-item {
+        background-color: #d8d7dd;
+        border-radius: 0;
+        color: #45454c;
+        font-weight: 500;
+        font-size: 0.9rem;
+
+        .count {
+            font-weight: 400;
+        }
+
+        &:nth-child(2n) {
+            background-color: #c4c4cc;
+        }
+
+        &.btnWrap {
+            display: flex;
+            justify-content: center;
+
+            .btn {
+                background-color:  #445be9;            
+                border-radius: 0;            
+                color: #fff;
+                font-weight: 500;
+                font-size: 0.85rem;
+                margin: 0 6px;
+                padding: 0.5rem 1.5rem;
+
+                &.offer {
+                    background-color: #3141a3;
+                }
+            }
+        }
+    }
+}

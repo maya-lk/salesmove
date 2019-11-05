@@ -21,6 +21,7 @@ import { validateToken } from './redux/user/user.actions';
 import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
 import PostAdComponent from './pages/post-ad/post-ad.component';
+import SearchPage from './pages/search/search.component';
 
 import './App.css';
 
@@ -91,6 +92,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/post-new-ad" component={PostAdComponent} />
+          <Route path="/search" component={SearchPage} />
         </Switch>
       </div>
     )

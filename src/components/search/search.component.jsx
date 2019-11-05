@@ -62,10 +62,14 @@ class SearchForm extends React.Component {
         this.setState({ [name] : value });
     }
 
+    handleSubmit = async event => {
+        event.preventDefault();
+    }
+
     render(){
         const { countries } = this.props;
         return(
-            <form className="searchForm">
+            <form className="searchForm" onSubmit={this.handleSubmit}>
                 <div className="labelWrap">I/We</div>
                 <div className="form-group">
                     <Select
