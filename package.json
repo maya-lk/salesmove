@@ -1,5 +1,6 @@
 {
   "name": "spalluto",
+  "homepage": "https://mayaprojects.net/salesmove/app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
