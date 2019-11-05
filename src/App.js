@@ -15,6 +15,7 @@ import {
   setServiceCategory , 
   setInvestmentCategory 
 } from './redux/common/common.actions';
+import { setAdvertisements } from './redux/advertisements/advertisements.actions';
 import { validateToken } from './redux/user/user.actions';
 
 import Header from './components/header/header.component';
@@ -34,7 +35,8 @@ class App extends React.Component {
       validateToken , 
       setProductCategory , 
       setServiceCategory , 
-      setInvestmentCategory 
+      setInvestmentCategory,
+      setAdvertisements
     } = this.props;
 
     //Common API
@@ -74,6 +76,12 @@ class App extends React.Component {
       //TODO: HANDLE NO TOKEN
     }
 
+    //Advertisements
+    API.get('results')
+    .then(function(response){
+      setAdvertisements(response.data);
+    });
+
   }
 
   render(){
@@ -98,6 +106,7 @@ const mapDispatchToProps = dispatch => ({
   setProductCategory: (productCategory) => dispatch(setProductCategory(productCategory)),
   setServiceCategory: (serviceCategory) => dispatch(setServiceCategory(serviceCategory)),
   setInvestmentCategory: (investmentCategory) => dispatch(setInvestmentCategory(investmentCategory)),
+  setAdvertisements: (ads) => dispatch(setAdvertisements(ads))
 });
 
 export default connect(null , mapDispatchToProps)(App);

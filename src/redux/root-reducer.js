@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 
 import commonReducer from './common/common.reducer';
 import userReducer from './user/user.reduser';
+import advertisementReducer from './advertisements/advertisements.reducer';
 
 const persistConfig = {
     key: 'root',
@@ -13,7 +14,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     commonParams : commonReducer,
-    user : userReducer
+    user : userReducer,
+    advertisements : advertisementReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);
