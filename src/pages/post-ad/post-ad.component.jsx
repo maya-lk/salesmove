@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Select from 'react-virtualized-select';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
-import ImageUploader from 'react-images-upload';
 
 import API from '../../lib/api';
+
+import ImagePreview from '../../components/image-preview/image-preview.component';
 
 import { 
     selectProductCategory , 
@@ -64,15 +65,32 @@ class PostAdComponent extends React.Component {
             otherSpecificRequrements : '',
             addDisplayPeriod : new Date(),
             images : [],
+            imagesPreviewUrls : [],
+            message: ''
         }
 
-        this.onDrop = this.onDrop.bind(this);
         this.handleDayChange = this.handleDayChange.bind(this);
     }
 
     handleChange = event => {
         const { name , value } = event.target;
         this.setState({ [name] : value });
+    }
+
+    handleMedia = event => {
+        this.setState({ images: [...this.state.images, ...event.target.files] });
+
+        let files = Array.from(event.target.files);
+
+        files.forEach((file) => {
+            let reader = new FileReader();
+            reader.onloadend = () => {
+                this.setState({    
+                    imagesPreviewUrls: [...this.state.imagesPreviewUrls, reader.result]
+                });
+            }
+            reader.readAsDataURL(file);
+        });
     }
 
     toggleCheckbox = (event) => {
@@ -118,12 +136,6 @@ class PostAdComponent extends React.Component {
         this.setState({ addDisplayPeriod: day });
     }
 
-    onDrop(image) {
-        this.setState({
-            images: this.state.images.concat(image),
-        });
-    }
-
     handleSubmit = async event => {
         event.preventDefault();
         const { 
@@ -141,24 +153,35 @@ class PostAdComponent extends React.Component {
             images 
         } = this.state;
 
-        const newAd = {
-            'type' : type,
-            'title' : title,
-            'category' : category,
-            'terms' : terms,
-            'country' : country,
-            'specifications' : specifications,
-            'quantity' : quantity,
-            'shippingTerms' : shippingTerms,
-            'destinationPort' : destinationPort,
-            'otherSpecificRequrements' : otherSpecificRequrements,
-            'addDisplayPeriod' : addDisplayPeriod,
-            'images' : images
-        };
+        const formData = new FormData();
+        formData.append('type',type);
+        formData.append('title',title);
+        formData.append('category',category);
+        formData.append('terms',terms);
+        formData.append('country',country.value);
+        formData.append('countryFlag',country.flagPath);
+        formData.append('specifications',specifications);
+        formData.append('quantity',quantity);
+        formData.append('shippingTerms',shippingTerms);
+        formData.append('destinationPort',destinationPort);
+        formData.append('otherSpecificRequrements',otherSpecificRequrements);
+        formData.append('addDisplayPeriod',addDisplayPeriod);
 
-        API.post("post-ad", newAd )
+        console.log('country' , country);
+
+        var imgLeng = images.length;
+        for (let index = 0; index < imgLeng; index++) {
+            formData.append('images[]',images[index]);
+        }
+
+        API.post("post-ad", formData ,{
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
         .then(response => {
-            console.log('response' , response);
+            //console.log('response' , response.data);
+            this.setState({ message : response.data });
         }).catch(err => {
             //console.log('err' , err);
         });
@@ -168,6 +191,7 @@ class PostAdComponent extends React.Component {
     render(){
         const categories = [ 'products' , 'services' , 'investments' ];
         const { countries } = this.props;
+        const { imagesPreviewUrls , message } = this.state;
         return(
             <div className="postNewAdWrap">
                 <div className="container">
@@ -201,7 +225,7 @@ class PostAdComponent extends React.Component {
                                 name="title"
                                 onChange={this.handleChange}
                                 value={this.state.title}
-                                required
+                                //required
                             />
                         </div>
 
@@ -212,7 +236,7 @@ class PostAdComponent extends React.Component {
                                 name="category"
                                 className="form-control"
                                 onChange={this.handleChange}
-                                required
+                                //required
                                 value={this.state.category}
                             >
                                 <option value="">Select Category</option>
@@ -303,19 +327,28 @@ class PostAdComponent extends React.Component {
 
                         <div className="form-group">
                             <label>Images</label>
-                            <ImageUploader
-                                withPreview={true}
-                                withIcon={true}
-                                buttonText='Choose images'
-                                onChange={this.onDrop}
-                                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                                maxFileSize={5242880}
-                            />
+                            <div className="imagePreviewWrap">
+                                {
+                                    (imagesPreviewUrls)?
+                                    imagesPreviewUrls.map( (image , idx) => <ImagePreview 
+                                        key={idx} 
+                                        image={image} 
+                                        /> )
+                                    : ''
+                                }
+                            </div>
+                            <input type="file" name="images" onChange={this.handleMedia} multiple/>
                         </div>
 
                         <div className="form-group text-right btnsWrap">
                             <input type="submit" value="Add New Ad" className="btn submitBtn"/>
                         </div>
+
+                        {
+                            (message.status)?
+                            (<div class="alert alert-success" role="alert">{message.message}</div>)
+                            : (<div class="alert alert-danger" role="alert">{message.message}</div>)
+                        }
 
                     </form>
                 </div>

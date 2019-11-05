@@ -40,4 +40,11 @@
         margin: 1rem;
         width: 22%;
     }
+
+    .imagePreviewWrap{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 }
