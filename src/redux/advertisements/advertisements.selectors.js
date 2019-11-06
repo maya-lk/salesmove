@@ -21,3 +21,23 @@ export const selectAllInvestmentCount = createSelector(
     [selectAdvertisementsAPI],
     (advertisements) => (advertisements.ads) ? advertisements.ads.filter( (ad) => ad.category === 'investments' ) : ''
 );
+
+export const selectWantParam = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.want
+);
+
+export const selectCategoryParam = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.category
+);
+
+export const selectSearchItemParam = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.searchItem
+);
+
+export const selectCountryParam = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.country
+);

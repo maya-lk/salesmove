@@ -4,10 +4,13 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Select from 'react-virtualized-select';
+import { withRouter } from 'react-router-dom';
 
 import thIcon from '../../assets/images/th-icon.png';
 
 import { selectCountyObj } from '../../redux/common/common.selectors';
+import { setWantParam , setCategoryParam , setSearchItemParam , setCountryParam } from '../../redux/advertisements/advertisements.actions';
+import { selectWantParam , selectCategoryParam , selectSearchItemParam , selectCountryParam } from '../../redux/advertisements/advertisements.selectors';
 
 import './search.styles.scss';
 import './react-select.css';
@@ -42,44 +45,27 @@ function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption
 
 class SearchForm extends React.Component {
 
-    constructor(){
-        super()
-        this.state = {
-            country : '',
-            category: '',
-            want: '',
-            searchItem : ''
-        }
-    }
-
-    componentDidMount(){
-
-    }
-
-    handleChange = event => {
-        const { name , value } = event.target;
-
-        this.setState({ [name] : value });
-    }
-
     handleSubmit = async event => {
         event.preventDefault();
+
+        this.props.history.push(`/search`);
     }
 
     render(){
-        const { countries } = this.props;
+        const { countries , want , category , searchItem , country } = this.props;
+        const { setWantParam , setCategoryParam , setSearchItemParam , setCountryParam } = this.props;
         return(
             <form className="searchForm" onSubmit={this.handleSubmit}>
                 <div className="labelWrap">I/We</div>
                 <div className="form-group">
                     <Select
                         labelKey='value'
-                        onChange={(want) => this.setState({ want })}
+                        onChange={(want) => (want)? setWantParam(want.value) : setWantParam('')}
                         options={[
                             { value: 'want' },
                             { value: 'offer' }
                         ]}
-                        value={this.state.want}
+                        value={want}
                         valueKey='value'
                         name="want"
                     />
@@ -92,13 +78,13 @@ class SearchForm extends React.Component {
                     </div>
                     <Select
                         labelKey='value'
-                        onChange={(category) => this.setState({ category })}
+                        onChange={(category) => (category) ? setCategoryParam(category.value) : setCategoryParam('')}
                         options={[
                             { value: 'products' },
                             { value: 'services' },
                             { value: 'investments' }
                         ]}
-                        value={this.state.category}
+                        value={category}
                         valueKey='value'
                         name="category"
                         placeholder="Category"
@@ -111,8 +97,8 @@ class SearchForm extends React.Component {
                         placeholder="What are you looking for?" 
                         aria-label="What are you looking for?"
                         name="searchItem"
-                        onChange={this.handleChange}
-                        value={this.state.searchItem}
+                        onChange={(event) => setSearchItemParam(event.target.value)}
+                        value={searchItem}
                     />
                 </div>
                 <div className="input-group country">
@@ -123,10 +109,10 @@ class SearchForm extends React.Component {
                     </div>
                     <Select
                         labelKey='value'
-                        onChange={(country) => this.setState({ country })}
+                        onChange={(country) => (country) ? setCountryParam(country.value) : setCountryParam('')}
                         optionRenderer={CountryOptionRenderer}
                         options={countries}
-                        value={this.state.country}
+                        value={country}
                         valueKey='value'
                         name="country"
                         placeholder="From"
@@ -142,7 +128,19 @@ class SearchForm extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    countries : selectCountyObj
-})
+    countries : selectCountyObj,
+    want : selectWantParam,
+    category : selectCategoryParam,
+    searchItem : selectSearchItemParam,
+    country : selectCountryParam,
+});
 
-export default connect(mapStateToProps)(SearchForm);
+
+const mapDispatchToProps = dispatch => ({
+    setWantParam : (want) => dispatch(setWantParam(want)),
+    setCategoryParam : (category) => dispatch(setCategoryParam(category)),
+    setSearchItemParam : (searchItem) => dispatch(setSearchItemParam(searchItem)),
+    setCountryParam : (country) => dispatch(setCountryParam(country)),
+});
+
+export default withRouter(connect(mapStateToProps , mapDispatchToProps)(SearchForm));
