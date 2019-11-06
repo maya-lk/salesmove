@@ -1,0 +1,4 @@
+export const testimonialActionTypes = {
+    SET_TESTIMONIAL_BANNER : 'SET_TESTIMONIAL_BANNER',
+    SET_TESTIMONIAL_ITEMS : 'SET_TESTIMONIAL_ITEMS'
+}
