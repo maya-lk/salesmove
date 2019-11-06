@@ -51,3 +51,8 @@ export const selectInvestmentCategory = createSelector(
     [selectCommonAPI],
     (commonParams) => commonParams.investmentCategory
 );
+
+export const selectFooterAbout = createSelector(
+    [selectCommonAPI],
+    (commonParams) => commonParams.footerAbout
+);

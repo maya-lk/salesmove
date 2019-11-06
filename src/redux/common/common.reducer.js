@@ -9,7 +9,8 @@ const INITIAL_STATE = {
     registerModal : false,
     productCategory : null,
     serviceCategory : null,
-    investmentCategory : null
+    investmentCategory : null,
+    footerAbout: null
 }
 
 const commonReducer = ( state = INITIAL_STATE , action ) => {
@@ -58,6 +59,11 @@ const commonReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 investmentCategory : action.payload
+            }
+        case commonActionTypes.SET_FOOTER_ABOUT:
+            return{
+                ...state,
+                footerAbout : action.payload
             }
         default:
             return state;

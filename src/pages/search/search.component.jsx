@@ -5,6 +5,7 @@ import Sidebar from '../../components/sidebar/sidebar.component';
 import SearchResults from '../../components/search-result/search-result.component';
 import LatestListings from '../../components/latest-listing/latest-listing.component';
 import Testimonials from '../../components/testimonials/testimonials.component';
+import Footer from '../../components/footer/footer.component';
 
 import './search.styles.scss';
 
@@ -17,6 +18,7 @@ const SearchPage = () => (
         </div>
         <LatestListings />
         <Testimonials />
+        <Footer />
     </div>
 );
 

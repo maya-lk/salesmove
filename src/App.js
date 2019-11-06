@@ -13,7 +13,8 @@ import {
   setCountries , 
   setProductCategory , 
   setServiceCategory , 
-  setInvestmentCategory 
+  setInvestmentCategory,
+  setFooterAbout
 } from './redux/common/common.actions';
 import { setAdvertisements } from './redux/advertisements/advertisements.actions';
 import { validateToken } from './redux/user/user.actions';
@@ -40,7 +41,8 @@ class App extends React.Component {
       setInvestmentCategory,
       setAdvertisements,
       setTestimonialBanner,
-      setTestimonialItems
+      setTestimonialItems,
+      setFooterAbout
     } = this.props;
 
     //Common API
@@ -54,6 +56,8 @@ class App extends React.Component {
       setProductCategory(response.data.productCategory);
       setServiceCategory(response.data.serviceCategory);
       setInvestmentCategory(response.data.investmentCategory);
+
+      setFooterAbout(response.data.footerAbout)
     });
 
     let token = null, email = null;
@@ -120,7 +124,8 @@ const mapDispatchToProps = dispatch => ({
   setInvestmentCategory: (investmentCategory) => dispatch(setInvestmentCategory(investmentCategory)),
   setAdvertisements: (ads) => dispatch(setAdvertisements(ads)),
   setTestimonialBanner: (testimonialBanner) => dispatch(setTestimonialBanner(testimonialBanner)),
-  setTestimonialItems: (items) => dispatch(setTestimonialItems(items))
+  setTestimonialItems: (items) => dispatch(setTestimonialItems(items)),
+  setFooterAbout: (footerAbout) => dispatch(setFooterAbout(footerAbout))
 });
 
 export default connect(null , mapDispatchToProps)(App);

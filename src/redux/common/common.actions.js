@@ -42,3 +42,8 @@ export const setInvestmentCategory = investmentCategory => ({
     type : commonActionTypes.SET_INVESTMENTS_CATEGORY,
     payload : investmentCategory
 });
+
+export const setFooterAbout = footerAbout => ({
+    type : commonActionTypes.SET_FOOTER_ABOUT,
+    payload : footerAbout
+});
