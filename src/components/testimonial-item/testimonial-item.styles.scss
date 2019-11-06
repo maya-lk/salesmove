@@ -1,0 +1,36 @@
+.testimonialItem{
+    .content {
+        font-weight: 500;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        position: relative;
+        padding: 0 3rem;
+
+        &::after , &::before{
+            position: absolute;
+            content: '"';
+            color: #fff;
+            opacity: 0.3;
+            font-size: 9rem;
+            display: inline-block;
+            line-height: 1;
+            height: 26px;
+        }
+
+        &::after{
+            left: 0;
+            top: -12px;
+        }
+
+        &::before{
+            right: 0;
+            bottom: -3px;
+        }
+    }
+
+    h4 {
+        margin-bottom: 0;
+        margin-top: 2rem;
+        font-size: 1.1rem;
+    }
+}

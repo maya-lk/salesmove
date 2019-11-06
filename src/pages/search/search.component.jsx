@@ -4,6 +4,7 @@ import MainBanner from '../../components/main-banner/main-banner.component';
 import Sidebar from '../../components/sidebar/sidebar.component';
 import SearchResults from '../../components/search-result/search-result.component';
 import LatestListings from '../../components/latest-listing/latest-listing.component';
+import Testimonials from '../../components/testimonials/testimonials.component';
 
 import './search.styles.scss';
 
@@ -15,6 +16,7 @@ const SearchPage = () => (
             <SearchResults />
         </div>
         <LatestListings />
+        <Testimonials />
     </div>
 );
 

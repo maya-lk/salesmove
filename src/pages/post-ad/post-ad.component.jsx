@@ -167,8 +167,6 @@ class PostAdComponent extends React.Component {
         formData.append('otherSpecificRequrements',otherSpecificRequrements);
         formData.append('addDisplayPeriod',addDisplayPeriod);
 
-        console.log('country' , country);
-
         var imgLeng = images.length;
         for (let index = 0; index < imgLeng; index++) {
             formData.append('images[]',images[index]);

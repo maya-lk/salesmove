@@ -17,6 +17,7 @@ import {
 } from './redux/common/common.actions';
 import { setAdvertisements } from './redux/advertisements/advertisements.actions';
 import { validateToken } from './redux/user/user.actions';
+import { setTestimonialBanner , setTestimonialItems } from './redux/testimonials/testimonials.actions';
 
 import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
@@ -37,7 +38,9 @@ class App extends React.Component {
       setProductCategory , 
       setServiceCategory , 
       setInvestmentCategory,
-      setAdvertisements
+      setAdvertisements,
+      setTestimonialBanner,
+      setTestimonialItems
     } = this.props;
 
     //Common API
@@ -83,6 +86,13 @@ class App extends React.Component {
       setAdvertisements(response.data);
     });
 
+    //Testimonials
+    API.get('testimonials')
+    .then(function(response){
+      setTestimonialBanner(response.data.testimonialBanner);
+      setTestimonialItems(response.data.items);
+    });
+
   }
 
   render(){
@@ -108,7 +118,9 @@ const mapDispatchToProps = dispatch => ({
   setProductCategory: (productCategory) => dispatch(setProductCategory(productCategory)),
   setServiceCategory: (serviceCategory) => dispatch(setServiceCategory(serviceCategory)),
   setInvestmentCategory: (investmentCategory) => dispatch(setInvestmentCategory(investmentCategory)),
-  setAdvertisements: (ads) => dispatch(setAdvertisements(ads))
+  setAdvertisements: (ads) => dispatch(setAdvertisements(ads)),
+  setTestimonialBanner: (testimonialBanner) => dispatch(setTestimonialBanner(testimonialBanner)),
+  setTestimonialItems: (items) => dispatch(setTestimonialItems(items))
 });
 
 export default connect(null , mapDispatchToProps)(App);
