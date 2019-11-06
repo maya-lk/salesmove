@@ -66,7 +66,8 @@ class PostAdComponent extends React.Component {
             addDisplayPeriod : new Date(),
             images : [],
             imagesPreviewUrls : [],
-            message: ''
+            message: '',
+            isSubmit : false
         }
 
         this.handleDayChange = this.handleDayChange.bind(this);
@@ -110,23 +111,23 @@ class PostAdComponent extends React.Component {
         const { productTerms , serviceTerms , invenstmentTerms } = this.props;
         switch (params) {
             case 'products':
-                return productTerms.map(term => 
-                <FormCheck key={term.ID}>
+                return (productTerms)? productTerms.map(term => 
+                <FormCheck key={term.ID} className="col-md-6 col-12">
                     <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
                     <FormCheck.Label for={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>)
+                </FormCheck>) : ''
             case 'services':
-                return serviceTerms.map(term => 
-                <FormCheck key={term.ID}>
+                return (serviceTerms)? serviceTerms.map(term => 
+                <FormCheck key={term.ID} className="col-md-6 col-12">
                     <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
                     <FormCheck.Label for={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>)
+                </FormCheck>) : ''
             case 'investments':
-                return invenstmentTerms.map(term => 
-                <FormCheck key={term.ID}>
+                return (invenstmentTerms)? invenstmentTerms.map(term => 
+                <FormCheck key={term.ID} className="col-md-6 col-12">
                     <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
                     <FormCheck.Label for={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>)
+                </FormCheck>) : ''
             default:
                 break;
         }
@@ -138,6 +139,9 @@ class PostAdComponent extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
+
+        this.setState({ isSubmit : true });
+        
         const { 
             type, 
             title, 
@@ -179,7 +183,7 @@ class PostAdComponent extends React.Component {
         })
         .then(response => {
             //console.log('response' , response.data);
-            this.setState({ message : response.data });
+            this.setState({ message : response.data , isSubmit : false });
         }).catch(err => {
             //console.log('err' , err);
         });
@@ -246,7 +250,7 @@ class PostAdComponent extends React.Component {
 
                         <div className="form-group">
                             <label>Name of  Product or sevices</label>
-                            {this.renderTerms(this.state.category)}
+                            <div className="d-flex flex-wrap">{this.renderTerms(this.state.category)}</div>
                         </div>
 
                         <div className="form-group">
@@ -345,8 +349,8 @@ class PostAdComponent extends React.Component {
 
                         {
                             (message.status)?
-                            (<div class="alert alert-success" role="alert">{message.message}</div>)
-                            : (<div class="alert alert-danger" role="alert">{message.message}</div>)
+                            (<div className="alert alert-success" role="alert">{message.message}</div>)
+                            : (<div className="alert alert-danger" role="alert">{message.message}</div>)
                         }
 
                     </form>
