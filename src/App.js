@@ -92,7 +92,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/post-new-ad" component={PostAdComponent} />
-          <Route path="/search" component={SearchPage} />
+          <Route path="/search/:category?" component={SearchPage} />
         </Switch>
       </div>
     )
