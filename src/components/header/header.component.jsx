@@ -5,7 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserLock , faKey , faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter , faFacebookF , faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import axios from 'axios';
+
+import { accountAPI } from '../../lib/api';
 
 import SignIn from '../sign-in/sign-in.component';
 import SignUp from '../sign-up/sign-up.component';
@@ -20,10 +21,10 @@ import './header.styles.scss';
 const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden , userDetails , signOutUser }) => {
     
     const handalSignout = () => {
-        axios.post("https://mayaprojects.net/salesmove/wp-json/simple-jwt-authentication/v1/token/revoke", {}, {
+        accountAPI.post("token/revoke", {}, {
             headers: {"Authorization": "Bearer " + userDetails.token
         }})
-            .then(response => {
+        .then(response => {
             //Clear local storage
             localStorage.removeItem("token");
             localStorage.removeItem("email");
@@ -58,8 +59,8 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                             (userDetails)?
                             (<ul className="navbar-nav accountWrap">                        
                                 <li className="nav-item">
-                                    <span className="nav-link">
-                                        <span><FontAwesomeIcon icon={faSignOutAlt} onClick={handalSignout}/></span>
+                                    <span className="nav-link" onClick={handalSignout}>
+                                        <span><FontAwesomeIcon icon={faSignOutAlt} /></span>
                                         Sign Out
                                     </span>
                                 </li>

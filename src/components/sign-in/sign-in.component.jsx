@@ -2,7 +2,8 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import axios from 'axios';
+
+import { accountAPI } from '../../lib/api';
 
 import { selectSigninModalHidden } from '../../redux/common/common.selectors';
 import { toggleSigninHidden } from '../../redux/common/common.actions';
@@ -21,7 +22,7 @@ class SignIn extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { setUser , setUserError } = this.props;
+        const { setUser , setUserError , toggleSigninHidden } = this.props;
         const { email , password } = this.state;
 
         let user = {
@@ -29,12 +30,12 @@ class SignIn extends React.Component {
             password: password
         };
 
-        axios.post("https://mayaprojects.net/salesmove/wp-json/simple-jwt-authentication/v1/token", user)
+        accountAPI.post("token", user)
         .then(response => {
             setUser(response.data);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("email", response.data.user_email);
-            this.props.toggleSigninHidden();
+            toggleSigninHidden();
         }).catch(err => {
             setUserError(err);
         });

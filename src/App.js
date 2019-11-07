@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Switch , Route } from 'react-router-dom';
-import axios from 'axios';
 
-import API from './lib/api';
+import API , { accountAPI } from './lib/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { 
@@ -66,7 +65,7 @@ class App extends React.Component {
       email = localStorage.getItem("email");
     }
     if(token){
-      axios.post("https://mayaprojects.net/salesmove/wp-json/simple-jwt-authentication/v1/token/validate", {},{
+      accountAPI.post("token/validate", {},{
         headers: {"Authorization": "Bearer " + token
       }})
       .then(res => {
