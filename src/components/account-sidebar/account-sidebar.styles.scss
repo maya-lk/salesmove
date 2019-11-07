@@ -1,0 +1,29 @@
+.accountSidebar {
+    width: 25%;
+
+    h3 {
+        background-color: #45454c;
+        margin-bottom: 0;
+        color: #fff;
+        font-weight: 500;
+        font-size: 0.9rem;
+        padding: 1.2rem;
+    }
+
+    .list-group-item {
+        background-color: #d8d7dd;
+        border-radius: 0;
+        color: #45454c;
+        font-weight: 500;
+        font-size: 0.9rem;
+
+        .icon {
+            font-weight: 400;
+            margin-right: 0.5rem;
+        }
+
+        &:nth-child(2n) {
+            background-color: #c4c4cc;
+        }
+    }
+}

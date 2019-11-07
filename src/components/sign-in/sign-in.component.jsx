@@ -35,6 +35,8 @@ class SignIn extends React.Component {
             setUser(response.data);
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("email", response.data.user_email);
+            localStorage.setItem("userID", response.data.user_id);
+            localStorage.setItem("displayName", response.data.user_display_name);
             toggleSigninHidden();
         }).catch(err => {
             setUserError(err);

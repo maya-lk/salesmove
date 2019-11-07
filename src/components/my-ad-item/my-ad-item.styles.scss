@@ -1,0 +1,42 @@
+.myPostItem {
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+
+    .imageWrap {
+        width: 20%;
+        min-height: 150px;
+        background-size: cover;
+        background-position: center;
+        background-color: #eee;
+    }
+
+    .actionWrap {
+        width: 20%;
+        padding: 1rem;
+
+        .btn {
+            width: 100%;
+            cursor: pointer;
+            font-size: 0.9rem;
+
+            &.btn-success{
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+
+    .content {
+        flex: 1;
+        padding: 1rem;
+        font-size: 0.9rem;
+        color: #4a4a4a;
+
+        h4 {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+    }
+}

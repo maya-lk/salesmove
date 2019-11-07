@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     userDetails: null,
     error: null,
     isLoading: false,
-    redirectURL: "/"
+    redirectURL: "/",
+    myAds: null,
 }
 
 const userReducer = ( state = INITIAL_STATE , action ) => {
@@ -28,6 +29,16 @@ const userReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 userDetails : action.payload
+            }
+        case userActionTypes.SET_MY_ADS:
+            return{
+                ...state,
+                myAds : action.payload
+            }
+        case userActionTypes.DELETE_AD:
+            return{
+                ...state,
+                myAds : state.myAds.filter( ad => ad.ID !== action.payload )
             }
         default:
             return state

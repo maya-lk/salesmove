@@ -18,6 +18,7 @@ import {
     selectCountyObj 
 } from '../../redux/common/common.selectors';
 import { selectAdPostingLoading } from '../../redux/advertisements/advertisements.selectors';
+import { selectUserDetails } from '../../redux/user/user.selectors';
 
 import { setAdPostingLoading } from '../../redux/advertisements/advertisements.actions';
 
@@ -144,7 +145,7 @@ class PostAdComponent extends React.Component {
     handleSubmit = async event => {
         event.preventDefault();
 
-        const { setAdPostingLoading } = this.props;        
+        const { setAdPostingLoading , userDetails } = this.props;        
         const { 
             type, 
             title, 
@@ -157,7 +158,7 @@ class PostAdComponent extends React.Component {
             destinationPort, 
             otherSpecificRequrements,
             addDisplayPeriod,
-            images 
+            images
         } = this.state;
 
         setAdPostingLoading();
@@ -175,6 +176,7 @@ class PostAdComponent extends React.Component {
         formData.append('destinationPort',destinationPort);
         formData.append('otherSpecificRequrements',otherSpecificRequrements);
         formData.append('addDisplayPeriod',addDisplayPeriod);
+        formData.append('userID',userDetails.user_id);
 
         var imgLeng = images.length;
         for (let index = 0; index < imgLeng; index++) {
@@ -377,7 +379,8 @@ const mapStateToProps = createStructuredSelector({
     serviceTerms : selectServiceCategory,
     invenstmentTerms : selectInvestmentCategory,
     countries : selectCountyObj,
-    isLoading : selectAdPostingLoading
+    isLoading : selectAdPostingLoading,
+    userDetails: selectUserDetails
 });
 
 const mapDispatchToProps = dispatch => ({

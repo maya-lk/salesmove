@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserLock , faKey , faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUserLock , faKey , faSignOutAlt , faUserCog } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter , faFacebookF , faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import { accountAPI } from '../../lib/api';
 
@@ -64,6 +65,16 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                                         Sign Out
                                     </span>
                                 </li>
+                                <Dropdown as="li" className="nav-item">
+                                    <Dropdown.Toggle as="span" id="dropdown-basic" className="nav-link">
+                                        <span><FontAwesomeIcon icon={faUserCog} /></span>
+                                        My Account
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Link to="/account/profile" className="dropdown-item">Profile</Link>
+                                        <Link to="/account/my-ads" className="dropdown-item">My Ads</Link>
+                                    </Dropdown.Menu>
+                                </Dropdown>
                             </ul>)
                             : (<ul className="navbar-nav accountWrap">                        
                             <li className="nav-item">

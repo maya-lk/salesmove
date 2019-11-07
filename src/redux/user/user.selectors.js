@@ -6,3 +6,8 @@ export const selectUserDetails = createSelector(
     [selectUser],
     (user) => user.userDetails
 );
+
+export const selectMyAds = createSelector(
+    [selectUser],
+    (user) => user.myAds
+);

@@ -18,7 +18,7 @@ import {
   setMainLoading
 } from './redux/common/common.actions';
 import { setAdvertisements } from './redux/advertisements/advertisements.actions';
-import { validateToken } from './redux/user/user.actions';
+import { validateToken , setMyAds } from './redux/user/user.actions';
 import { setTestimonialBanner , setTestimonialItems } from './redux/testimonials/testimonials.actions';
 
 import { selectMainLoading } from './redux/common/common.selectors';
@@ -28,6 +28,7 @@ import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
 import PostAdComponent from './pages/post-ad/post-ad.component';
 import SearchPage from './pages/search/search.component';
+import AccountPage from './pages/account/account.component';
 
 import './App.css';
 
@@ -47,7 +48,8 @@ class App extends React.Component {
       setTestimonialBanner,
       setTestimonialItems,
       setFooterAbout,
-      setMainLoading
+      setMainLoading,
+      setMyAds
     } = this.props;
 
     //Common API
@@ -65,10 +67,12 @@ class App extends React.Component {
       setFooterAbout(response.data.footerAbout)
     });
 
-    let token = null, email = null;
+    let token = null, email = null, userID = null, displayName = null;
     if(localStorage.getItem("token")){
       token = localStorage.getItem("token");
       email = localStorage.getItem("email");
+      userID = localStorage.getItem("userID");
+      displayName = localStorage.getItem("displayName");
     }
     if(token){
       accountAPI.post("token/validate", {},{
@@ -78,7 +82,9 @@ class App extends React.Component {
         if(res.data.data.status === 200){
           const userDetails = {
             token : token,
-            user_email : email
+            user_email : email,
+            user_id : userID,
+            user_display_name : displayName
           }
           validateToken(userDetails);
         }
@@ -102,6 +108,14 @@ class App extends React.Component {
       setTestimonialItems(response.data.items);
     });
 
+    //Get My Ads
+    if(userID){
+      API.get(`my-ads?userid=${userID}`)
+      .then(function(response){
+        setMyAds(response.data);
+      });
+    }
+
     setTimeout(
       function() {
         setMainLoading();
@@ -124,6 +138,7 @@ class App extends React.Component {
             <Route exact path="/" component={HomePage} />
             <Route exact path="/post-new-ad" component={PostAdComponent} />
             <Route path="/search/:category?" component={SearchPage} />
+            <Route path="/account/:accId?" component={AccountPage} />
           </Switch>
         </div>)
         }        
@@ -145,7 +160,8 @@ const mapDispatchToProps = dispatch => ({
   setTestimonialBanner: (testimonialBanner) => dispatch(setTestimonialBanner(testimonialBanner)),
   setTestimonialItems: (items) => dispatch(setTestimonialItems(items)),
   setFooterAbout: (footerAbout) => dispatch(setFooterAbout(footerAbout)),
-  setMainLoading : () => dispatch(setMainLoading())
+  setMainLoading : () => dispatch(setMainLoading()),
+  setMyAds : (myAds) => dispatch(setMyAds(myAds)),
 });
 
 const mapStateToProps = createStructuredSelector({

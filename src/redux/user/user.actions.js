@@ -19,3 +19,13 @@ export const validateToken = userDetails => ({
     type : userActionTypes.VALIDATE_TOKEN,
     payload : userDetails
 });
+
+export const setMyAds = myAds => ({
+    type : userActionTypes.SET_MY_ADS,
+    payload : myAds
+});
+
+export const deleteAdItem = item => ({
+    type : userActionTypes.DELETE_AD,
+    payload : item
+});
