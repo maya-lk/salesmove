@@ -47,3 +47,7 @@ export const setFooterAbout = footerAbout => ({
     type : commonActionTypes.SET_FOOTER_ABOUT,
     payload : footerAbout
 });
+
+export const setMainLoading = () => ({
+    type : commonActionTypes.SET_MAIN_LOADING
+});

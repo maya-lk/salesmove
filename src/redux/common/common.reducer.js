@@ -10,7 +10,8 @@ const INITIAL_STATE = {
     productCategory : null,
     serviceCategory : null,
     investmentCategory : null,
-    footerAbout: null
+    footerAbout: null,
+    mainLoading: true,
 }
 
 const commonReducer = ( state = INITIAL_STATE , action ) => {
@@ -64,6 +65,11 @@ const commonReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 footerAbout : action.payload
+            }
+        case commonActionTypes.SET_MAIN_LOADING:
+            return{
+                ...state,
+                mainLoading : !state.mainLoading
             }
         default:
             return state;

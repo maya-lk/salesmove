@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Switch , Route } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 
 import API , { accountAPI } from './lib/api';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,12 +14,16 @@ import {
   setProductCategory , 
   setServiceCategory , 
   setInvestmentCategory,
-  setFooterAbout
+  setFooterAbout,
+  setMainLoading
 } from './redux/common/common.actions';
 import { setAdvertisements } from './redux/advertisements/advertisements.actions';
 import { validateToken } from './redux/user/user.actions';
 import { setTestimonialBanner , setTestimonialItems } from './redux/testimonials/testimonials.actions';
 
+import { selectMainLoading } from './redux/common/common.selectors';
+
+import MainLoadingScreen from './components/main-loading/main-loading.component';
 import Header from './components/header/header.component';
 import HomePage from './pages/home/home.component';
 import PostAdComponent from './pages/post-ad/post-ad.component';
@@ -41,7 +46,8 @@ class App extends React.Component {
       setAdvertisements,
       setTestimonialBanner,
       setTestimonialItems,
-      setFooterAbout
+      setFooterAbout,
+      setMainLoading
     } = this.props;
 
     //Common API
@@ -96,17 +102,31 @@ class App extends React.Component {
       setTestimonialItems(response.data.items);
     });
 
+    setTimeout(
+      function() {
+        setMainLoading();
+      },
+     3000
+    );
+
   }
 
   render(){
+    const { mainLoading } = this.props;
     return (
-      <div className="siteWrapper">
-        <Header/>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/post-new-ad" component={PostAdComponent} />
-          <Route path="/search/:category?" component={SearchPage} />
-        </Switch>
+      <div>
+        {
+          (mainLoading)?
+          (<MainLoadingScreen />)
+          : (<div className="siteWrapper">
+          <Header/>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/post-new-ad" component={PostAdComponent} />
+            <Route path="/search/:category?" component={SearchPage} />
+          </Switch>
+        </div>)
+        }        
       </div>
     )
   }
@@ -124,7 +144,12 @@ const mapDispatchToProps = dispatch => ({
   setAdvertisements: (ads) => dispatch(setAdvertisements(ads)),
   setTestimonialBanner: (testimonialBanner) => dispatch(setTestimonialBanner(testimonialBanner)),
   setTestimonialItems: (items) => dispatch(setTestimonialItems(items)),
-  setFooterAbout: (footerAbout) => dispatch(setFooterAbout(footerAbout))
+  setFooterAbout: (footerAbout) => dispatch(setFooterAbout(footerAbout)),
+  setMainLoading : () => dispatch(setMainLoading())
 });
 
-export default connect(null , mapDispatchToProps)(App);
+const mapStateToProps = createStructuredSelector({
+  mainLoading : selectMainLoading
+})
+
+export default connect(mapStateToProps , mapDispatchToProps)(App);

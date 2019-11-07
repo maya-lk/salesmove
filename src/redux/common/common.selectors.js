@@ -56,3 +56,8 @@ export const selectFooterAbout = createSelector(
     [selectCommonAPI],
     (commonParams) => commonParams.footerAbout
 );
+
+export const selectMainLoading = createSelector(
+    [selectCommonAPI],
+    (commonParams) => commonParams.mainLoading
+);

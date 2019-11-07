@@ -114,19 +114,19 @@ class PostAdComponent extends React.Component {
                 return (productTerms)? productTerms.map(term => 
                 <FormCheck key={term.ID} className="col-md-6 col-12">
                     <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
-                    <FormCheck.Label for={term.ID}>{term.name}</FormCheck.Label>
+                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
                 </FormCheck>) : ''
             case 'services':
                 return (serviceTerms)? serviceTerms.map(term => 
                 <FormCheck key={term.ID} className="col-md-6 col-12">
                     <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
-                    <FormCheck.Label for={term.ID}>{term.name}</FormCheck.Label>
+                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
                 </FormCheck>) : ''
             case 'investments':
                 return (invenstmentTerms)? invenstmentTerms.map(term => 
                 <FormCheck key={term.ID} className="col-md-6 col-12">
                     <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
-                    <FormCheck.Label for={term.ID}>{term.name}</FormCheck.Label>
+                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
                 </FormCheck>) : ''
             default:
                 break;
