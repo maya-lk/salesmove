@@ -29,6 +29,7 @@ import HomePage from './pages/home/home.component';
 import PostAdComponent from './pages/post-ad/post-ad.component';
 import SearchPage from './pages/search/search.component';
 import AccountPage from './pages/account/account.component';
+import NotFoundPage from './pages/404/404.component';
 
 import './App.css';
 
@@ -139,6 +140,7 @@ class App extends React.Component {
             <Route exact path="/post-new-ad" component={PostAdComponent} />
             <Route path="/search/:category?" component={SearchPage} />
             <Route path="/account/:accId?" component={AccountPage} />
+            <Route component={NotFoundPage} />
           </Switch>
         </div>)
         }        
