@@ -46,3 +46,13 @@ export const selectAdPostingLoading = createSelector(
     [selectAdvertisementsAPI],
     (advertisements) => advertisements.isLoading
 );
+
+export const selectItemModalToggle = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.toggleItemModal
+);
+
+export const selectClickedItem = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.clickedItem
+);

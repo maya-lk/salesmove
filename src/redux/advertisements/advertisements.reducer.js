@@ -6,7 +6,9 @@ const INITIAL_STATE = {
     category: '',
     want: '',
     searchItem : '',
-    isLoading: false
+    isLoading: false,
+    toggleItemModal : false,
+    clickedItem : null
 }
 
 const advertisementReducer = ( state = INITIAL_STATE , action ) => {
@@ -40,6 +42,16 @@ const advertisementReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 isLoading : !state.isLoading
+            }
+        case advertisementActionTypes.SET_AD_ITEM_MODAL_TOGGLE:
+            return{
+                ...state,
+                toggleItemModal : !state.toggleItemModal
+            }
+        case advertisementActionTypes.SET_CLICKED_ITEM:
+            return{
+                ...state,
+                clickedItem : action.payload 
             }
         default:
             return state;

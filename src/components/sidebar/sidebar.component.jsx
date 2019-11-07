@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router';
 
 import { 
+    selectAllAds,
     selectAllProductsCount , 
     selectAllServicesCount , 
     selectAllInvestmentCount 
@@ -11,10 +13,15 @@ import {
 
 import './sidebar.styles.scss';
 
-const Sidebar = ({ productCount , serviceCount , investmentCount }) => (
+const Sidebar = ({ ads , productCount , serviceCount , investmentCount , match }) => (
     <div className="sidebarWrap">
         <h3>Categories</h3>
         <div className="list-group">
+            {
+                (match.params.category)?
+                (<Link to="/search" className="list-group-item list-group-item-action">All <span className="count">({ads.length})</span></Link>)
+                : ''
+            }
             <Link to="/search/products" className="list-group-item list-group-item-action">Products <span className="count">({productCount.length})</span></Link>
             <Link to="/search/services" className="list-group-item list-group-item-action">Services <span className="count">({serviceCount.length})</span></Link>
             <Link to="/search/investments" className="list-group-item list-group-item-action">Investments <span className="count">({investmentCount.length})</span></Link>
@@ -27,9 +34,10 @@ const Sidebar = ({ productCount , serviceCount , investmentCount }) => (
 );
 
 const mapStateToProps = createStructuredSelector({
+    ads : selectAllAds,
     productCount : selectAllProductsCount,
     serviceCount : selectAllServicesCount,
     investmentCount : selectAllInvestmentCount
 })
 
-export default connect(mapStateToProps)(Sidebar);
+export default withRouter(connect(mapStateToProps)(Sidebar));

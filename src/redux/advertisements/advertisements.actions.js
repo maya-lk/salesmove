@@ -28,3 +28,12 @@ export const setCountryParam = country => ({
 export const setAdPostingLoading = () => ({
     type : advertisementActionTypes.SET_AD_POSTING_LOADING
 });
+
+export const setItemModalToggle = () => ({
+    type : advertisementActionTypes.SET_AD_ITEM_MODAL_TOGGLE
+});
+
+export const setClickedItem = clickedItem => ({
+    type : advertisementActionTypes.SET_CLICKED_ITEM,
+    payload : clickedItem
+});

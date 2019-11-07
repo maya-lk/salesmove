@@ -8,15 +8,17 @@ import {
     selectSearchItemParam , 
     selectWantParam , 
     selectCategoryParam ,
-    selectCountryParam 
+    selectCountryParam,
+    selectItemModalToggle
 } from '../../redux/advertisements/advertisements.selectors';
 
 import SearchItem from '../search-item/search-item.component';
 import SearchItemLoader from '../content-loader/content-loader.component';
+import ItemModalOverview from '../item-modal-overview/item-modal-overview.component';
 
 import './search-result.styles.scss';
 
-const SearchResults = ({ ads , match , want , categoryParam , searchItem , country }) => (
+const SearchResults = ({ ads , match , want , categoryParam , searchItem , country , toggleItemModal }) => (
     <div className="searchResultsWrap">
         <div className="countBar">
             Showing 
@@ -86,6 +88,11 @@ const SearchResults = ({ ads , match , want , categoryParam , searchItem , count
                 : <SearchItemLoader />
             }           
         </div>
+        {
+            (toggleItemModal)?
+            <ItemModalOverview />
+            : ''
+        }
     </div>
 );
 
@@ -95,6 +102,7 @@ const mapStateToProps = createStructuredSelector({
     categoryParam : selectCategoryParam,
     searchItem : selectSearchItemParam,
     country : selectCountryParam,
+    toggleItemModal : selectItemModalToggle,
 })
 
 export default withRouter(connect(mapStateToProps)(SearchResults));

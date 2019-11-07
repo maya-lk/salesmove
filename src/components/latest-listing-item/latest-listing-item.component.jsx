@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { setClickedItem , setItemModalToggle } from '../../redux/advertisements/advertisements.actions';
 
 import './latest-listing-item.styles.scss';
 
-const LatestListingItem = ({ item }) => (
-    <div className="listingItem">
-        <Link to={`/advertisements/${item.slug}`} />
+const LatestListingItem = ({ item , setClickedItem , setItemModalToggle }) => (
+    <div className="listingItem" onClick={() => {
+        setClickedItem(item);
+        setItemModalToggle();
+    }}>
         <div className="topWrap">
             {
                 (item.country_flag)?
@@ -30,4 +34,9 @@ const LatestListingItem = ({ item }) => (
     </div>
 );
 
-export default LatestListingItem;
+const mapDispatchToProps = dispatch => ({
+    setClickedItem : (item) => dispatch(setClickedItem(item)),
+    setItemModalToggle : () => dispatch(setItemModalToggle())
+});
+
+export default connect(null, mapDispatchToProps)(LatestListingItem);

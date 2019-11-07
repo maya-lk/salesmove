@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { setClickedItem , setItemModalToggle } from '../../redux/advertisements/advertisements.actions';
 
 import './search-item.styles.scss';
 
-const SearchItem = ({ item }) => (
-    <div className="searchItem">
-        <Link to={`/advertisements/${item.slug}`} />
+const SearchItem = ({ item , setClickedItem , setItemModalToggle }) => (
+    <div className="searchItem" onClick={() => {
+        setClickedItem(item);
+        setItemModalToggle();
+    }}>
         <div className="topWrap d-flex">
             <div className="country">
                 {
@@ -20,8 +24,14 @@ const SearchItem = ({ item }) => (
         </div>
         <div className="content">
             <h3>{item.title}</h3>
+            {item.specifications}
         </div>
     </div>
 );
 
-export default SearchItem;
+const mapDispatchToProps = dispatch => ({
+    setClickedItem : (item) => dispatch(setClickedItem(item)),
+    setItemModalToggle : () => dispatch(setItemModalToggle())
+});
+
+export default connect(null, mapDispatchToProps)(SearchItem);
