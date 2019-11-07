@@ -41,3 +41,8 @@ export const selectCountryParam = createSelector(
     [selectAdvertisementsAPI],
     (advertisements) => advertisements.country
 );
+
+export const selectAdPostingLoading = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.isLoading
+);

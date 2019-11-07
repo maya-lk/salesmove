@@ -9,6 +9,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import API from '../../lib/api';
 
 import ImagePreview from '../../components/image-preview/image-preview.component';
+import LoadingScreen from '../../components/loading/loading.component';
 
 import { 
     selectProductCategory , 
@@ -16,6 +17,9 @@ import {
     selectInvestmentCategory , 
     selectCountyObj 
 } from '../../redux/common/common.selectors';
+import { selectAdPostingLoading } from '../../redux/advertisements/advertisements.selectors';
+
+import { setAdPostingLoading } from '../../redux/advertisements/advertisements.actions';
 
 import './post-ad.styles.scss';
 import 'react-day-picker/lib/style.css';
@@ -140,8 +144,7 @@ class PostAdComponent extends React.Component {
     handleSubmit = async event => {
         event.preventDefault();
 
-        this.setState({ isSubmit : true });
-        
+        const { setAdPostingLoading } = this.props;        
         const { 
             type, 
             title, 
@@ -156,6 +159,8 @@ class PostAdComponent extends React.Component {
             addDisplayPeriod,
             images 
         } = this.state;
+
+        setAdPostingLoading();
 
         const formData = new FormData();
         formData.append('type',type);
@@ -183,7 +188,8 @@ class PostAdComponent extends React.Component {
         })
         .then(response => {
             //console.log('response' , response.data);
-            this.setState({ message : response.data , isSubmit : false });
+            this.setState({ message : response.data });
+            setAdPostingLoading();
         }).catch(err => {
             //console.log('err' , err);
         });
@@ -192,10 +198,15 @@ class PostAdComponent extends React.Component {
 
     render(){
         const categories = [ 'products' , 'services' , 'investments' ];
-        const { countries } = this.props;
+        const { countries , isLoading } = this.props;
         const { imagesPreviewUrls , message } = this.state;
         return(
             <div className="postNewAdWrap">
+                {
+                    (isLoading)?
+                    (<LoadingScreen />)
+                    : ''
+                }
                 <div className="container">
                     <h1>Post New Advertisement</h1>
                     <form onSubmit={this.handleSubmit}>
@@ -365,7 +376,12 @@ const mapStateToProps = createStructuredSelector({
     productTerms : selectProductCategory,
     serviceTerms : selectServiceCategory,
     invenstmentTerms : selectInvestmentCategory,
-    countries : selectCountyObj
+    countries : selectCountyObj,
+    isLoading : selectAdPostingLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+    setAdPostingLoading : () => dispatch(setAdPostingLoading())
 })
 
-export default connect(mapStateToProps)(PostAdComponent);
+export default connect(mapStateToProps , mapDispatchToProps)(PostAdComponent);

@@ -5,7 +5,8 @@ const INITIAL_STATE = {
     country : '',
     category: '',
     want: '',
-    searchItem : ''
+    searchItem : '',
+    isLoading: false
 }
 
 const advertisementReducer = ( state = INITIAL_STATE , action ) => {
@@ -34,6 +35,11 @@ const advertisementReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 country : action.payload 
+            }
+        case advertisementActionTypes.SET_AD_POSTING_LOADING:
+            return{
+                ...state,
+                isLoading : !state.isLoading
             }
         default:
             return state;

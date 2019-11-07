@@ -24,3 +24,7 @@ export const setCountryParam = country => ({
     type : advertisementActionTypes.SET_COUNTRY_PARAM,
     payload : country
 });
+
+export const setAdPostingLoading = () => ({
+    type : advertisementActionTypes.SET_AD_POSTING_LOADING
+});
