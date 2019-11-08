@@ -71,12 +71,24 @@
         }
     }
 
-    a {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10;    
+    .bottomWrap{
+        background-color: #dddddd;
+        display: flex;
+        justify-content: space-between;
+
+        .btn.inqueryBtn {
+            color: #fff;
+            background-color: #000;
+            border-radius: 0;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+        }
+
+        .btn.viewBtn {
+            background-color: #3141a3;
+            color: #fff;
+            border-radius: 0;
+            padding: 0.5rem 2rem;
+        }
     }
 }

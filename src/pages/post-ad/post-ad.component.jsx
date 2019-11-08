@@ -189,10 +189,10 @@ class PostAdComponent extends React.Component {
             }
         })
         .then(response => {
-            console.log('response' , response.data);
+            //console.log('response' , response.data);
             this.setState({ 
                 message : response.data , 
-                /* type : '',
+                type : '',
                 title: '',
                 category : '',
                 terms : [],
@@ -204,7 +204,7 @@ class PostAdComponent extends React.Component {
                 otherSpecificRequrements : '',
                 addDisplayPeriod : new Date(),
                 images : [],
-                imagesPreviewUrls : [] */ 
+                imagesPreviewUrls : [] 
             });
             setAdPostingLoading();
         }).catch(err => {

@@ -37,3 +37,7 @@ export const setClickedItem = clickedItem => ({
     type : advertisementActionTypes.SET_CLICKED_ITEM,
     payload : clickedItem
 });
+
+export const setInquiryModalToggle = () => ({
+    type : advertisementActionTypes.SET_INQUIRY_MODAL_TOGGLE
+});

@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     searchItem : '',
     isLoading: false,
     toggleItemModal : false,
-    clickedItem : null
+    clickedItem : null,
+    toggleInquiryModal: false
 }
 
 const advertisementReducer = ( state = INITIAL_STATE , action ) => {
@@ -52,6 +53,11 @@ const advertisementReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 clickedItem : action.payload 
+            }
+        case advertisementActionTypes.SET_INQUIRY_MODAL_TOGGLE:
+            return{
+                ...state,
+                toggleInquiryModal : !state.toggleInquiryModal
             }
         default:
             return state;

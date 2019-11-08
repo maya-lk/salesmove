@@ -18,6 +18,18 @@
             width: 100%;
             margin-right: 0.5rem;
         }
+
+        .btn.inqueryBtn {
+            color: #fff;
+            background-color: #000;
+            border-radius: 0;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+            margin-left: auto;
+            margin-right: -1rem;
+            margin-top: -0.5rem;
+            margin-bottom: -0.5rem;
+        }
     }
 
     .content { 

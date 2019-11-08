@@ -8,17 +8,19 @@ import {
     selectWantParam , 
     selectCategoryParam ,
     selectCountryParam,
-    selectItemModalToggle
+    selectItemModalToggle,
+    selectInquiryModalToggle
 } from '../../redux/advertisements/advertisements.selectors';
 
 import SearchItem from '../search-item/search-item.component';
 import ItemModalOverview from '../item-modal-overview/item-modal-overview.component';
+import InquiryModal from '../inquiry-modal/inquiry-modal.component';
 
 import './search-result.styles.scss';
 
 class SearchResults extends React.Component {
     render(){
-        const { ads , want , categoryParam , searchItem , country , toggleItemModal } = this.props;
+        const { ads , want , categoryParam , searchItem , country , toggleItemModal , toggleInquiryModal } = this.props;
 
         const filteredOptions = ( want && categoryParam && searchItem && country && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
@@ -73,6 +75,11 @@ class SearchResults extends React.Component {
                     <ItemModalOverview />
                     : ''
                 }
+                {
+                    (toggleInquiryModal)?
+                    <InquiryModal />
+                    : ''
+                }
             </div>
         )
     }
@@ -85,6 +92,7 @@ const mapStateToProps = createStructuredSelector({
     searchItem : selectSearchItemParam,
     country : selectCountryParam,
     toggleItemModal : selectItemModalToggle,
+    toggleInquiryModal : selectInquiryModalToggle
 })
 
 export default connect(mapStateToProps)(SearchResults);

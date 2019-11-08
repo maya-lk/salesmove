@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { setClickedItem , setItemModalToggle } from '../../redux/advertisements/advertisements.actions';
+import { setClickedItem , setInquiryModalToggle } from '../../redux/advertisements/advertisements.actions';
 
 import './latest-listing-item.styles.scss';
 
-const LatestListingItem = ({ item , setClickedItem , setItemModalToggle }) => (
-    <div className="listingItem" onClick={() => {
-        setClickedItem(item);
-        setItemModalToggle();
-    }}>
+const LatestListingItem = ({ item , setClickedItem  , setInquiryModalToggle }) => (
+    <div className="listingItem">
         <div className="topWrap">
             {
                 (item.country_flag)?
@@ -22,7 +19,14 @@ const LatestListingItem = ({ item , setClickedItem , setItemModalToggle }) => (
                 : ( item.type === 'Offer' ) ?
                 <span>Seller from {item.country}</span>
                 : <span>{item.country}</span>
-            }            
+            }
+            <span 
+                className="btn inqueryBtn" 
+                onClick={() => {
+                    setClickedItem(item);
+                    setInquiryModalToggle();
+                }}
+            >Inquiry Now</span>           
         </div>
         <div className="content">
             <h3>{item.title}</h3>
@@ -36,7 +40,7 @@ const LatestListingItem = ({ item , setClickedItem , setItemModalToggle }) => (
 
 const mapDispatchToProps = dispatch => ({
     setClickedItem : (item) => dispatch(setClickedItem(item)),
-    setItemModalToggle : () => dispatch(setItemModalToggle())
+    setInquiryModalToggle : () => dispatch(setInquiryModalToggle())
 });
 
 export default connect(null, mapDispatchToProps)(LatestListingItem);

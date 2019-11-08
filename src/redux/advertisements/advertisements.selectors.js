@@ -56,3 +56,8 @@ export const selectClickedItem = createSelector(
     [selectAdvertisementsAPI],
     (advertisements) => advertisements.clickedItem
 );
+
+export const selectInquiryModalToggle = createSelector(
+    [selectAdvertisementsAPI],
+    (advertisements) => advertisements.toggleInquiryModal
+);
