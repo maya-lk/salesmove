@@ -10,4 +10,15 @@
         padding: 1.1rem;
         margin-bottom: 1rem;    
     }
+
+    .searchItemsWrap{
+        min-height: 190px;
+
+        > h2 {
+            margin: auto;
+            text-transform: uppercase;
+            font-weight: 900;
+            color: #acacac;
+        }
+    }
 }

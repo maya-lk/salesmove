@@ -7,7 +7,7 @@ import Select from 'react-virtualized-select';
 import API from '../../lib/api';
 
 import { selectSignupModalHidden , selectCountyObj } from '../../redux/common/common.selectors';
-import { toggleSignupHidden , toggleSigninHidden } from '../../redux/common/common.actions';
+import { toggleSignupHidden } from '../../redux/common/common.actions';
 
 import './sign-up.styles.scss';
 
@@ -49,20 +49,19 @@ class SignUp extends React.Component {
             contactNo: '',
             website: '',
             country: '',
-            errors: []
+            errors: null,
+            success : null
         }
     }
 
     handleSubmit = async event => {
         event.preventDefault();
         const { business , fname , email , password , contactNo , website , country } = this.state;
-        const { toggleSignupHidden , toggleSigninHidden } = this.props;
-        const errorsArr = [];
 
         if( business === '' || fname === '' || email === '' || password === '' || contactNo === '' || website === '' || country === '' ){
-            errorsArr.push('All fields Required.');
+            this.setState({ errors : 'All fields Required.' });
         }else if( password.length < 6 ){
-            errorsArr.push('Password is too short.');
+            this.setState({ errors : 'Password is too short.' });
         }else {
             const user = {
                 'business' : business,
@@ -76,18 +75,16 @@ class SignUp extends React.Component {
         
             API.post("register", user )
             .then(response => {
+                //console.log('response' , response.data);
                 if( response.data.status ){
-                    toggleSignupHidden();
-                    toggleSigninHidden();
+                    this.setState({ success : response.data.message });
                 }else{
-                    errorsArr.push(response.data.message);
+                    this.setState({ errors : response.data.message });
                 }
             }).catch(err => {
                 //console.log('err' , err);
             });
         }
-
-        this.setState({ errors : errorsArr });
 
     }
 
@@ -98,7 +95,7 @@ class SignUp extends React.Component {
 
     render(){
         const { countries } = this.props;
-        const { errors } = this.state;
+        const { errors , success } = this.state;
         return(
             <Modal
                 size="md"
@@ -113,8 +110,10 @@ class SignUp extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     {
-                        (errors.length)?
-                        (errors.map(error => <div key={error} className="alert alert-danger" role="alert">{error}</div>))
+                        (errors)?
+                        (<div className="alert alert-danger" role="alert">{errors}</div>)
+                        : (success)?
+                        (<div className="alert alert-success" role="alert">{success}</div>)
                         : ''
                     }
                     <form onSubmit={this.handleSubmit}> 
@@ -206,7 +205,7 @@ class SignUp extends React.Component {
                         
                         <div className="buttons">
                             <input type="submit" value="Sign Up" className="btn submitBtn" />
-                        </div>                    
+                        </div>                  
                     </form>
                 </Modal.Body>
             </Modal>
@@ -215,8 +214,7 @@ class SignUp extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    toggleSignupHidden : () => dispatch(toggleSignupHidden()),
-    toggleSigninHidden : () => dispatch(toggleSigninHidden())
+    toggleSignupHidden : () => dispatch(toggleSignupHidden())
 })
 
 const mapStateToProps = createStructuredSelector({

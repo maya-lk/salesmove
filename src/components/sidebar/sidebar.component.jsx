@@ -1,33 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router';
 
 import { 
     selectAllAds,
     selectAllProductsCount , 
     selectAllServicesCount , 
-    selectAllInvestmentCount 
+    selectAllInvestmentCount,
+    selectCategoryParam,
 } from '../../redux/advertisements/advertisements.selectors';
+import { setWantParam , setCategoryParam } from '../../redux/advertisements/advertisements.actions';
 
 import './sidebar.styles.scss';
 
-const Sidebar = ({ ads , productCount , serviceCount , investmentCount , match }) => (
+const Sidebar = ({ ads , productCount , serviceCount , investmentCount , category , setWantParam , setCategoryParam }) => (
     <div className="sidebarWrap">
         <h3>Categories</h3>
         <div className="list-group">
             {
-                (match.params.category)?
-                (<Link to="/search" className="list-group-item list-group-item-action">All <span className="count">({ads.length})</span></Link>)
+                (category)?
+                <span className="list-group-item list-group-item-action" onClick={ () => setCategoryParam('') }>All <span className="count">({ads.length})</span></span>
                 : ''
             }
-            <Link to="/search/products" className="list-group-item list-group-item-action">Products <span className="count">({productCount.length})</span></Link>
-            <Link to="/search/services" className="list-group-item list-group-item-action">Services <span className="count">({serviceCount.length})</span></Link>
-            <Link to="/search/investments" className="list-group-item list-group-item-action">Investments <span className="count">({investmentCount.length})</span></Link>
+            
+            <span className="list-group-item list-group-item-action" onClick={ () => setCategoryParam('products') }>Products <span className="count">({productCount.length})</span></span>
+            <span className="list-group-item list-group-item-action" onClick={ () => setCategoryParam('services') }>Services <span className="count">({serviceCount.length})</span></span>
+            <span className="list-group-item list-group-item-action" onClick={ () => setCategoryParam('investments') }>Investments <span className="count">({investmentCount.length})</span></span>
             <div className="list-group-item list-group-item-action btnWrap">
-                <span className="btn">Want(Buy)</span>
-                <span className="btn offer">Offer(Sell)</span>
+                <span className="btn" onClick={ () => setWantParam('want') }>Want(Buy)</span>
+                <span className="btn offer" onClick={ () => setWantParam('offer') }>Offer(Sell)</span>
             </div>
         </div>
     </div>
@@ -37,7 +38,13 @@ const mapStateToProps = createStructuredSelector({
     ads : selectAllAds,
     productCount : selectAllProductsCount,
     serviceCount : selectAllServicesCount,
-    investmentCount : selectAllInvestmentCount
+    investmentCount : selectAllInvestmentCount,
+    category : selectCategoryParam,
 })
 
-export default withRouter(connect(mapStateToProps)(Sidebar));
+const mapDispatchToProps = dispatch => ({
+    setWantParam : (want) => dispatch(setWantParam(want)),
+    setCategoryParam : (category) => dispatch(setCategoryParam(category))
+});
+
+export default connect(mapStateToProps , mapDispatchToProps)(Sidebar);

@@ -2,12 +2,13 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router';
 
-import { accountAPI } from '../../lib/api';
+import API , { accountAPI } from '../../lib/api';
 
 import { selectSigninModalHidden } from '../../redux/common/common.selectors';
-import { toggleSigninHidden } from '../../redux/common/common.actions';
-import { setUser , setUserError } from '../../redux/user/user.actions';
+import { toggleSigninHidden , toggleSignupHidden } from '../../redux/common/common.actions';
+import { setUser , setUserError , setMyAds } from '../../redux/user/user.actions';
 
 import './sign-in.styles.scss';
 
@@ -16,13 +17,14 @@ class SignIn extends React.Component {
         super();
         this.state = {
             email : '',
-            password: ''
+            password: '',
+            error: null
         }
     }
 
     handleSubmit = async event => {
         event.preventDefault();
-        const { setUser , setUserError , toggleSigninHidden } = this.props;
+        const { setUser , setUserError , toggleSigninHidden , history , setMyAds } = this.props;
         const { email , password } = this.state;
 
         let user = {
@@ -32,14 +34,25 @@ class SignIn extends React.Component {
 
         accountAPI.post("token", user)
         .then(response => {
-            setUser(response.data);
-            localStorage.setItem("token", response.data.token);
-            localStorage.setItem("email", response.data.user_email);
-            localStorage.setItem("userID", response.data.user_id);
-            localStorage.setItem("displayName", response.data.user_display_name);
-            toggleSigninHidden();
+            console.log('res' , response.data);
+            if (typeof response.data.token !== 'undefined') {
+                setUser(response.data);
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("email", response.data.user_email);
+                localStorage.setItem("userID", response.data.user_id);
+                localStorage.setItem("displayName", response.data.user_display_name);
+
+                API.get(`my-ads?userid=${response.data.user_id}`)
+                .then(function(response){
+                    setMyAds(response.data);
+                    toggleSigninHidden();
+                    history.push('/account/my-ads');
+                });
+            }
         }).catch(err => {
+            console.log('err' , err);
             setUserError(err);
+            this.setState({ error : 'Password/Username incorrect, Please check and try again.' });
         });
 
     }
@@ -49,7 +62,14 @@ class SignIn extends React.Component {
         this.setState({ [name] : value });
     }
 
+    handleRegister = () => {
+        const { toggleSigninHidden , toggleSignupHidden } = this.props;
+        toggleSigninHidden();
+        toggleSignupHidden();
+    }
+
     render(){
+        const { error } = this.state;
         return(
             <Modal
                 size="md"
@@ -63,6 +83,11 @@ class SignIn extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {
+                        (error)?
+                        (<div className="alert alert-danger" role="alert">{error}</div>)
+                        : ''
+                    }
                     <form onSubmit={this.handleSubmit}>
 
                         <div className="form-group">
@@ -91,7 +116,8 @@ class SignIn extends React.Component {
                         
                         <div className="buttons">
                             <input type="submit" value="Sign In" className="btn submitBtn" />
-                        </div>                    
+                        </div>
+                        <div className="linkUrl" onClick={this.handleRegister}>Don't you have an Account?</div>                 
                     </form>
                 </Modal.Body>
             </Modal>
@@ -100,13 +126,15 @@ class SignIn extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+    toggleSignupHidden : () => dispatch(toggleSignupHidden()),
     toggleSigninHidden : () => dispatch(toggleSigninHidden()),
     setUser: (user) => dispatch(setUser(user)),
-    setUserError: (error) => dispatch(setUserError(error))
+    setUserError: (error) => dispatch(setUserError(error)),
+    setMyAds : (myAds) => dispatch(setMyAds(myAds)),
 })
 
 const mapStateToProps = createStructuredSelector({
     loginModal : selectSigninModalHidden
 });
 
-export default connect(mapStateToProps , mapDispatchToProps)(SignIn);
+export default withRouter(connect(mapStateToProps , mapDispatchToProps)(SignIn));

@@ -189,8 +189,23 @@ class PostAdComponent extends React.Component {
             }
         })
         .then(response => {
-            //console.log('response' , response.data);
-            this.setState({ message : response.data });
+            console.log('response' , response.data);
+            this.setState({ 
+                message : response.data , 
+                /* type : '',
+                title: '',
+                category : '',
+                terms : [],
+                country : '',
+                specifications : '',
+                quantity : '',
+                shippingTerms : '',
+                destinationPort : '',
+                otherSpecificRequrements : '',
+                addDisplayPeriod : new Date(),
+                images : [],
+                imagesPreviewUrls : [] */ 
+            });
             setAdPostingLoading();
         }).catch(err => {
             //console.log('err' , err);
@@ -210,6 +225,13 @@ class PostAdComponent extends React.Component {
                     : ''
                 }
                 <div className="container">
+                    
+                    {
+                        (message.status)?
+                        (<div className="alert alert-success" role="alert">{message.message}</div>)
+                        : (<div className="alert alert-danger" role="alert">{message.message}</div>)
+                    }
+
                     <h1>Post New Advertisement</h1>
                     <form onSubmit={this.handleSubmit}>
 
@@ -359,12 +381,6 @@ class PostAdComponent extends React.Component {
                         <div className="form-group text-right btnsWrap">
                             <input type="submit" value="Add New Ad" className="btn submitBtn"/>
                         </div>
-
-                        {
-                            (message.status)?
-                            (<div className="alert alert-success" role="alert">{message.message}</div>)
-                            : (<div className="alert alert-danger" role="alert">{message.message}</div>)
-                        }
 
                     </form>
                 </div>

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserLock , faKey , faSignOutAlt , faUserCog } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter , faFacebookF , faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { withRouter } from 'react-router';
 
 import { accountAPI } from '../../lib/api';
 
@@ -19,7 +20,7 @@ import { signOutUser } from '../../redux/user/user.actions';
 
 import './header.styles.scss';
 
-const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden , userDetails , signOutUser }) => {
+const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden , userDetails , signOutUser , history }) => {
     
     const handalSignout = () => {
         accountAPI.post("token/revoke", {}, {
@@ -29,8 +30,8 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
             //Clear local storage
             localStorage.removeItem("token");
             localStorage.removeItem("email");
-
             signOutUser(null);
+            history.push('/');
         }).catch(err => {
             
         })
@@ -134,4 +135,4 @@ const mapStateToProps = createStructuredSelector({
     userDetails : selectUserDetails
 });
 
-export default connect(mapStateToProps , mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps , mapDispatchToProps)(Header));

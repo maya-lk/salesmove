@@ -16,6 +16,7 @@
         color: #45454c;
         font-weight: 500;
         font-size: 0.9rem;
+        cursor: pointer;
 
         .count {
             font-weight: 400;
@@ -37,6 +38,7 @@
                 font-size: 0.85rem;
                 margin: 0 6px;
                 padding: 0.5rem 1.5rem;
+                cursor: pointer;
 
                 &.offer {
                     background-color: #3141a3;
