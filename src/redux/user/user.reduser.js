@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     isLoading: false,
     redirectURL: "/",
     myAds: null,
+    userProfile : null
 }
 
 const userReducer = ( state = INITIAL_STATE , action ) => {
@@ -39,6 +40,11 @@ const userReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 myAds : state.myAds.filter( ad => ad.ID !== action.payload )
+            }
+        case userActionTypes.SET_USER_PROFILE_DETAILS:
+            return{
+                ...state,
+                userProfile : action.payload
             }
         default:
             return state

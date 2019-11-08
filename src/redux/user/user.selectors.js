@@ -11,3 +11,8 @@ export const selectMyAds = createSelector(
     [selectUser],
     (user) => user.myAds
 );
+
+export const selectUserProfile = createSelector(
+    [selectUser],
+    (user) => user.userProfile
+);

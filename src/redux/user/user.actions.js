@@ -29,3 +29,8 @@ export const deleteAdItem = item => ({
     type : userActionTypes.DELETE_AD,
     payload : item
 });
+
+export const setUserProfileDetails = userProfile => ({
+    type : userActionTypes.SET_USER_PROFILE_DETAILS,
+    payload : userProfile
+});

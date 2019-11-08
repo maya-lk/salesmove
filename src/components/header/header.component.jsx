@@ -8,7 +8,7 @@ import { faTwitter , faFacebookF , faLinkedinIn } from '@fortawesome/free-brands
 import Dropdown from 'react-bootstrap/Dropdown';
 import { withRouter } from 'react-router';
 
-import { accountAPI } from '../../lib/api';
+import API , { accountAPI } from '../../lib/api';
 
 import SignIn from '../sign-in/sign-in.component';
 import SignUp from '../sign-up/sign-up.component';
@@ -16,11 +16,11 @@ import SignUp from '../sign-up/sign-up.component';
 import { selectSiteLogo , selectSocialMedia } from '../../redux/common/common.selectors';
 import { toggleSigninHidden , toggleSignupHidden } from '../../redux/common/common.actions';
 import { selectUserDetails } from '../../redux/user/user.selectors';
-import { signOutUser } from '../../redux/user/user.actions';
+import { signOutUser , setMyAds , setUserProfileDetails } from '../../redux/user/user.actions';
 
 import './header.styles.scss';
 
-const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden , userDetails , signOutUser , history }) => {
+const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden , userDetails , signOutUser , history , setMyAds , setUserProfileDetails }) => {
     
     const handalSignout = () => {
         accountAPI.post("token/revoke", {}, {
@@ -35,6 +35,26 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
         }).catch(err => {
             
         })
+    }
+
+    const handleMyAds = () => {
+        const userID = (localStorage.getItem("userID"))? localStorage.getItem("userID") : '';
+        if( userID ){
+            API.get(`my-ads?userid=${userID}`)
+            .then(function(response){
+                setMyAds(response.data);
+            });
+        }
+    }
+
+    const handleProfile = () => {
+        const userID = (localStorage.getItem("userID"))? localStorage.getItem("userID") : '';
+        if( userID ){
+            API.get(`user?userid=${userID}`)
+            .then(function(response){
+                setUserProfileDetails(response.data);
+            });
+        }
     }
 
     return(
@@ -72,8 +92,8 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                                         My Account
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Link to="/account/profile" className="dropdown-item">Profile</Link>
-                                        <Link to="/account/my-ads" className="dropdown-item">My Ads</Link>
+                                        <Link to="/account/profile" className="dropdown-item" onClick={handleProfile}>Profile</Link>
+                                        <Link to="/account/my-ads" className="dropdown-item" onClick={handleMyAds}>My Ads</Link>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </ul>)
@@ -126,7 +146,9 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
 const mapDispatchToProps = dispatch => ({
     toggleSigninHidden : () => dispatch(toggleSigninHidden()),
     toggleSignupHidden : () => dispatch(toggleSignupHidden()),
-    signOutUser : (user) => dispatch(signOutUser(user))
+    signOutUser : (user) => dispatch(signOutUser(user)),
+    setMyAds : (myAds) => dispatch(setMyAds(myAds)),
+    setUserProfileDetails : (userProfile) => dispatch(setUserProfileDetails(userProfile)),
 })
 
 const mapStateToProps = createStructuredSelector({
