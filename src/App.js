@@ -32,6 +32,7 @@ import SearchPage from './pages/search/search.component';
 import AccountPage from './pages/account/account.component';
 import NotFoundPage from './pages/404/404.component';
 import EditAdvertisement from './pages/edit-ad/edit-ad.component';
+import DefaultPages from './pages/default-pages/default-pages.component';
 
 import './App.css';
 
@@ -160,6 +161,7 @@ class App extends React.Component {
             <Route path="/search/:category?" component={SearchPage} />
             <Route path="/account/:accId?" component={AccountPage} />
             <Route path="/edit/:editId" component={EditAdvertisement} />
+            <Route path="/page" component={DefaultPages} />
             <Route component={NotFoundPage} />
           </Switch>
         </div>)

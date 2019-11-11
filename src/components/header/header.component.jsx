@@ -63,10 +63,10 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                 <div className="container d-flex justify-content-end">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/how-to-post-ads">HOW TO POST ADS</Link>
+                            <Link className="nav-link" to="/page/how-to-post-ad">HOW TO POST ADS</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/contact-us">CONTACT US</Link>
+                            <Link className="nav-link" to="/page/contact-us">CONTACT US</Link>
                         </li>
                     </ul>
                 </div>
