@@ -220,7 +220,7 @@ class EditAdvertisement extends React.Component {
 
     render(){
         const categories = [ 'products' , 'services' , 'investments' ];
-        const { countries , isLoading , editAd } = this.props;
+        const { countries , isLoading } = this.props;
         const { imagesPreviewUrls , message , type } = this.state;
 
         return(
