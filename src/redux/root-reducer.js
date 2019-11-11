@@ -6,6 +6,7 @@ import commonReducer from './common/common.reducer';
 import userReducer from './user/user.reduser';
 import advertisementReducer from './advertisements/advertisements.reducer';
 import testimonialReducer from './testimonials/testimonials.reducer';
+import pagesReduser from './pages/pages.reducer';
 
 const persistConfig = {
     key: 'root',
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     commonParams : commonReducer,
     user : userReducer,
     advertisements : advertisementReducer,
-    testimonials : testimonialReducer
+    testimonials : testimonialReducer,
+    pages : pagesReduser
 });
 
 export default persistReducer(persistConfig, rootReducer);

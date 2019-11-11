@@ -20,6 +20,7 @@ import {
 import { setAdvertisements } from './redux/advertisements/advertisements.actions';
 import { validateToken , setMyAds , setUserProfileDetails } from './redux/user/user.actions';
 import { setTestimonialBanner , setTestimonialItems } from './redux/testimonials/testimonials.actions';
+import { setAboutPage , setServicePage , setHowToPostAdPage } from './redux/pages/pages.actions';
 
 import { selectMainLoading } from './redux/common/common.selectors';
 
@@ -52,7 +53,10 @@ class App extends React.Component {
       setFooterAbout,
       setMainLoading,
       setMyAds,
-      setUserProfileDetails
+      setUserProfileDetails,
+      setAboutPage,
+      setServicePage,
+      setHowToPostAdPage
     } = this.props;
 
     //Common API
@@ -124,6 +128,14 @@ class App extends React.Component {
       });
     }
 
+    //Set Other Pages
+    API.get('pages')
+    .then(function(response){
+      setAboutPage(response.data.about);
+      setServicePage(response.data.services);
+      setHowToPostAdPage(response.data.howToPostAd);
+    });
+
     setTimeout(
       function() {
         setMainLoading();
@@ -173,6 +185,9 @@ const mapDispatchToProps = dispatch => ({
   setMainLoading : () => dispatch(setMainLoading()),
   setMyAds : (myAds) => dispatch(setMyAds(myAds)),
   setUserProfileDetails : (userProfile) => dispatch(setUserProfileDetails(userProfile)),
+  setAboutPage : (about) => dispatch(setAboutPage(about)),
+  setServicePage : (services) => dispatch(setServicePage(services)),
+  setHowToPostAdPage : (howToPostAd) => dispatch(setHowToPostAdPage(howToPostAd)),
 });
 
 const mapStateToProps = createStructuredSelector({

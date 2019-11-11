@@ -1,0 +1,5 @@
+export const pagesActionTypes = {
+    SET_ABOUT_PAGE : 'SET_ABOUT_PAGE',
+    SET_SERVICES_PAGE : 'SET_SERVICES_PAGE',
+    SET_HOW_TO_POST_AD_PAGE : 'SET_HOW_TO_POST_AD_PAGE',
+}
