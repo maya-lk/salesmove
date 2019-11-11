@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectAllAds } from '../../redux/advertisements/advertisements.selectors';
 
-import LatestListingItem from '../latest-listing-item/latest-listing-item.component';
+import SearchItem from '../search-item/search-item.component';
 import SearchItemLoader from '../content-loader/content-loader.component';
 
 import './latest-listing.styles.scss';
@@ -17,7 +17,7 @@ const LatestListings = ({ ads }) => (
                 {
                     (ads)?
                     ads.filter((item , idx) => idx < 3)
-                    .map( ad => <LatestListingItem key={ad.ID} item={ad} /> )
+                    .map( ad => <SearchItem key={ad.ID} item={ad} /> )
                     : <SearchItemLoader/>
                 }
             </div>

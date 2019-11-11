@@ -9,3 +9,125 @@
     font-size: 1.1rem;
     padding: 0.75rem 0;
 }
+
+@media screen and ( max-width: 767px ){
+
+    .headerWrap .topWrap .navbar-nav {
+        width: 100%;
+        justify-content: center;
+    }
+    .headerWrap .container {
+        flex-wrap: wrap;
+    }
+    .navbar-brand {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+    }
+    .headerWrap .bottomWrap .naviWrap {
+        flex-wrap: wrap;
+    }
+    .headerWrap .bottomWrap .naviWrap .navbar-nav.socialMedia {
+        display: none;
+    }
+    .headerWrap .bottomWrap .naviWrap .navbar-nav.accountWrap {
+        margin-right: 0;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .headerWrap .bottomWrap .naviWrap .btn.postAdBtn {
+        margin-left: 0;
+        width: 100%;
+    }
+    .searchForm {
+        flex-wrap: wrap;
+    }
+    .searchForm .labelWrap {
+        width: 100%;
+        padding: 0.5rem;
+        justify-content: center;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        -o-border-radius: 0;
+    }
+    .searchForm .form-group {
+        width: 100%;
+        margin: 5px 0;
+    }
+    .searchForm .input-group.category {
+        width: 100%;
+    }
+    .searchForm .form-group.item {
+        width: 100%;
+    }
+    .searchForm .input-group {
+        width: 100%;
+    }
+    .searchForm .submitWrap {
+        margin-top: 5px;
+        width: 100%;
+        padding: 0;
+        background-color: transparent;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        -o-border-radius: 0;
+    }
+    .searchForm .submitWrap .btn.searchSubmit {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        -o-border-radius: 0;
+    }
+    .mainBannerWrap .searchWrap {
+        margin-top: auto;
+        padding-bottom: 3rem;
+    }
+    .searchPageWrap .mainBannerWrap .searchWrap {
+        margin-top: 15rem;
+    }
+    .sidebarWrap {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .searchResultsWrap {
+        padding: 0;
+        width: 100%;
+    }
+    .searchItem , 
+    .latestListingWrap .container .searchItem {
+        width: 100%;
+    }
+    .testimonialsWrap .testimonials {
+        padding: 2rem 1rem;
+        width: 100%;
+    }
+    .contactUsWrap {
+        width: 100%;
+        padding: 2rem 1rem;
+    }
+    body {
+        margin-bottom: 0;
+    }
+    .accountPageWrap {
+        padding-top: 215px;
+    }
+    .accountSidebar {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .accountContent {
+        padding-left: 0;
+        width: 100%;
+    }
+
+
+
+}
