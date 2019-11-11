@@ -16,3 +16,9 @@ export const selectUserProfile = createSelector(
     [selectUser],
     (user) => user.userProfile
 );
+
+export const selectEditAd = editAdUrlParams =>
+    createSelector(
+        [selectUser],
+        user => user.myAds.filter( ad => ad.ID === editAdUrlParams )
+);

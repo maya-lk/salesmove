@@ -37,7 +37,7 @@ const MyAdItem = ({ item , history }) => {
                 {item.specifications}
             </div>
             <div className="actionWrap">
-                <span className="btn btn-success" onClick={() => history.push(`/edit-ad/${item.ID}`)}><FontAwesomeIcon icon={faPencilAlt} /> Edit</span>
+                <span className="btn btn-success" onClick={() => history.push(`/edit/${item.ID}`)}><FontAwesomeIcon icon={faPencilAlt} /> Edit</span>
                 <span className="btn btn-danger" onClick={() => handalDelete(item.ID)}><FontAwesomeIcon icon={faTrash} /> Delete</span>
             </div>
         </div>

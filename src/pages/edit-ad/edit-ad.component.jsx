@@ -2,7 +2,6 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import FormCheck from 'react-bootstrap/FormCheck';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import Select from 'react-virtualized-select';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 
@@ -18,64 +17,47 @@ import {
     selectCountyObj 
 } from '../../redux/common/common.selectors';
 import { selectAdPostingLoading } from '../../redux/advertisements/advertisements.selectors';
-import { selectUserDetails } from '../../redux/user/user.selectors';
+import { selectUserDetails , selectEditAd } from '../../redux/user/user.selectors';
 
 import { setAdPostingLoading } from '../../redux/advertisements/advertisements.actions';
 
-import './post-ad.styles.scss';
+import './edit-ad.styles.scss';
 import 'react-day-picker/lib/style.css';
 
-function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
-  
-    return (
-        <div
-            key={key}
-            onClick={() => selectValue(option)}
-            onMouseEnter={() => focusOption(option)}
-            style={{ padding : '0.5rem' , cursor : 'pointer' }}
-        >   
-            
-            <label>
-                {
-                    (option.flagPath)?
-                    (<img
-                        className="countryIcon"
-                        src={option.flagPath}
-                        style={{ width : '30px' , marginRight : '10px' }}
-                        alt={option.value}
-                    />)
-                    : ''
-                } 
-                {option.value}
-            </label>
-        </div>
-    )
-}
+class EditAdvertisement extends React.Component {
 
-class PostAdComponent extends React.Component {
-
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
 
         this.state = {
-            type : '',
-            title: '',
-            category : '',
-            terms : [],
-            country : '',
-            specifications : '',
-            quantity : '',
-            shippingTerms : '',
-            destinationPort : '',
-            otherSpecificRequrements : '',
-            addDisplayPeriod : new Date(),
-            images : [],
-            imagesPreviewUrls : [],
+            postID : this.props.editAd[0].ID,
+            type : this.props.editAd[0].type,
+            title: this.props.editAd[0].title,
+            category : this.props.editAd[0].category,
+            terms : '',
+            country : { value : this.props.editAd[0].country, countryFlag : this.props.editAd[0].country_flag },
+            specifications : this.props.editAd[0].specifications,
+            quantity : this.props.editAd[0].quantity,
+            shippingTerms : this.props.editAd[0].shipping_terms,
+            destinationPort : this.props.editAd[0].destination_port,
+            otherSpecificRequrements : this.props.editAd[0].other_specific_requrements,
+            addDisplayPeriod : new Date(this.props.editAd[0].add_display_period),
+            images : this.props.editAd[0].images,
+            imagesPreviewUrls : this.props.editAd[0].images,
+            imagesID : this.props.editAd[0].imagesID,
             message: '',
             isSubmit : false
         }
 
         this.handleDayChange = this.handleDayChange.bind(this);
+    }
+
+    componentDidMount(){
+        const { editAd } = this.props;
+        const termIDArr = [];
+        editAd[0].terms.map( term => termIDArr.push(term.term_id.toString()) );
+
+        this.setState({ terms : termIDArr });
     }
 
     handleChange = event => {
@@ -109,33 +91,67 @@ class PostAdComponent extends React.Component {
         } else {
           newArr = terms.filter(a => a !== item);
         }
-        this.setState({ terms: newArr }, () => console.log('updated state', newArr))
+        this.setState({ terms: newArr })
     };
 
     renderTerms(params){
-        const { productTerms , serviceTerms , invenstmentTerms } = this.props;
+        const { productTerms , serviceTerms , invenstmentTerms , editAd } = this.props;
+        const { terms } = this.state;
+        const termIDArr = [];
+
+        editAd[0].terms.map( term => termIDArr.push(term.term_id) ); 
+
         switch (params) {
             case 'products':
                 return (productTerms)? productTerms.map(term => 
                 <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
+                    <FormCheck.Input 
+                        type="checkbox" 
+                        name="term" 
+                        onChange={this.toggleCheckbox} 
+                        id={term.ID} 
+                        value={term.ID} 
+                        defaultChecked={ 
+                            (termIDArr.includes(term.ID)) ? true : (terms.includes(term.ID)) ? true : false 
+                        } 
+                    />
                     <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
                 </FormCheck>) : ''
             case 'services':
                 return (serviceTerms)? serviceTerms.map(term => 
                 <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
+                    <FormCheck.Input 
+                        type="checkbox" 
+                        name="term" 
+                        onChange={this.toggleCheckbox} 
+                        id={term.ID} 
+                        value={term.ID} 
+                        defaultChecked={ 
+                            (termIDArr.includes(term.ID)) ? true : (terms.includes(term.ID)) ? true : false  
+                        } 
+                    />
                     <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
                 </FormCheck>) : ''
             case 'investments':
                 return (invenstmentTerms)? invenstmentTerms.map(term => 
                 <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
+                    <FormCheck.Input 
+                        type="checkbox" 
+                        name="term" 
+                        onChange={this.toggleCheckbox} 
+                        id={term.ID} 
+                        value={term.ID} 
+                        defaultChecked={ 
+                            (termIDArr.includes(term.ID)) ? true : (terms.includes(term.ID)) ? true : false  
+                        } 
+                    />
                     <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
                 </FormCheck>) : ''
             default:
                 break;
         }
+
+        //
     }
 
     handleDayChange(day) {
@@ -147,6 +163,7 @@ class PostAdComponent extends React.Component {
 
         const { setAdPostingLoading , userDetails } = this.props;        
         const { 
+            postID,
             type, 
             title, 
             category, 
@@ -158,12 +175,14 @@ class PostAdComponent extends React.Component {
             destinationPort, 
             otherSpecificRequrements,
             addDisplayPeriod,
-            images
+            images,
+            imagesID
         } = this.state;
 
         setAdPostingLoading();
 
         const formData = new FormData();
+        formData.append('postID',postID);
         formData.append('type',type);
         formData.append('title',title);
         formData.append('category',category);
@@ -177,35 +196,21 @@ class PostAdComponent extends React.Component {
         formData.append('otherSpecificRequrements',otherSpecificRequrements);
         formData.append('addDisplayPeriod',addDisplayPeriod);
         formData.append('userID',userDetails.user_id);
+        formData.append('imagesID',imagesID);
 
         var imgLeng = images.length;
         for (let index = 0; index < imgLeng; index++) {
             formData.append('images[]',images[index]);
         }
 
-        API.post("post-ad", formData ,{
+        API.post("edit-ad", formData ,{
             headers: {
                 'content-type': 'multipart/form-data'
             }
         })
         .then(response => {
-            //console.log('response' , response.data);
-            this.setState({ 
-                message : response.data , 
-                type : '',
-                title: '',
-                category : '',
-                terms : [],
-                country : '',
-                specifications : '',
-                quantity : '',
-                shippingTerms : '',
-                destinationPort : '',
-                otherSpecificRequrements : '',
-                addDisplayPeriod : new Date(),
-                images : [],
-                imagesPreviewUrls : [] 
-            });
+            console.log('response' , response.data);
+            this.setState({ message : response.data });
             setAdPostingLoading();
         }).catch(err => {
             //console.log('err' , err);
@@ -215,8 +220,9 @@ class PostAdComponent extends React.Component {
 
     render(){
         const categories = [ 'products' , 'services' , 'investments' ];
-        const { countries , isLoading } = this.props;
-        const { imagesPreviewUrls , message } = this.state;
+        const { countries , isLoading , editAd } = this.props;
+        const { imagesPreviewUrls , message , type } = this.state;
+
         return(
             <div className="postNewAdWrap">
                 {
@@ -243,6 +249,7 @@ class PostAdComponent extends React.Component {
                                 name="type"
                                 onChange={this.handleChange}
                                 value="Want"
+                                checked={(type === 'Want') ? true : false}
                             />
                             <Form.Check
                                 type="radio"
@@ -251,6 +258,7 @@ class PostAdComponent extends React.Component {
                                 name="type"
                                 onChange={this.handleChange}
                                 value="Offer"
+                                checked={(type === 'Offer') ? true : false}
                             />
                         </div>
 
@@ -359,6 +367,7 @@ class PostAdComponent extends React.Component {
                             <label>Add Display Period</label>
                             <DayPickerInput 
                                 onDayChange={this.handleDayChange} 
+                                value={this.state.addDisplayPeriod}
                             />
                         </div>
 
@@ -379,7 +388,7 @@ class PostAdComponent extends React.Component {
                         </div>
 
                         <div className="form-group text-right btnsWrap">
-                            <input type="submit" value="Add New Ad" className="btn submitBtn"/>
+                            <input type="submit" value="Update" className="btn submitBtn"/>
                         </div>
 
                     </form>
@@ -390,17 +399,45 @@ class PostAdComponent extends React.Component {
 
 }
 
-const mapStateToProps = createStructuredSelector({
-    productTerms : selectProductCategory,
-    serviceTerms : selectServiceCategory,
-    invenstmentTerms : selectInvestmentCategory,
-    countries : selectCountyObj,
-    isLoading : selectAdPostingLoading,
-    userDetails: selectUserDetails
+const mapStateToProps = (state , ownProps) => ({
+    editAd : selectEditAd(parseInt(ownProps.match.params.editId))(state),
+    productTerms : selectProductCategory(state),
+    serviceTerms : selectServiceCategory(state),
+    invenstmentTerms : selectInvestmentCategory(state),
+    countries : selectCountyObj(state),
+    isLoading : selectAdPostingLoading(state),
+    userDetails: selectUserDetails(state)
 });
 
 const mapDispatchToProps = dispatch => ({
     setAdPostingLoading : () => dispatch(setAdPostingLoading())
 })
 
-export default connect(mapStateToProps , mapDispatchToProps)(PostAdComponent);
+export default connect(mapStateToProps , mapDispatchToProps)(EditAdvertisement);
+
+function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
+  
+    return (
+        <div
+            key={key}
+            onClick={() => selectValue(option)}
+            onMouseEnter={() => focusOption(option)}
+            style={{ padding : '0.5rem' , cursor : 'pointer' }}
+        >   
+            
+            <label>
+                {
+                    (option.flagPath)?
+                    (<img
+                        className="countryIcon"
+                        src={option.flagPath}
+                        style={{ width : '30px' , marginRight : '10px' }}
+                        alt={option.value}
+                    />)
+                    : ''
+                } 
+                {option.value}
+            </label>
+        </div>
+    )
+}
