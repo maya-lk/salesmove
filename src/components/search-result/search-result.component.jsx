@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import { 
     selectAllAds , 
@@ -63,13 +64,18 @@ class SearchResults extends React.Component {
                         : ''
                     }            
                 </div>
-                <div className="searchItemsWrap d-flex justify-content-between flex-wrap">
-                    {   
-                        (filteredOptions.length)?
-                        filteredOptions.map( ad => <SearchItem key={ad.ID} item={ad} /> )
-                        : <h2>No Results Found</h2>
-                    }           
-                </div>
+                <ReactCSSTransitionGroup
+                    transitionName="messageout"
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={300}
+                    className="searchItemsWrap d-flex justify-content-between flex-wrap"
+                >
+                {   
+                    (filteredOptions.length)?
+                    filteredOptions.map( ad => <SearchItem key={ad.ID} item={ad} /> )
+                    : <h2>No Results Found</h2>
+                } 
+                </ReactCSSTransitionGroup>
                 {
                     (toggleItemModal)?
                     <ItemModalOverview />
