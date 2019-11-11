@@ -18,7 +18,7 @@ import {
   setMainLoading
 } from './redux/common/common.actions';
 import { setAdvertisements } from './redux/advertisements/advertisements.actions';
-import { validateToken , setMyAds } from './redux/user/user.actions';
+import { validateToken , setMyAds , setUserProfileDetails } from './redux/user/user.actions';
 import { setTestimonialBanner , setTestimonialItems } from './redux/testimonials/testimonials.actions';
 
 import { selectMainLoading } from './redux/common/common.selectors';
@@ -50,7 +50,8 @@ class App extends React.Component {
       setTestimonialItems,
       setFooterAbout,
       setMainLoading,
-      setMyAds
+      setMyAds,
+      setUserProfileDetails
     } = this.props;
 
     //Common API
@@ -115,6 +116,11 @@ class App extends React.Component {
       .then(function(response){
         setMyAds(response.data);
       });
+
+      API.get(`user?userid=${userID}`)
+      .then(function(response){
+        setUserProfileDetails(response.data);
+      });
     }
 
     setTimeout(
@@ -164,6 +170,7 @@ const mapDispatchToProps = dispatch => ({
   setFooterAbout: (footerAbout) => dispatch(setFooterAbout(footerAbout)),
   setMainLoading : () => dispatch(setMainLoading()),
   setMyAds : (myAds) => dispatch(setMyAds(myAds)),
+  setUserProfileDetails : (userProfile) => dispatch(setUserProfileDetails(userProfile)),
 });
 
 const mapStateToProps = createStructuredSelector({
