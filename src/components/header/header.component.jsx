@@ -17,11 +17,11 @@ import FotgotPassword from '../forgot-password/forgot-password.component';
 import { selectSiteLogo , selectSocialMedia } from '../../redux/common/common.selectors';
 import { toggleSigninHidden , toggleSignupHidden } from '../../redux/common/common.actions';
 import { selectUserDetails } from '../../redux/user/user.selectors';
-import { signOutUser , setMyAds , setUserProfileDetails } from '../../redux/user/user.actions';
+import { signOutUser , setMyAds , setUserProfileDetails , setPaymentsDetails } from '../../redux/user/user.actions';
 
 import './header.styles.scss';
 
-const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden , userDetails , signOutUser , history , setMyAds , setUserProfileDetails }) => {
+const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden , userDetails , signOutUser , history , setMyAds , setUserProfileDetails , setPaymentsDetails }) => {
     
     const handalSignout = () => {
         accountAPI.post("token/revoke", {}, {
@@ -54,6 +54,16 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
             API.get(`user?userid=${userID}`)
             .then(function(response){
                 setUserProfileDetails(response.data);
+            });
+        }
+    }
+
+    const handlePayments = () => {
+        const userID = (localStorage.getItem("userID"))? localStorage.getItem("userID") : '';
+        if( userID ){
+            API.get(`payments?userid=${userID}`)
+            .then(function(response){
+                setPaymentsDetails(response.data);
             });
         }
     }
@@ -95,6 +105,7 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                                     <Dropdown.Menu>
                                         <Link to="/account/profile" className="dropdown-item" onClick={handleProfile}>Profile</Link>
                                         <Link to="/account/my-ads" className="dropdown-item" onClick={handleMyAds}>My Ads</Link>
+                                        <Link to="/account/payments" className="dropdown-item" onClick={handlePayments}>Payments</Link>
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </ul>)
@@ -154,6 +165,7 @@ const mapDispatchToProps = dispatch => ({
     signOutUser : (user) => dispatch(signOutUser(user)),
     setMyAds : (myAds) => dispatch(setMyAds(myAds)),
     setUserProfileDetails : (userProfile) => dispatch(setUserProfileDetails(userProfile)),
+    setPaymentsDetails : (payments) => dispatch(setPaymentsDetails(payments))
 })
 
 const mapStateToProps = createStructuredSelector({

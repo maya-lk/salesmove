@@ -27,7 +27,7 @@ class SearchResults extends React.Component {
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
             .filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
             .filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
-            .filter( (ad) => (country)? ad.country.toLowerCase() === country.toLowerCase() : '' )
+            .filter( (ad) => (country !== 'All Country')? ad.country.toLowerCase() === country.toLowerCase() : '' )
 
             : ( want && categoryParam && searchItem && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
@@ -38,17 +38,37 @@ class SearchResults extends React.Component {
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
             .filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
 
+            : ( want && searchItem && ads ) ?
+            ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
+            .filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
+
+            : ( want && country && ads ) ?
+            ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
+            .filter( (ad) => (country !== 'All Country')? ad.country.toLowerCase() === country.toLowerCase() : '' )
+
             : ( want && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
 
+            : ( categoryParam && searchItem && ads ) ?
+            ads.filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            .filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
+
+            : ( categoryParam && country && ads ) ?
+            ads.filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            .filter( (ad) => (country !== 'All Country')? ad.country.toLowerCase() === country.toLowerCase() : '' )
+
             : ( categoryParam && ads ) ?
             ads.filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+
+            : ( searchItem && country && ads ) ?
+            ads.filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
+            .filter( (ad) => (country !== 'All Country')? ad.country.toLowerCase() === country.toLowerCase() : '' )
 
             : ( searchItem && ads ) ?
             ads.filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
 
             : ( country && ads ) ? 
-            ads.filter( (ad) => (country)? ad.country.toLowerCase() === country.toLowerCase() : '' )
+            ads.filter( (ad) => (country !== 'All Country')? ad.country.toLowerCase() === country.toLowerCase() : '' )
             
             : (ads) ?
             ads

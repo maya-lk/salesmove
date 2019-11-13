@@ -22,3 +22,8 @@ export const selectEditAd = editAdUrlParams =>
         [selectUser],
         user => user.myAds.filter( ad => ad.ID === editAdUrlParams )
 );
+
+export const selectPaymentsDetails = createSelector(
+    [selectUser],
+    (user) => user.payments
+);

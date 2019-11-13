@@ -37,7 +37,6 @@ const Sidebar = ({ ads , productCount , serviceCount , investmentCount , want , 
             : investmentCount
     return(
     <div className="sidebarWrap">
-        {searchItem}
         <h3>Categories</h3>
         <div className="list-group">
             {

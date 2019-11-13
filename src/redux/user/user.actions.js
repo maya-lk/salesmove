@@ -34,3 +34,8 @@ export const setUserProfileDetails = userProfile => ({
     type : userActionTypes.SET_USER_PROFILE_DETAILS,
     payload : userProfile
 });
+
+export const setPaymentsDetails = payments => ({
+    type : userActionTypes.SET_PAYMENTS_DETAILS,
+    payload : payments
+});

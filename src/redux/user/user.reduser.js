@@ -6,7 +6,8 @@ const INITIAL_STATE = {
     isLoading: false,
     redirectURL: "/",
     myAds: null,
-    userProfile : null
+    userProfile : null,
+    payments: null
 }
 
 const userReducer = ( state = INITIAL_STATE , action ) => {
@@ -45,6 +46,11 @@ const userReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 userProfile : action.payload
+            }
+        case userActionTypes.SET_PAYMENTS_DETAILS:
+            return{
+                ...state,
+                payments : action.payload
             }
         default:
             return state

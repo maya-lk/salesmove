@@ -16,34 +16,23 @@ import './search.styles.scss';
 import './react-select.css';
 import 'react-virtualized-select/styles.css';
 
-function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
-  
-    return (
-        <div
-            key={key}
-            onClick={() => selectValue(option)}
-            onMouseEnter={() => focusOption(option)}
-            style={{ padding : '0.5rem' , cursor : 'pointer' }}
-        >   
-            
-            <label>
-                {
-                    (option.flagPath)?
-                    (<img
-                        className="countryIcon"
-                        src={option.flagPath}
-                        style={{ width : '30px' , marginRight : '10px' }}
-                        alt={option.value}
-                    />)
-                    : ''
-                } 
-                {option.value}
-            </label>
-        </div>
-    )
-}
-
 class SearchForm extends React.Component {
+    
+    constructor(){
+        super();
+        this.state = {
+            multiValue: [],
+        }
+        this.handleMultiChange = this.handleMultiChange.bind(this);
+    }
+
+    handleMultiChange(option) {
+        this.setState(state => {
+          return {
+            multiValue: option
+          };
+        });
+    }
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -52,8 +41,18 @@ class SearchForm extends React.Component {
     }
 
     render(){
-        const { countries , want , category , searchItem , country } = this.props;
-        const { setWantParam , setCategoryParam , setSearchItemParam , setCountryParam } = this.props;
+        const { 
+            countries , 
+            want , 
+            category , 
+            searchItem , 
+            country , 
+            setWantParam , 
+            setCategoryParam , 
+            setSearchItemParam , 
+            setCountryParam 
+        } = this.props;
+
         return(
             <form className="searchForm" onSubmit={this.handleSubmit}>
                 <div className="labelWrap">I/We</div>
@@ -109,11 +108,11 @@ class SearchForm extends React.Component {
                     </div>
                     <Select
                         labelKey='value'
-                        onChange={(country) => (country) ? setCountryParam(country.value) : setCountryParam('')}
+                        onChange={(country) => (country && country.value !== 'All Country') ? setCountryParam(country.value) : setCountryParam('')}
                         optionRenderer={CountryOptionRenderer}
                         options={countries}
                         value={country}
-                        valueKey='value'
+                        //valueKey='value'
                         name="country"
                         placeholder="From"
                     />
@@ -127,6 +126,33 @@ class SearchForm extends React.Component {
 
 }
 
+function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
+  
+    return (
+        <div
+            key={key}
+            onClick={() => selectValue(option)}
+            onMouseEnter={() => focusOption(option)}
+            style={{ padding : '0.5rem' , cursor : 'pointer' }}
+        >   
+            
+            <label>
+                {
+                    (option.flagPath)?
+                    (<img
+                        className="countryIcon"
+                        src={option.flagPath}
+                        style={{ width : '30px' , marginRight : '10px' }}
+                        alt={option.value}
+                    />)
+                    : ''
+                } 
+                {option.value}
+            </label>
+        </div>
+    )
+}
+
 const mapStateToProps = createStructuredSelector({
     countries : selectCountyObj,
     want : selectWantParam,
@@ -134,7 +160,6 @@ const mapStateToProps = createStructuredSelector({
     searchItem : selectSearchItemParam,
     country : selectCountryParam,
 });
-
 
 const mapDispatchToProps = dispatch => ({
     setWantParam : (want) => dispatch(setWantParam(want)),

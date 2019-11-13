@@ -1,16 +1,16 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser , faBookReader } from '@fortawesome/free-solid-svg-icons';
+import { faUser , faBookReader , faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import API from '../../lib/api';
 
-import { setMyAds , setUserProfileDetails } from '../../redux/user/user.actions';
+import { setMyAds , setUserProfileDetails , setPaymentsDetails } from '../../redux/user/user.actions';
 
 import './account-sidebar.styles.scss';
 
-const AccountSidebar = ({ setMyAds , setUserProfileDetails }) => {
+const AccountSidebar = ({ setMyAds , setUserProfileDetails , setPaymentsDetails }) => {
 
     const handleMyAds = () => {
         const userID = (localStorage.getItem("userID")) ? localStorage.getItem("userID") : '';
@@ -31,6 +31,16 @@ const AccountSidebar = ({ setMyAds , setUserProfileDetails }) => {
             });
         }
     }
+
+    const handlePayments = () => {
+        const userID = (localStorage.getItem("userID"))? localStorage.getItem("userID") : '';
+        if( userID ){
+            API.get(`payments?userid=${userID}`)
+            .then(function(response){
+                setPaymentsDetails(response.data);
+            });
+        }
+    }
     
     return(
         <div className="accountSidebar">
@@ -42,6 +52,9 @@ const AccountSidebar = ({ setMyAds , setUserProfileDetails }) => {
                 <Link to="/account/my-ads" className="list-group-item list-group-item-action" onClick={handleMyAds}>
                     <span className="icon"><FontAwesomeIcon icon={faBookReader} /></span>My Ads
                 </Link>
+                <Link to="/account/payments" className="list-group-item list-group-item-action" onClick={handlePayments}>
+                    <span className="icon"><FontAwesomeIcon icon={faMoneyBillAlt} /></span>Payments
+                </Link>
             </div>
         </div>
     )
@@ -50,6 +63,7 @@ const AccountSidebar = ({ setMyAds , setUserProfileDetails }) => {
 const mapDispatchToProps = dispatch => ({
     setMyAds : (myAds) => dispatch(setMyAds(myAds)),
     setUserProfileDetails : (userProfile) => dispatch(setUserProfileDetails(userProfile)),
+    setPaymentsDetails : (payments) => dispatch(setPaymentsDetails(payments))
 })
 
 export default connect(null,mapDispatchToProps)(AccountSidebar);

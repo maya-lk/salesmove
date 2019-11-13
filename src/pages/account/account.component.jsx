@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import AccountSidebar from '../../components/account-sidebar/account-sidebar.component';
 import Profile from '../../components/profile/profile.component';
 import MyAds from '../../components/my-ads/my-ads.component';
+import Payment from '../../components/payment/payment.component';
 
 import './account.styles.scss';
 
@@ -17,6 +18,8 @@ const AccountPage = ({ match }) => (
                 <Route path="/account/profile" component={Profile} />
                 : ( match.params.accId && match.params.accId === 'my-ads' )?
                 <Route path="/account/my-ads" component={MyAds} />
+                : ( match.params.accId && match.params.accId === 'payments' )?
+                <Route path="/account/payments" component={Payment} />
                 : ''
             }             
         </div>
