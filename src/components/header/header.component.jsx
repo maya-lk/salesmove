@@ -12,6 +12,7 @@ import API , { accountAPI } from '../../lib/api';
 
 import SignIn from '../sign-in/sign-in.component';
 import SignUp from '../sign-up/sign-up.component';
+import FotgotPassword from '../forgot-password/forgot-password.component';
 
 import { selectSiteLogo , selectSocialMedia } from '../../redux/common/common.selectors';
 import { toggleSigninHidden , toggleSignupHidden } from '../../redux/common/common.actions';
@@ -119,6 +120,10 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                         {
                             (userDetails)?
                             '' : <SignUp />
+                        }
+                        {
+                            (userDetails)?
+                            '' : <FotgotPassword />
                         }
                         {
                             (socialMedia)?

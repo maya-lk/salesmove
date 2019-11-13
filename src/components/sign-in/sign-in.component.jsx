@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 import API , { accountAPI } from '../../lib/api';
 
 import { selectSigninModalHidden } from '../../redux/common/common.selectors';
-import { toggleSigninHidden , toggleSignupHidden } from '../../redux/common/common.actions';
+import { toggleSigninHidden , toggleSignupHidden , toggleForgotPasswordHidden } from '../../redux/common/common.actions';
 import { setUser , setUserError , setMyAds } from '../../redux/user/user.actions';
 
 import './sign-in.styles.scss';
@@ -68,6 +68,12 @@ class SignIn extends React.Component {
         toggleSignupHidden();
     }
 
+    handleForgotPassword = () => {
+        const { toggleSigninHidden , toggleForgotPasswordHidden } = this.props;
+        toggleSigninHidden();
+        toggleForgotPasswordHidden();
+    }
+
     render(){
         const { error } = this.state;
         return(
@@ -117,7 +123,8 @@ class SignIn extends React.Component {
                         <div className="buttons">
                             <input type="submit" value="Sign In" className="btn submitBtn" />
                         </div>
-                        <div className="linkUrl" onClick={this.handleRegister}>Don't you have an Account?</div>                 
+                        <div className="linkUrl" onClick={this.handleRegister}>Don't you have an Account?</div>
+                        <div className="linkUrl" onClick={this.handleForgotPassword}>Forgot Password</div>                
                     </form>
                 </Modal.Body>
             </Modal>
@@ -131,6 +138,7 @@ const mapDispatchToProps = dispatch => ({
     setUser: (user) => dispatch(setUser(user)),
     setUserError: (error) => dispatch(setUserError(error)),
     setMyAds : (myAds) => dispatch(setMyAds(myAds)),
+    toggleForgotPasswordHidden : () => dispatch(toggleForgotPasswordHidden()),
 })
 
 const mapStateToProps = createStructuredSelector({

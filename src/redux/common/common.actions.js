@@ -51,3 +51,7 @@ export const setFooterAbout = footerAbout => ({
 export const setMainLoading = () => ({
     type : commonActionTypes.SET_MAIN_LOADING
 });
+
+export const toggleForgotPasswordHidden = () => ({
+    type : commonActionTypes.SET_FORGOT_PASSWORD_MODAL_TOGGLE
+});

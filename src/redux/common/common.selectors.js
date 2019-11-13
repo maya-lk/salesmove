@@ -61,3 +61,8 @@ export const selectMainLoading = createSelector(
     [selectCommonAPI],
     (commonParams) => commonParams.mainLoading
 );
+
+export const selectForgotPasswordModalHidden = createSelector(
+    [selectCommonAPI],
+    (commonParams) => commonParams.forgotPasswordModal
+);

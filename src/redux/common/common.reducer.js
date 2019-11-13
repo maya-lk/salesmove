@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     investmentCategory : null,
     footerAbout: null,
     mainLoading: true,
+    forgotPasswordModal: false,
 }
 
 const commonReducer = ( state = INITIAL_STATE , action ) => {
@@ -70,6 +71,11 @@ const commonReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 mainLoading : !state.mainLoading
+            }
+        case commonActionTypes.SET_FORGOT_PASSWORD_MODAL_TOGGLE:
+            return{
+                ...state,
+                forgotPasswordModal : !state.forgotPasswordModal
             }
         default:
             return state;
