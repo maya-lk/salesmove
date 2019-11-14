@@ -11,12 +11,7 @@ import API from '../../lib/api';
 import ImagePreview from '../../components/image-preview/image-preview.component';
 import LoadingScreen from '../../components/loading/loading.component';
 
-import { 
-    selectProductCategory , 
-    selectServiceCategory , 
-    selectInvestmentCategory , 
-    selectCountyObj 
-} from '../../redux/common/common.selectors';
+import { selectServiceCategory , selectCountyObj } from '../../redux/common/common.selectors';
 import { selectAdPostingLoading } from '../../redux/advertisements/advertisements.selectors';
 import { selectUserDetails } from '../../redux/user/user.selectors';
 
@@ -24,33 +19,6 @@ import { setAdPostingLoading } from '../../redux/advertisements/advertisements.a
 
 import './post-ad.styles.scss';
 import 'react-day-picker/lib/style.css';
-
-function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
-  
-    return (
-        <div
-            key={key}
-            onClick={() => selectValue(option)}
-            onMouseEnter={() => focusOption(option)}
-            style={{ padding : '0.5rem' , cursor : 'pointer' }}
-        >   
-            
-            <label>
-                {
-                    (option.flagPath)?
-                    (<img
-                        className="countryIcon"
-                        src={option.flagPath}
-                        style={{ width : '30px' , marginRight : '10px' }}
-                        alt={option.value}
-                    />)
-                    : ''
-                } 
-                {option.value}
-            </label>
-        </div>
-    )
-}
 
 class PostAdComponent extends React.Component {
 
@@ -60,7 +28,6 @@ class PostAdComponent extends React.Component {
         this.state = {
             type : '',
             title: '',
-            category : '',
             terms : [],
             country : '',
             specifications : '',
@@ -112,30 +79,15 @@ class PostAdComponent extends React.Component {
         this.setState({ terms: newArr }, () => console.log('updated state', newArr))
     };
 
-    renderTerms(params){
-        const { productTerms , serviceTerms , invenstmentTerms } = this.props;
-        switch (params) {
-            case 'products':
-                return (productTerms)? productTerms.map(term => 
-                <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
-                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>) : ''
-            case 'services':
-                return (serviceTerms)? serviceTerms.map(term => 
-                <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
-                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>) : ''
-            case 'investments':
-                return (invenstmentTerms)? invenstmentTerms.map(term => 
-                <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
-                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>) : ''
-            default:
-                break;
-        }
+    renderTerms(){
+        const { serviceTerms } = this.props;
+        
+        return (serviceTerms)? serviceTerms.map(term => 
+            <FormCheck key={term.ID} className="col-md-6 col-12">
+                <FormCheck.Input type="checkbox" name="term" onChange={this.toggleCheckbox} id={term.ID} value={term.ID} />
+                <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
+            </FormCheck>) : ''
+
     }
 
     handleDayChange(day) {
@@ -149,7 +101,6 @@ class PostAdComponent extends React.Component {
         const { 
             type, 
             title, 
-            category, 
             terms , 
             country, 
             specifications, 
@@ -166,7 +117,6 @@ class PostAdComponent extends React.Component {
         const formData = new FormData();
         formData.append('type',type);
         formData.append('title',title);
-        formData.append('category',category);
         formData.append('terms',terms);
         formData.append('country',country.value);
         formData.append('countryFlag',country.flagPath);
@@ -194,7 +144,6 @@ class PostAdComponent extends React.Component {
                 message : response.data , 
                 type : '',
                 title: '',
-                category : '',
                 terms : [],
                 country : '',
                 specifications : '',
@@ -214,7 +163,6 @@ class PostAdComponent extends React.Component {
     }
 
     render(){
-        const categories = [ 'products' , 'services' , 'investments' ];
         const { countries , isLoading } = this.props;
         const { imagesPreviewUrls , message } = this.state;
         return(
@@ -238,19 +186,19 @@ class PostAdComponent extends React.Component {
                         <div className="form-group">
                             <Form.Check
                                 type="radio"
-                                label="Want"
+                                label="Buy"
                                 id="want"
                                 name="type"
                                 onChange={this.handleChange}
-                                value="Want"
+                                value="Buy"
                             />
                             <Form.Check
                                 type="radio"
-                                label="Offer"
+                                label="Sell"
                                 id="offer"
                                 name="type"
                                 onChange={this.handleChange}
-                                value="Offer"
+                                value="Sell"
                             />
                         </div>
 
@@ -267,25 +215,8 @@ class PostAdComponent extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="category">Category</label>
-                            <select
-                                id="category"
-                                name="category"
-                                className="form-control"
-                                onChange={this.handleChange}
-                                required
-                                value={this.state.category}
-                            >
-                                <option value="">Select Category</option>
-                                {
-                                    categories.map( category => <option key={category} >{category}</option> )
-                                }
-                            </select>
-                        </div>
-
-                        <div className="form-group">
                             <label>Name of  Product or sevices</label>
-                            <div className="d-flex flex-wrap">{this.renderTerms(this.state.category)}</div>
+                            <div className="d-flex flex-wrap">{this.renderTerms()}</div>
                         </div>
 
                         <div className="form-group">
@@ -390,10 +321,35 @@ class PostAdComponent extends React.Component {
 
 }
 
+function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
+  
+    return (
+        <div
+            key={key}
+            onClick={() => selectValue(option)}
+            onMouseEnter={() => focusOption(option)}
+            style={{ padding : '0.5rem' , cursor : 'pointer' }}
+        >   
+            
+            <label>
+                {
+                    (option.flagPath)?
+                    (<img
+                        className="countryIcon"
+                        src={option.flagPath}
+                        style={{ width : '30px' , marginRight : '10px' }}
+                        alt={option.value}
+                    />)
+                    : ''
+                } 
+                {option.value}
+            </label>
+        </div>
+    )
+}
+
 const mapStateToProps = createStructuredSelector({
-    productTerms : selectProductCategory,
     serviceTerms : selectServiceCategory,
-    invenstmentTerms : selectInvestmentCategory,
     countries : selectCountyObj,
     isLoading : selectAdPostingLoading,
     userDetails: selectUserDetails

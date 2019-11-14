@@ -37,19 +37,9 @@ export const selectSignupModalHidden = createSelector(
     (commonParams) => commonParams.registerModal
 );
 
-export const selectProductCategory = createSelector(
-    [selectCommonAPI],
-    (commonParams) => commonParams.productCategory
-);
-
 export const selectServiceCategory = createSelector(
     [selectCommonAPI],
     (commonParams) => commonParams.serviceCategory
-);
-
-export const selectInvestmentCategory = createSelector(
-    [selectCommonAPI],
-    (commonParams) => commonParams.investmentCategory
 );
 
 export const selectFooterAbout = createSelector(

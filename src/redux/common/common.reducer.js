@@ -7,9 +7,7 @@ const INITIAL_STATE = {
     countries : null,
     loginModal: false,
     registerModal : false,
-    productCategory : null,
     serviceCategory : null,
-    investmentCategory : null,
     footerAbout: null,
     mainLoading: true,
     forgotPasswordModal: false,
@@ -47,20 +45,10 @@ const commonReducer = ( state = INITIAL_STATE , action ) => {
                 ...state,
                 registerModal : !state.registerModal
             }
-        case commonActionTypes.SET_PRODUCTS_CATEGORY:
-            return{
-                ...state,
-                productCategory : action.payload
-            }
         case commonActionTypes.SET_SERVICES_CATEGORY:
             return{
                 ...state,
                 serviceCategory : action.payload
-            }
-        case commonActionTypes.SET_INVESTMENTS_CATEGORY:
-            return{
-                ...state,
-                investmentCategory : action.payload
             }
         case commonActionTypes.SET_FOOTER_ABOUT:
             return{

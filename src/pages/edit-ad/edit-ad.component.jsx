@@ -10,12 +10,7 @@ import API from '../../lib/api';
 import ImagePreview from '../../components/image-preview/image-preview.component';
 import LoadingScreen from '../../components/loading/loading.component';
 
-import { 
-    selectProductCategory , 
-    selectServiceCategory , 
-    selectInvestmentCategory , 
-    selectCountyObj 
-} from '../../redux/common/common.selectors';
+import { selectServiceCategory , selectCountyObj } from '../../redux/common/common.selectors';
 import { selectAdPostingLoading } from '../../redux/advertisements/advertisements.selectors';
 import { selectUserDetails , selectEditAd } from '../../redux/user/user.selectors';
 
@@ -33,7 +28,6 @@ class EditAdvertisement extends React.Component {
             postID : this.props.editAd[0].ID,
             type : this.props.editAd[0].type,
             title: this.props.editAd[0].title,
-            category : this.props.editAd[0].category,
             terms : '',
             country : { value : this.props.editAd[0].country, countryFlag : this.props.editAd[0].country_flag },
             specifications : this.props.editAd[0].specifications,
@@ -94,64 +88,27 @@ class EditAdvertisement extends React.Component {
         this.setState({ terms: newArr })
     };
 
-    renderTerms(params){
-        const { productTerms , serviceTerms , invenstmentTerms , editAd } = this.props;
+    renderTerms(){
+        const { serviceTerms , editAd } = this.props;
         const { terms } = this.state;
         const termIDArr = [];
 
         editAd[0].terms.map( term => termIDArr.push(term.term_id) ); 
 
-        switch (params) {
-            case 'products':
-                return (productTerms)? productTerms.map(term => 
-                <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input 
-                        type="checkbox" 
-                        name="term" 
-                        onChange={this.toggleCheckbox} 
-                        id={term.ID} 
-                        value={term.ID} 
-                        defaultChecked={ 
-                            (termIDArr.includes(term.ID)) ? true : (terms.includes(term.ID)) ? true : false 
-                        } 
-                    />
-                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>) : ''
-            case 'services':
-                return (serviceTerms)? serviceTerms.map(term => 
-                <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input 
-                        type="checkbox" 
-                        name="term" 
-                        onChange={this.toggleCheckbox} 
-                        id={term.ID} 
-                        value={term.ID} 
-                        defaultChecked={ 
-                            (termIDArr.includes(term.ID)) ? true : (terms.includes(term.ID)) ? true : false  
-                        } 
-                    />
-                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>) : ''
-            case 'investments':
-                return (invenstmentTerms)? invenstmentTerms.map(term => 
-                <FormCheck key={term.ID} className="col-md-6 col-12">
-                    <FormCheck.Input 
-                        type="checkbox" 
-                        name="term" 
-                        onChange={this.toggleCheckbox} 
-                        id={term.ID} 
-                        value={term.ID} 
-                        defaultChecked={ 
-                            (termIDArr.includes(term.ID)) ? true : (terms.includes(term.ID)) ? true : false  
-                        } 
-                    />
-                    <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
-                </FormCheck>) : ''
-            default:
-                break;
-        }
-
-        //
+        return (serviceTerms)? serviceTerms.map(term => 
+            <FormCheck key={term.ID} className="col-md-6 col-12">
+                <FormCheck.Input 
+                    type="checkbox" 
+                    name="term" 
+                    onChange={this.toggleCheckbox} 
+                    id={term.ID} 
+                    value={term.ID} 
+                    defaultChecked={ 
+                        (termIDArr.includes(term.ID)) ? true : (terms.includes(term.ID)) ? true : false  
+                    } 
+                />
+                <FormCheck.Label htmlFor={term.ID}>{term.name}</FormCheck.Label>
+            </FormCheck>) : ''
     }
 
     handleDayChange(day) {
@@ -166,7 +123,6 @@ class EditAdvertisement extends React.Component {
             postID,
             type, 
             title, 
-            category, 
             terms , 
             country, 
             specifications, 
@@ -185,7 +141,6 @@ class EditAdvertisement extends React.Component {
         formData.append('postID',postID);
         formData.append('type',type);
         formData.append('title',title);
-        formData.append('category',category);
         formData.append('terms',terms);
         formData.append('country',country.value);
         formData.append('countryFlag',country.flagPath);
@@ -219,7 +174,6 @@ class EditAdvertisement extends React.Component {
     }
 
     render(){
-        const categories = [ 'products' , 'services' , 'investments' ];
         const { countries , isLoading } = this.props;
         const { imagesPreviewUrls , message , type } = this.state;
 
@@ -244,21 +198,21 @@ class EditAdvertisement extends React.Component {
                         <div className="form-group">
                             <Form.Check
                                 type="radio"
-                                label="Want"
+                                label="Buy"
                                 id="want"
                                 name="type"
                                 onChange={this.handleChange}
-                                value="Want"
-                                checked={(type === 'Want') ? true : false}
+                                value="Buy"
+                                checked={(type === 'Buy') ? true : false}
                             />
                             <Form.Check
                                 type="radio"
-                                label="Offer"
+                                label="Sell"
                                 id="offer"
                                 name="type"
                                 onChange={this.handleChange}
-                                value="Offer"
-                                checked={(type === 'Offer') ? true : false}
+                                value="Sell"
+                                checked={(type === 'Sell') ? true : false}
                             />
                         </div>
 
@@ -275,25 +229,8 @@ class EditAdvertisement extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="category">Category</label>
-                            <select
-                                id="category"
-                                name="category"
-                                className="form-control"
-                                onChange={this.handleChange}
-                                required
-                                value={this.state.category}
-                            >
-                                <option value="">Select Category</option>
-                                {
-                                    categories.map( category => <option key={category} >{category}</option> )
-                                }
-                            </select>
-                        </div>
-
-                        <div className="form-group">
                             <label>Name of  Product or sevices</label>
-                            <div className="d-flex flex-wrap">{this.renderTerms(this.state.category)}</div>
+                            <div className="d-flex flex-wrap">{this.renderTerms()}</div>
                         </div>
 
                         <div className="form-group">
@@ -401,9 +338,7 @@ class EditAdvertisement extends React.Component {
 
 const mapStateToProps = (state , ownProps) => ({
     editAd : selectEditAd(parseInt(ownProps.match.params.editId))(state),
-    productTerms : selectProductCategory(state),
     serviceTerms : selectServiceCategory(state),
-    invenstmentTerms : selectInvestmentCategory(state),
     countries : selectCountyObj(state),
     isLoading : selectAdPostingLoading(state),
     userDetails: selectUserDetails(state)

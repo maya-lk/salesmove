@@ -57,7 +57,7 @@ class ContactUs extends React.Component {
         const { error , success } = this.state;
         return(
             <div className="contactUsWrap">
-                <h3>Send a message</h3>
+                <h3>Partner With Us</h3>
                 <form onSubmit={this.handalSubmit}>
 
                     {

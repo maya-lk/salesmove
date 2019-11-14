@@ -94,6 +94,21 @@
 
         &.category {
             width: 20%;
+
+            #category{
+                background-color: transparent !important;
+                border-radius: 0;
+                border: none !important;
+                box-shadow: 0 0 0 !important;
+                height: 79px;
+                color: #3d3d3f;
+                font-weight: 600;
+                font-size: 1.2rem;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                appearance: none;
+                cursor: pointer;
+            }
         }
 
         .Select {

@@ -23,20 +23,23 @@ class SearchResults extends React.Component {
     render(){
         const { ads , want , categoryParam , searchItem , country , toggleItemModal , toggleInquiryModal } = this.props;
 
+        // const adTerms = ads.map( ad => ad.terms );
+        // const termNames = adTerms.map( term => term.name );
+
         const filteredOptions = ( want && categoryParam && searchItem && country && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
-            .filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
             .filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
             .filter( (ad) => (country !== 'All Country')? ad.country.toLowerCase() === country.toLowerCase() : '' )
 
             : ( want && categoryParam && searchItem && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
-            .filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
             .filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
 
             : ( want && categoryParam && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
-            .filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
 
             : ( want && searchItem && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
@@ -50,15 +53,18 @@ class SearchResults extends React.Component {
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
 
             : ( categoryParam && searchItem && ads ) ?
-            ads.filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            ads
+            .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
             .filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
 
             : ( categoryParam && country && ads ) ?
-            ads.filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            ads
+            .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
             .filter( (ad) => (country !== 'All Country')? ad.country.toLowerCase() === country.toLowerCase() : '' )
 
             : ( categoryParam && ads ) ?
-            ads.filter( (ad) => (categoryParam)? ad.category.toLowerCase() === categoryParam.toLowerCase() : '' )
+            ads
+            .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
 
             : ( searchItem && country && ads ) ?
             ads.filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
@@ -75,7 +81,7 @@ class SearchResults extends React.Component {
             : []
         
         return(
-            <div className="searchResultsWrap">        
+            <div className="searchResultsWrap">      
                 <div className="countBar">
                 Showing <span>{filteredOptions.length}</span> results
                     {

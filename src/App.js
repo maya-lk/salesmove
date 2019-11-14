@@ -10,10 +10,8 @@ import {
   setSiteLogo , 
   setSocialMedia , 
   setMainBanner , 
-  setCountries , 
-  setProductCategory , 
+  setCountries ,  
   setServiceCategory , 
-  setInvestmentCategory,
   setFooterAbout,
   setMainLoading
 } from './redux/common/common.actions';
@@ -45,9 +43,7 @@ class App extends React.Component {
       setMainBanner , 
       setCountries , 
       validateToken , 
-      setProductCategory , 
       setServiceCategory , 
-      setInvestmentCategory,
       setAdvertisements,
       setTestimonialBanner,
       setTestimonialItems,
@@ -68,9 +64,7 @@ class App extends React.Component {
       setMainBanner(response.data.mainBanner);
       setCountries(response.data.countries);
 
-      setProductCategory(response.data.productCategory);
       setServiceCategory(response.data.serviceCategory);
-      setInvestmentCategory(response.data.investmentCategory);
 
       setFooterAbout(response.data.footerAbout)
     });
@@ -177,9 +171,7 @@ const mapDispatchToProps = dispatch => ({
   setMainBanner : (mainBanner) => dispatch(setMainBanner(mainBanner)),
   setCountries : (countries) => dispatch(setCountries(countries)),
   validateToken: (user) => dispatch(validateToken(user)),
-  setProductCategory: (productCategory) => dispatch(setProductCategory(productCategory)),
   setServiceCategory: (serviceCategory) => dispatch(setServiceCategory(serviceCategory)),
-  setInvestmentCategory: (investmentCategory) => dispatch(setInvestmentCategory(investmentCategory)),
   setAdvertisements: (ads) => dispatch(setAdvertisements(ads)),
   setTestimonialBanner: (testimonialBanner) => dispatch(setTestimonialBanner(testimonialBanner)),
   setTestimonialItems: (items) => dispatch(setTestimonialItems(items)),

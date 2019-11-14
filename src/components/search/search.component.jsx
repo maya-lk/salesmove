@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 import thIcon from '../../assets/images/th-icon.png';
 
-import { selectCountyObj } from '../../redux/common/common.selectors';
+import { selectCountyObj , selectServiceCategory } from '../../redux/common/common.selectors';
 import { setWantParam , setCategoryParam , setSearchItemParam , setCountryParam } from '../../redux/advertisements/advertisements.actions';
 import { selectWantParam , selectCategoryParam , selectSearchItemParam , selectCountryParam } from '../../redux/advertisements/advertisements.selectors';
 
@@ -50,7 +50,8 @@ class SearchForm extends React.Component {
             setWantParam , 
             setCategoryParam , 
             setSearchItemParam , 
-            setCountryParam 
+            setCountryParam,
+            serviceTerms
         } = this.props;
 
         return(
@@ -61,8 +62,8 @@ class SearchForm extends React.Component {
                         labelKey='value'
                         onChange={(want) => (want)? setWantParam(want.value) : setWantParam('')}
                         options={[
-                            { value: 'want' },
-                            { value: 'offer' }
+                            { value: 'Buy' },
+                            { value: 'Sell' }
                         ]}
                         value={want}
                         valueKey='value'
@@ -75,19 +76,20 @@ class SearchForm extends React.Component {
                             <img src={thIcon} alt="th icon"/>
                         </span>
                     </div>
-                    <Select
-                        labelKey='value'
-                        onChange={(category) => (category) ? setCategoryParam(category.value) : setCategoryParam('')}
-                        options={[
-                            { value: 'products' },
-                            { value: 'services' },
-                            { value: 'investments' }
-                        ]}
+                    <select 
+                        name="category" 
+                        id="category"
+                        onChange={(event) => setCategoryParam(event.target.value)}
+                        className="form-control"
                         value={category}
-                        valueKey='value'
-                        name="category"
-                        placeholder="Category"
-                    />
+                    >
+                        <option value="">Category</option>
+                        {
+                            (serviceTerms) ?
+                            (serviceTerms.map( serviceTerm => <option key={serviceTerm.ID} value={serviceTerm.name}>{serviceTerm.name}</option> ))
+                            : ''
+                        }
+                    </select>
                 </div>
                 <div className="form-group item">
                     <input 
@@ -159,6 +161,7 @@ const mapStateToProps = createStructuredSelector({
     category : selectCategoryParam,
     searchItem : selectSearchItemParam,
     country : selectCountryParam,
+    serviceTerms : selectServiceCategory,
 });
 
 const mapDispatchToProps = dispatch => ({
