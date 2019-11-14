@@ -58,6 +58,7 @@ class ContactUs extends React.Component {
         return(
             <div className="contactUsWrap">
                 <h3>Partner With Us</h3>
+                <p>If you  want to be a partner with saleseazy team fill below form (Freelance SalesEazy Country representatives, Product certification bodies, Export, and Import Service providers, Consultants, International Exhibition Organizers, and B2B services providers)</p>
                 <form onSubmit={this.handalSubmit}>
 
                     {
