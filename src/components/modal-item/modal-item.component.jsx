@@ -51,6 +51,10 @@ const ModalItem = ({ clickedItem , setClickedItem , setItemModalToggle , setInqu
                         <td>{clickedItem.quantity}</td>
                     </tr>
                     <tr>
+                        <th scope="row">Price per unit</th>
+                        <td>{clickedItem.price}</td>
+                    </tr>
+                    <tr>
                         <th scope="row">Shipping Terms</th>
                         <td>{clickedItem.shipping_terms}</td>
                     </tr>

@@ -2,11 +2,13 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import Select from 'react-virtualized-select';
 
 import API from '../../lib/api';
 
 import { setInquiryModalToggle } from '../../redux/advertisements/advertisements.actions';
 import { selectClickedItem , selectInquiryModalToggle } from '../../redux/advertisements/advertisements.selectors';
+import { selectCountyObj } from '../../redux/common/common.selectors';
 
 import './inquiry-modal.styles.scss';
 
@@ -22,6 +24,10 @@ class InquiryModal extends React.Component {
             email : '',
             contactNo : '',
             message : '',
+            quantity : '',
+            shippingTerms : '',
+            price: '',
+            country : '',
             errors: null,
             success: null
         }
@@ -35,7 +41,7 @@ class InquiryModal extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const { adTitle , adID , fname , email , contactNo , message } = this.state;
+        const { adTitle , adID , fname , email , contactNo , message , quantity , shippingTerms , price, country } = this.state;
 
         if( adTitle === '' || adID === '' || fname === '' || email === '' || contactNo === '' || message === '' ){
             this.setState({ errors : 'All fields Required.' });
@@ -47,6 +53,10 @@ class InquiryModal extends React.Component {
             formData.append('email',email);
             formData.append('contactNo',contactNo);
             formData.append('message',message);
+            formData.append('quantity',quantity);
+            formData.append('shippingTerms',shippingTerms);
+            formData.append('price',price);
+            formData.append('country',country);
         
             API.post("inquiry", formData ,{
                 headers: {
@@ -64,6 +74,10 @@ class InquiryModal extends React.Component {
                         email : '',
                         contactNo : '',
                         message : '',
+                        quantity : '',
+                        shippingTerms : '',
+                        price: '',
+                        country : '',
                     });
                 }else{
                     this.setState({ errors : response.data.message });
@@ -75,7 +89,7 @@ class InquiryModal extends React.Component {
     }
 
     render(){
-        const { toggleInquiryModal , setInquiryModalToggle } = this.props;
+        const { toggleInquiryModal , setInquiryModalToggle , countries } = this.props;
         const { adTitle , fname , email , contactNo , message , errors , success } = this.state;
         return(
             <Modal
@@ -108,6 +122,39 @@ class InquiryModal extends React.Component {
                                 value={adTitle}
                                 onChange={this.handleChange}
                                 required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                placeholder="Quantity"
+                                name="quantity"
+                                onChange={this.handleChange}
+                                value={this.state.quantity}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <input 
+                                type="text" 
+                                placeholder="Shipping Terms"
+                                className="form-control"
+                                name="shippingTerms"
+                                onChange={this.handleChange}
+                                value={this.state.shippingTerms}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <input 
+                                type="text" 
+                                placeholder="Price"
+                                className="form-control"
+                                name="price"
+                                onChange={this.handleChange}
+                                value={this.state.price}
                             />
                         </div>
 
@@ -148,6 +195,19 @@ class InquiryModal extends React.Component {
                         </div>
 
                         <div className="form-group">
+                            <Select
+                                labelKey='value'
+                                onChange={(country) => (country && country.value !== 'All Country') ? this.setState({ country : country.value }) : this.setState({ country : '' })}
+                                optionRenderer={CountryOptionRenderer}
+                                options={countries}
+                                value={this.state.country}
+                                valueKey='value'
+                                name="country"
+                                placeholder="Country"
+                            />
+                        </div>
+
+                        <div className="form-group">
                             <textarea 
                                 className="form-control"
                                 placeholder="Message"
@@ -171,7 +231,8 @@ class InquiryModal extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
     clickedItem : selectClickedItem,
-    toggleInquiryModal : selectInquiryModalToggle
+    toggleInquiryModal : selectInquiryModalToggle,
+    countries : selectCountyObj,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -179,3 +240,30 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps , mapDispatchToProps)(InquiryModal);
+
+function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
+  
+    return (
+        <div
+            key={key}
+            onClick={() => selectValue(option)}
+            onMouseEnter={() => focusOption(option)}
+            style={{ padding : '0.5rem' , cursor : 'pointer' }}
+        >   
+            
+            <label>
+                {
+                    (option.flagPath)?
+                    (<img
+                        className="countryIcon"
+                        src={option.flagPath}
+                        style={{ width : '30px' , marginRight : '10px' }}
+                        alt={option.value}
+                    />)
+                    : ''
+                } 
+                {option.value}
+            </label>
+        </div>
+    )
+}
