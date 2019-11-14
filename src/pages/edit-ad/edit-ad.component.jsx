@@ -32,6 +32,7 @@ class EditAdvertisement extends React.Component {
             country : { value : this.props.editAd[0].country, countryFlag : this.props.editAd[0].country_flag },
             specifications : this.props.editAd[0].specifications,
             quantity : this.props.editAd[0].quantity,
+            price : this.props.editAd[0].price,
             shippingTerms : this.props.editAd[0].shipping_terms,
             destinationPort : this.props.editAd[0].destination_port,
             otherSpecificRequrements : this.props.editAd[0].other_specific_requrements,
@@ -126,7 +127,8 @@ class EditAdvertisement extends React.Component {
             terms , 
             country, 
             specifications, 
-            quantity, 
+            quantity,
+            price,
             shippingTerms, 
             destinationPort, 
             otherSpecificRequrements,
@@ -146,6 +148,7 @@ class EditAdvertisement extends React.Component {
         formData.append('countryFlag',country.flagPath);
         formData.append('specifications',specifications);
         formData.append('quantity',quantity);
+        formData.append('price',price);
         formData.append('shippingTerms',shippingTerms);
         formData.append('destinationPort',destinationPort);
         formData.append('otherSpecificRequrements',otherSpecificRequrements);
@@ -265,6 +268,17 @@ class EditAdvertisement extends React.Component {
                                 name="quantity"
                                 onChange={this.handleChange}
                                 value={this.state.quantity}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Price per Unit</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                name="price"
+                                onChange={this.handleChange}
+                                value={this.state.price}
                             />
                         </div>
 

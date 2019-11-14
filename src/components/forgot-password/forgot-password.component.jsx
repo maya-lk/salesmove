@@ -17,8 +17,7 @@ class FotgotPassword extends React.Component {
         this.state = {
             email : '',
             error: null,
-            showPassword : false,
-            password : ''
+            success : null
         }
     }
 
@@ -26,7 +25,7 @@ class FotgotPassword extends React.Component {
         event.preventDefault();
         const { email } = this.state;
 
-        this.setState({ error : null });
+        this.setState({ error : null , success : null });
 
         const formData = new FormData();
         formData.append('username',email);
@@ -39,7 +38,7 @@ class FotgotPassword extends React.Component {
         .then(response => {
             console.log('response' , response.data);
             if( response.data.status ){
-                this.setState({ password : response.data.message , showPassword : true });
+                this.setState({ success : response.data.message });
             }else{
                 this.setState({ error : response.data.message });
             }
@@ -62,7 +61,7 @@ class FotgotPassword extends React.Component {
     }
 
     render(){
-        const { error , password , showPassword } = this.state;
+        const { error , success } = this.state;
         return(
             <Modal
                 size="md"
@@ -79,12 +78,11 @@ class FotgotPassword extends React.Component {
                     {
                         (error)?
                         (<div className="alert alert-danger" role="alert" dangerouslySetInnerHTML={{__html: error}} />)
+                        : (success) ?
+                        (<div className="alert alert-success" role="alert" dangerouslySetInnerHTML={{__html: success}} />)
                         : ''
                     }
-                    <div className="showPassword" style={{ display : `${ showPassword ? 'block' : 'none' }` }}>
-                        Your Password : {password}
-                    </div>
-                    <form onSubmit={this.handleSubmit} style={{ display : `${ showPassword ? 'none' : 'block' }` }} >
+                    <form onSubmit={this.handleSubmit} >
 
                         <div className="form-group">
                             <input 

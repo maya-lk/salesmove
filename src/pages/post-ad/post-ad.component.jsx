@@ -32,6 +32,7 @@ class PostAdComponent extends React.Component {
             country : '',
             specifications : '',
             quantity : '',
+            price: '',
             shippingTerms : '',
             destinationPort : '',
             otherSpecificRequrements : '',
@@ -104,7 +105,8 @@ class PostAdComponent extends React.Component {
             terms , 
             country, 
             specifications, 
-            quantity, 
+            quantity,
+            price,
             shippingTerms, 
             destinationPort, 
             otherSpecificRequrements,
@@ -122,6 +124,7 @@ class PostAdComponent extends React.Component {
         formData.append('countryFlag',country.flagPath);
         formData.append('specifications',specifications);
         formData.append('quantity',quantity);
+        formData.append('price',price);
         formData.append('shippingTerms',shippingTerms);
         formData.append('destinationPort',destinationPort);
         formData.append('otherSpecificRequrements',otherSpecificRequrements);
@@ -148,6 +151,7 @@ class PostAdComponent extends React.Component {
                 country : '',
                 specifications : '',
                 quantity : '',
+                price : '',
                 shippingTerms : '',
                 destinationPort : '',
                 otherSpecificRequrements : '',
@@ -251,6 +255,17 @@ class PostAdComponent extends React.Component {
                                 name="quantity"
                                 onChange={this.handleChange}
                                 value={this.state.quantity}
+                            />
+                        </div>
+                        
+                        <div className="form-group">
+                            <label>Price per Unit</label>
+                            <input 
+                                type="text" 
+                                className="form-control"
+                                name="price"
+                                onChange={this.handleChange}
+                                value={this.state.price}
                             />
                         </div>
 
