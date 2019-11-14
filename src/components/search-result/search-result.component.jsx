@@ -23,9 +23,6 @@ class SearchResults extends React.Component {
     render(){
         const { ads , want , categoryParam , searchItem , country , toggleItemModal , toggleInquiryModal } = this.props;
 
-        // const adTerms = ads.map( ad => ad.terms );
-        // const termNames = adTerms.map( term => term.name );
-
         const filteredOptions = ( want && categoryParam && searchItem && country && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
             .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
