@@ -15,7 +15,9 @@ const MyAds = ({ myAds }) => (
         <div className="myAdsWrap">
             {
                 (myAds)?
-                myAds.map( ad => <MyAdItem key={ad.ID} item={ad} /> )
+                myAds
+                .filter( ad => ad.status === 'publish' )
+                .map( ad => <MyAdItem key={ad.ID} item={ad} /> )
                 : <SearchItemLoader/>
             }
         </div>
