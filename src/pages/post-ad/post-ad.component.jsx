@@ -227,7 +227,7 @@ class PostAdComponent extends React.Component {
                             <label>Looking For Supplers from</label>
                             <Select
                                 labelKey='value'
-                                onChange={(country) => this.setState({ country })}
+                                onChange={(country) => (country && country.value !== 'All Country') ? this.setState({ country }) : this.setState({ country : '' })}
                                 optionRenderer={CountryOptionRenderer}
                                 options={countries}
                                 value={this.state.country}

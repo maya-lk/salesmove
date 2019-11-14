@@ -15,20 +15,25 @@ import { setWantParam , setCategoryParam } from '../../redux/advertisements/adve
 
 import './sidebar.styles.scss';
 
-const Sidebar = ({ categoryParam , setWantParam , setCategoryParam , serviceTerms }) => {
+const Sidebar = ({ ads , category , setWantParam , setCategoryParam , serviceTerms }) => {
+
     return(
         <div className="sidebarWrap">
             <h3>Categories</h3>
             <div className="list-group">
                 {
-                    (categoryParam)?
-                    <span className="list-group-item list-group-item-action" onClick={ () => setCategoryParam('') }>All</span>
+                    (category)?
+                    <span className="list-group-item list-group-item-action" onClick={ () => setCategoryParam('') }>All <span className="count">({ads.length})</span></span>
                     : ''
                 }
 
                 {
                     (serviceTerms) ?
-                    (serviceTerms.map( term => <span key={term.ID} className="list-group-item list-group-item-action" onClick={ () => setCategoryParam(term.name) }>{term.name}</span> ))
+                    (serviceTerms.map( term => 
+                    <span key={term.ID} className="list-group-item list-group-item-action" onClick={ () => setCategoryParam(term.name) }>
+                        {term.name}
+                        <span className="count"> ({ads.filter( (ad) => ad.terms.find(serviceTerm => serviceTerm.name === term.name) ).length})</span>
+                    </span> ))
                     : ''
                 }
                 <div className="list-group-item list-group-item-action btnWrap">
