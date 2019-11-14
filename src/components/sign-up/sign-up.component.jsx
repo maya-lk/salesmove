@@ -11,33 +11,6 @@ import { toggleSignupHidden } from '../../redux/common/common.actions';
 
 import './sign-up.styles.scss';
 
-function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
-  
-    return (
-        <div
-            key={key}
-            onClick={() => selectValue(option)}
-            onMouseEnter={() => focusOption(option)}
-            style={{ padding : '0.5rem' , cursor : 'pointer' }}
-        >   
-            
-            <label>
-                {
-                    (option.flagPath)?
-                    (<img
-                        className="countryIcon"
-                        src={option.flagPath}
-                        style={{ width : '30px' , marginRight : '10px' }}
-                        alt={option.value}
-                    />)
-                    : ''
-                } 
-                {option.value}
-            </label>
-        </div>
-    )
-}
-
 class SignUp extends React.Component {
     constructor(){
         super();
@@ -58,7 +31,7 @@ class SignUp extends React.Component {
         event.preventDefault();
         const { business , fname , email , password , contactNo , website , country } = this.state;
 
-        if( business === '' || fname === '' || email === '' || password === '' || contactNo === '' || website === '' || country === '' ){
+        if( business === '' || fname === '' || email === '' || password === '' || contactNo === '' || country === '' ){
             this.setState({ errors : 'All fields Required.' });
         }else if( password.length < 6 ){
             this.setState({ errors : 'Password is too short.' });
@@ -187,7 +160,6 @@ class SignUp extends React.Component {
                                 name="website"
                                 onChange={this.handleChange}
                                 value={this.state.website}
-                                required
                             />
                         </div>
 
@@ -223,3 +195,30 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export default connect(mapStateToProps , mapDispatchToProps)(SignUp);
+
+function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
+  
+    return (
+        <div
+            key={key}
+            onClick={() => selectValue(option)}
+            onMouseEnter={() => focusOption(option)}
+            style={{ padding : '0.5rem' , cursor : 'pointer' }}
+        >   
+            
+            <label>
+                {
+                    (option.flagPath)?
+                    (<img
+                        className="countryIcon"
+                        src={option.flagPath}
+                        style={{ width : '30px' , marginRight : '10px' }}
+                        alt={option.value}
+                    />)
+                    : ''
+                } 
+                {option.value}
+            </label>
+        </div>
+    )
+}
