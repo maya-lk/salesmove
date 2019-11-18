@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
   
     return (

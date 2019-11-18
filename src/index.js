@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import registerServiceWorker from './registerServiceWorker';
 
 import { store , persistor } from './redux/store';
 
@@ -18,3 +19,4 @@ ReactDOM.render(
         </BrowserRouter>
     </Provider>
 , document.getElementById('root'));
+registerServiceWorker();
