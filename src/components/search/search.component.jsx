@@ -12,6 +12,8 @@ import { selectCountyObj , selectServiceCategory } from '../../redux/common/comm
 import { setWantParam , setCategoryParam , setSearchItemParam , setCountryParam } from '../../redux/advertisements/advertisements.actions';
 import { selectWantParam , selectCategoryParam , selectSearchItemParam , selectCountryParam } from '../../redux/advertisements/advertisements.selectors';
 
+import { CountryOptionRenderer } from '../../lib/utils';
+
 import './search.styles.scss';
 import './react-select.css';
 import 'react-virtualized-select/styles.css';
@@ -126,33 +128,6 @@ class SearchForm extends React.Component {
         )
     }
 
-}
-
-function CountryOptionRenderer ({ focusedOption, focusedOptionIndex, focusOption, key, labelKey, option, options, selectValue, style, valueArray, valueKey }) {
-  
-    return (
-        <div
-            key={key}
-            onClick={() => selectValue(option)}
-            onMouseEnter={() => focusOption(option)}
-            style={{ padding : '0.5rem' , cursor : 'pointer' }}
-        >   
-            
-            <label>
-                {
-                    (option.flagPath)?
-                    (<img
-                        className="countryIcon"
-                        src={option.flagPath}
-                        style={{ width : '30px' , marginRight : '10px' }}
-                        alt={option.value}
-                    />)
-                    : ''
-                } 
-                {option.value}
-            </label>
-        </div>
-    )
 }
 
 const mapStateToProps = createStructuredSelector({
