@@ -21,7 +21,7 @@
 
         .footerSocial {
             .navbar-nav.socialMedia {
-                flex-direction: revert;
+                flex-direction: unset;
                 justify-content: space-between;
                 
                 .nav-link{
