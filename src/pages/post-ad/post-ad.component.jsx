@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Select from 'react-virtualized-select';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
+import Swal from 'sweetalert2';
 
 import API from '../../lib/api';
 import { CountryOptionRenderer } from '../../lib/utils';
@@ -161,6 +162,11 @@ class PostAdComponent extends React.Component {
                 imagesPreviewUrls : [] 
             });
             setAdPostingLoading();
+            Swal.fire({
+                icon: 'success',
+                title: 'Good job!',
+                text: 'You have Successfully added New Advertisement.',
+            });
         }).catch(err => {
             //console.log('err' , err);
         });
@@ -225,7 +231,7 @@ class PostAdComponent extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label>Looking For Supplers from</label>
+                            <label>The County/Countries we sell /buy</label>
                             <Select
                                 labelKey='value'
                                 onChange={(country) => (country && country.value !== 'All Country') ? this.setState({ country }) : this.setState({ country : '' })}

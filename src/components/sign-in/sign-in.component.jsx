@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router';
+import Swal from 'sweetalert2';
 
 import API , { accountAPI } from '../../lib/api';
 
@@ -46,7 +47,17 @@ class SignIn extends React.Component {
                 .then(function(response){
                     setMyAds(response.data);
                     toggleSigninHidden();
-                    history.push('/account/my-ads');
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Good job!',
+                        text: 'You have Successfully Signin for Sales Move',
+                        confirmButtonText: 'Ok',
+                        preConfirm: () => {
+                            history.push('/account/my-ads');
+                        }
+                    });
+
                 });
             }
         }).catch(err => {
