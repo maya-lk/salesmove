@@ -7,6 +7,7 @@ import { faUserLock , faKey , faSignOutAlt , faUserCog } from '@fortawesome/free
 import { faTwitter , faFacebookF , faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { withRouter } from 'react-router';
+import Swal from 'sweetalert2';
 
 import API , { accountAPI } from '../../lib/api';
 
@@ -32,7 +33,15 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
             localStorage.removeItem("token");
             localStorage.removeItem("email");
             signOutUser(null);
-            history.push('/');
+            Swal.fire({
+                icon: 'success',
+                title: '',
+                text: 'You have Successfully Sign Out from Sales Move',
+                confirmButtonText: 'Ok',
+                preConfirm: () => {
+                    history.push('/');
+                }
+            });
         }).catch(err => {
             
         })
