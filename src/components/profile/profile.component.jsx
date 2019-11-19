@@ -48,7 +48,7 @@ class Profile extends React.Component {
             formData.append('email',email);
             formData.append('contactNo',contactNo);
             formData.append('website',website);
-            formData.append('country',country);
+            formData.append('country',country.value);
             formData.append('userID',userID);
             formData.append('currpassword',currpassword);
             formData.append('password',password);
