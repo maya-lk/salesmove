@@ -26,6 +26,12 @@
             background-color: #c4c4cc;
         }
 
+        &.active {
+            border-color: rgba(0,0,0,.125);
+            background-color: #4359ea;
+            color: #fff;
+        }
+
         &.btnWrap {
             display: flex;
             justify-content: center;

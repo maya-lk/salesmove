@@ -15,35 +15,62 @@ import { setWantParam , setCategoryParam } from '../../redux/advertisements/adve
 
 import './sidebar.styles.scss';
 
-const Sidebar = ({ ads , category , setWantParam , setCategoryParam , serviceTerms }) => {
+class Sidebar extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            activeID : ''
+        }
+        this.handleCategoryClick = this.handleCategoryClick.bind(this);
+    }
 
-    return(
-        <div className="sidebarWrap">
-            <h3>Categories</h3>
-            <div className="list-group">
-                {
-                    (category)?
-                    <span className="list-group-item list-group-item-action" onClick={ () => setCategoryParam('') }>All <span className="count">({ads.length})</span></span>
-                    : ''
-                }
+    handleCategoryClick = term => {
+        const { setCategoryParam } = this.props;
+        setCategoryParam(term.name);
+        this.setState({ activeID : term.ID });
+    }
 
-                {
-                    (serviceTerms) ?
-                    (serviceTerms.map( term => 
-                    <span key={term.ID} className="list-group-item list-group-item-action" onClick={ () => setCategoryParam(term.name) }>
-                        {term.name}
-                        <span className="count"> ({ads.filter( (ad) => ad.terms.find(serviceTerm => serviceTerm.name === term.name) ).length})</span>
-                    </span> ))
-                    : ''
-                }
-                <div className="list-group-item list-group-item-action btnWrap">
-                    <span className="btn" onClick={ () => setWantParam('Buy') }>Buy</span>
-                    <span className="btn offer" onClick={ () => setWantParam('Sell') }>Sell</span>
+    handleAllCategory = () =>{
+        const { setCategoryParam } = this.props;
+        setCategoryParam('');
+        this.setState({ activeID : '' });
+    }
+
+    render(){
+        const { ads , category , setWantParam , serviceTerms } = this.props;
+        return(
+            <div className="sidebarWrap">
+                <h3>Categories</h3>
+                <div className="list-group">
+                    {
+                        (category)?
+                        <span className="list-group-item list-group-item-action" onClick={ () => this.handleAllCategory() }>All <span className="count">({ads.length})</span></span>
+                        : ''
+                    }
+    
+                    {
+                        (serviceTerms) ?
+                        (serviceTerms.map( term => 
+                        <span 
+                            key={term.ID} 
+                            className={`${ term.ID === this.state.activeID ? 'active' : '' } list-group-item list-group-item-action`} 
+                            onClick={ () => this.handleCategoryClick(term) }
+                        >
+                            {term.name}
+                            <span className="count"> ({ads.filter( (ad) => ad.terms.find(serviceTerm => serviceTerm.name === term.name) ).length})</span>
+                        </span> ))
+                        : ''
+                    }
+                    <div className="list-group-item list-group-item-action btnWrap">
+                        <span className="btn" onClick={ () => setWantParam('Buy') }>Buy</span>
+                        <span className="btn offer" onClick={ () => setWantParam('Sell') }>Sell</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    )
-};
+        )
+    }
+
+}
 
 const mapStateToProps = createStructuredSelector({
     ads : selectAllAds,
