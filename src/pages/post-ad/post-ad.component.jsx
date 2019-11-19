@@ -41,7 +41,6 @@ class PostAdComponent extends React.Component {
             addDisplayPeriod : new Date(),
             images : [],
             imagesPreviewUrls : [],
-            message: '',
             isSubmit : false
         }
 
@@ -122,7 +121,7 @@ class PostAdComponent extends React.Component {
         formData.append('type',type);
         formData.append('title',title);
         formData.append('terms',terms);
-        formData.append('country',country.value);
+        formData.append('country', country.value );
         formData.append('countryFlag',country.flagPath);
         formData.append('specifications',specifications);
         formData.append('quantity',quantity);
@@ -145,28 +144,37 @@ class PostAdComponent extends React.Component {
         })
         .then(response => {
             //console.log('response' , response.data);
-            this.setState({ 
-                message : response.data , 
-                type : '',
-                title: '',
-                terms : [],
-                country : '',
-                specifications : '',
-                quantity : '',
-                price : '',
-                shippingTerms : '',
-                destinationPort : '',
-                otherSpecificRequrements : '',
-                addDisplayPeriod : new Date(),
-                images : [],
-                imagesPreviewUrls : [] 
-            });
+            if( response.data.status ){
+                this.setState({ 
+                    type : '',
+                    title: '',
+                    terms : [],
+                    country : '',
+                    specifications : '',
+                    quantity : '',
+                    price : '',
+                    shippingTerms : '',
+                    destinationPort : '',
+                    otherSpecificRequrements : '',
+                    addDisplayPeriod : new Date(),
+                    images : [],
+                    imagesPreviewUrls : [] 
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: `${response.data.message}`,
+                    text: 'Your add will be published after reviewing within Short period of Time',
+                });
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: `${response.data.message}`,
+                    text: 'Please try again',
+                });
+            }
+            
             setAdPostingLoading();
-            Swal.fire({
-                icon: 'success',
-                title: 'You have Successfully added New Advertisement.',
-                text: 'Your add will be published after reviewing within Short period of Time',
-            });
+            
         }).catch(err => {
             //console.log('err' , err);
         });
@@ -175,7 +183,7 @@ class PostAdComponent extends React.Component {
 
     render(){
         const { countries , isLoading } = this.props;
-        const { imagesPreviewUrls , message } = this.state;
+        const { imagesPreviewUrls } = this.state;
         return(
             <div className="postNewAdWrap">
                 {
@@ -184,12 +192,6 @@ class PostAdComponent extends React.Component {
                     : ''
                 }
                 <div className="container">
-                    
-                    {
-                        (message.status)?
-                        (<div className="alert alert-success" role="alert">{message.message}</div>)
-                        : (<div className="alert alert-danger" role="alert">{message.message}</div>)
-                    }
 
                     <h1>Post New Advertisement</h1>
                     <form onSubmit={this.handleSubmit}>
@@ -234,7 +236,7 @@ class PostAdComponent extends React.Component {
                             <label>The County/Countries we sell /buy</label>
                             <Select
                                 labelKey='value'
-                                onChange={(country) => (country && country.value !== 'All Countries') ? this.setState({ country }) : this.setState({ country : '' })}
+                                onChange={(country) => (country) ? this.setState({ country }) : this.setState({ country : '' })}
                                 optionRenderer={CountryOptionRenderer}
                                 options={countries}
                                 value={this.state.country}

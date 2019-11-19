@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt , faTrash } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
 
 import API from '../../lib/api';
 
@@ -10,12 +11,11 @@ import { deleteAdItem } from '../../redux/user/user.actions';
 
 import './my-ad-item.styles.scss';
 
-const MyAdItem = ({ item , history }) => {
+const MyAdItem = ({ item , history , deleteAdItem }) => {
 
-    const handalDelete = itemID => {
-
+    const handalDelete = item => {
         const formData = new FormData();
-        formData.append('pid',itemID);
+        formData.append('pid',item.ID);
 
         API.post("delete-ad", formData , {
             headers: {
@@ -24,6 +24,24 @@ const MyAdItem = ({ item , history }) => {
         })
         .then(response => {
             console.log('response' , response.data);
+            if( response.data.status ){
+                Swal.fire({
+                    icon: 'success',
+                    title: '',
+                    text: `${response.data.message}`,
+                    confirmButtonText: 'Ok',
+                    preConfirm: () => {
+                        deleteAdItem(item.ID);
+                    }
+                });
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: '',
+                    text: `${response.data.message}`,
+                    confirmButtonText: 'Ok',
+                });
+            }
         }).catch(err => {
             console.log('err' , err);
         });
@@ -38,7 +56,7 @@ const MyAdItem = ({ item , history }) => {
             </div>
             <div className="actionWrap">
                 <span className="btn btn-success" onClick={() => history.push(`/edit/${item.ID}`)}><FontAwesomeIcon icon={faPencilAlt} /> Edit</span>
-                <span className="btn btn-danger" onClick={() => handalDelete(item.ID)}><FontAwesomeIcon icon={faTrash} /> Delete</span>
+                <span className="btn btn-danger" onClick={() => handalDelete(item)}><FontAwesomeIcon icon={faTrash} /> Delete</span>
             </div>
         </div>
     )

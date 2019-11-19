@@ -56,6 +56,8 @@ class SearchForm extends React.Component {
             serviceTerms
         } = this.props;
 
+        console.log('country' , country);
+
         return(
             <form className="searchForm" onSubmit={this.handleSubmit}>
                 <div className="labelWrap">I/We</div>
@@ -112,13 +114,15 @@ class SearchForm extends React.Component {
                     </div>
                     <Select
                         labelKey='value'
-                        onChange={(country) => (country) ? setCountryParam(country.value) : setCountryParam('')}
+                        onChange={(conty) => (conty) ? setCountryParam(conty) : setCountryParam('')}
                         optionRenderer={CountryOptionRenderer}
                         options={countries}
                         value={country}
-                        //valueKey='value'
+                        valueKey='value'
                         name="country"
                         placeholder="From"
+                        multi
+                        simpleValue
                     />
                 </div>
                 <div className="submitWrap">

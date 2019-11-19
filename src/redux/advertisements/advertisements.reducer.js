@@ -2,7 +2,7 @@ import { advertisementActionTypes } from './advertisements.types';
 
 const INITIAL_STATE = {
     ads : null,
-    country : '',
+    country : [],
     category: '',
     want: '',
     searchItem : '',
@@ -37,7 +37,7 @@ const advertisementReducer = ( state = INITIAL_STATE , action ) => {
         case advertisementActionTypes.SET_COUNTRY_PARAM:
             return{
                 ...state,
-                country : action.payload 
+                country : (action.payload) ? action.payload.split(',') : ''
             }
         case advertisementActionTypes.SET_AD_POSTING_LOADING:
             return{

@@ -10,11 +10,11 @@ const SearchItem = ({ item , setClickedItem , setItemModalToggle , setInquiryMod
         <div className="topWrap d-flex">
             <div className="country">
                 {
-                    (item.country_flag)?
+                    (item.country_flag && item.country_flag !== 'undefined')?
                     <img src={item.country_flag} alt={item.country}/>
                     : ''
                 }
-                {item.country}               
+                {(item.country !== 'undefined') ? item.country : ''}               
             </div>
             <div className="time" dangerouslySetInnerHTML={{__html: item.time }} />
             <div className="type">{item.type}</div>

@@ -13,8 +13,6 @@ const MyAds = ({ myAds }) => {
     const publishedAdFilter = myAds.filter( ad => ad.status === 'publish' );
     const pendingAdFilter = myAds.filter( ad => ad.status === 'pending' );
 
-    console.log(publishedAdFilter);
-
     return(
         <div className="accountContent">
             <div className="titleBar">My Advertisements</div>

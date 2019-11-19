@@ -27,7 +27,12 @@ class SearchResults extends React.Component {
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
             .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
             .filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
-            .filter( (ad) => (country !== 'All Countries')? ad.country.toLowerCase() === country.toLowerCase() : ad )
+            .filter( (ad) => 
+                (country.length > 0) ? 
+                country.find( conty => ( conty.toLowerCase() === ad.country.toLowerCase() || ad.country.toLowerCase() === 'all countries') ) 
+                : ad 
+            )
+            .filter( (ad) => (country !== 'All Countries')? country.includes(ad.country.toLowerCase()) : ad )
 
             : ( want && categoryParam && searchItem && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
@@ -44,7 +49,11 @@ class SearchResults extends React.Component {
 
             : ( want && country && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
-            .filter( (ad) => (country !== 'All Countries')? ad.country.toLowerCase() === country.toLowerCase() : ad )
+            .filter( (ad) => 
+                (country.length > 0) ? 
+                country.find( conty => ( conty.toLowerCase() === ad.country.toLowerCase() || ad.country.toLowerCase() === 'all countries') ) 
+                : ad 
+            )
 
             : ( want && ads ) ?
             ads.filter( (ad) => (want)? ad.type.toLowerCase() === want.toLowerCase() : '' )
@@ -57,7 +66,7 @@ class SearchResults extends React.Component {
             : ( categoryParam && country && ads ) ?
             ads
             .filter( (ad) => (categoryParam)? ad.terms.find(term => term.name === categoryParam) : '' )
-            .filter( (ad) => (country !== 'All Countries')? ad.country.toLowerCase() === country.toLowerCase() : ad )
+            //.filter( (ad) => (country !== 'All Countries')? ad.country.toLowerCase() === country.toLowerCase() : ad )
 
             : ( categoryParam && ads ) ?
             ads
@@ -65,13 +74,22 @@ class SearchResults extends React.Component {
 
             : ( searchItem && country && ads ) ?
             ads.filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
-            .filter( (ad) => (country !== 'All Countries')? ad.country.toLowerCase() === country.toLowerCase() : ad )
+            .filter( (ad) => 
+                (country.length > 0) ? 
+                country.find( conty => ( conty.toLowerCase() === ad.country.toLowerCase() || ad.country.toLowerCase() === 'all countries') ) 
+                : ad 
+            )
 
             : ( searchItem && ads ) ?
             ads.filter( (ad) => (searchItem)? ad.title.toLowerCase().includes(searchItem.toLowerCase()) : '' )
 
             : ( country && ads ) ? 
-            ads.filter( (ad) => (country !== 'All Countries')? ad.country.toLowerCase() === country.toLowerCase() : ad )
+            ads
+            .filter( (ad) => 
+                (country.length > 0) ? 
+                country.find( conty => ( conty.toLowerCase() === ad.country.toLowerCase() || ad.country.toLowerCase() === 'all countries') ) 
+                : ad 
+            )
             
             : (ads) ?
             ads
