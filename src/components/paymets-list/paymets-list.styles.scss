@@ -1,17 +1,28 @@
 .paymentsListWrap {
     margin-top: 2rem;
 
-    .payment {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        border: 1px solid #d7d7d7;
-        padding: 1rem;
+    .paymentsListsWrap{
+        margin-top: 1.5rem;
 
-        .react-fancybox{
-            cursor: pointer;
+        .payment {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            border: 1px solid #d7d7d7;
+            padding: 0.5rem;
+    
+            .react-fancybox{
+                cursor: pointer;
+    
+                .thumbnail {
+                    width: 50%;
+    
+                    img {
+                        max-width: 100%;
+                    }
+                }
+            }
         }
     }
 }
