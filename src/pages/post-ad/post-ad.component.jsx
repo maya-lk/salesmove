@@ -164,8 +164,8 @@ class PostAdComponent extends React.Component {
             setAdPostingLoading();
             Swal.fire({
                 icon: 'success',
-                title: 'Good job!',
-                text: 'You have Successfully added New Advertisement.',
+                title: 'You have Successfully added New Advertisement.',
+                text: 'Your add will be published after reviewing within Short period of Time',
             });
         }).catch(err => {
             //console.log('err' , err);
@@ -234,7 +234,7 @@ class PostAdComponent extends React.Component {
                             <label>The County/Countries we sell /buy</label>
                             <Select
                                 labelKey='value'
-                                onChange={(country) => (country && country.value !== 'All Country') ? this.setState({ country }) : this.setState({ country : '' })}
+                                onChange={(country) => (country && country.value !== 'All Countries') ? this.setState({ country }) : this.setState({ country : '' })}
                                 optionRenderer={CountryOptionRenderer}
                                 options={countries}
                                 value={this.state.country}
@@ -288,7 +288,7 @@ class PostAdComponent extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label>Destination Port</label>
+                            <label>Shipping/Destination Port</label>
                             <input 
                                 type="text" 
                                 className="form-control"

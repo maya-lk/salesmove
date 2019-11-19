@@ -112,7 +112,7 @@ class SearchForm extends React.Component {
                     </div>
                     <Select
                         labelKey='value'
-                        onChange={(country) => (country && country.value !== 'All Country') ? setCountryParam(country.value) : setCountryParam('')}
+                        onChange={(country) => (country) ? setCountryParam(country.value) : setCountryParam('')}
                         optionRenderer={CountryOptionRenderer}
                         options={countries}
                         value={country}
