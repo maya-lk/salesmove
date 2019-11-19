@@ -312,7 +312,7 @@ class EditAdvertisement extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label>Other Specific Requrements</label>
+                            <label>Other Specific Requirements</label>
                             <textarea 
                                 className="form-control"
                                 onChange={this.handleChange}
