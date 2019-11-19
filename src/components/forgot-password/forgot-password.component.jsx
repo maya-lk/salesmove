@@ -67,7 +67,7 @@ class FotgotPassword extends React.Component {
                 size="md"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                show={this.props.forgotPasswordModal} onHide={this.props.toggleSigninHidden}
+                show={this.props.forgotPasswordModal} onHide={this.props.toggleForgotPasswordHidden}
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
