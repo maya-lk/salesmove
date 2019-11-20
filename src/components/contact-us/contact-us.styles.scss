@@ -22,5 +22,33 @@
     .btn.submitBtn {
         background-color: #1c266b;
     }
+
+    .form-group{
+        .Select{
+            color: #000;
+            
+            .Select-control {
+                height: auto;
+                border-radius: 0;
+                cursor: pointer;
+    
+                .Select-multi-value-wrapper {
+                    height: 48px;
+    
+                    .Select-placeholder {
+                        display: flex;
+                        align-items: center;
+                    }
+    
+                    .Select-value {
+                        display: flex;
+                        align-items: center;
+                        color: #000;
+                    }
+                }
+            }
+        }
+        
+    }
     
 }

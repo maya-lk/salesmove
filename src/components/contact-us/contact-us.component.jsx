@@ -1,6 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import Select from 'react-virtualized-select';
 
 import API from '../../lib/api';
+import { CountryOptionRenderer } from '../../lib/utils';
+
+import { selectCountyObj } from '../../redux/common/common.selectors';
 
 import './contact-us.styles.scss';
 
@@ -11,6 +17,8 @@ class ContactUs extends React.Component {
         this.state = {
             fname: '',
             contactNo : '',
+            email: '',
+            country : '',
             message: '',
             error: null,
             success: null,
@@ -24,9 +32,9 @@ class ContactUs extends React.Component {
 
     handalSubmit = event => {
         event.preventDefault();
-        const { fname , contactNo , message } = this.state;
+        const { fname , contactNo , message , email , country } = this.state;
 
-        if( fname === '' || contactNo === '' || message === '' ){
+        if( fname === '' || contactNo === '' || message === '' || email === '' || country === '' ){
             this.setState({ error : 'All fields required.' });
         }else{
             this.setState({ error : null });
@@ -34,13 +42,22 @@ class ContactUs extends React.Component {
             const formData = new FormData();
             formData.append('fname',fname);
             formData.append('contactNo',contactNo);
+            formData.append('email',email);
+            formData.append('country',country.value);
             formData.append('message',message);
 
             API.post("contact", formData)
             .then(response => {
                 //console.log('response' , response.data);
                 if( response.data.status ){
-                    this.setState({ success : response.data.msg });
+                    this.setState({ 
+                        success : response.data.msg,
+                        fname: '',
+                        contactNo : '',
+                        email: '',
+                        country : '',
+                        message: '', 
+                    });
                 }else{
                     this.setState({ error : response.data.msg });
                 }
@@ -55,6 +72,7 @@ class ContactUs extends React.Component {
 
     render(){
         const { error , success } = this.state;
+        const { countries } = this.props;
         return(
             <div className="contactUsWrap">
                 <h3>Partner With Us</h3>
@@ -78,6 +96,7 @@ class ContactUs extends React.Component {
                             placeholder="Name"
                             onChange={this.handalChange}
                             value={this.state.fname}
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -89,6 +108,32 @@ class ContactUs extends React.Component {
                             placeholder="Contact Number"
                             onChange={this.handalChange}
                             value={this.state.contactNo}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <input 
+                            type="email" 
+                            name="email" 
+                            id="email" 
+                            className="form-control" 
+                            placeholder="Email Address"
+                            onChange={this.handalChange}
+                            value={this.state.email}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <Select
+                            labelKey='value'
+                            onChange={(country) => (country) ? this.setState({ country }) : this.setState({ country : '' })}
+                            optionRenderer={CountryOptionRenderer}
+                            options={countries}
+                            value={this.state.country}
+                            valueKey='value'
+                            name="country"
+                            placeholder="Country"
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -99,6 +144,7 @@ class ContactUs extends React.Component {
                             placeholder="Message"
                             onChange={this.handalChange}
                             value={this.state.message}
+                            required
                         />
                     </div>
                     <div className="form-group mb-0 btnsWrap">
@@ -110,4 +156,8 @@ class ContactUs extends React.Component {
     }
 }
 
-export default ContactUs;
+const mapStateToProps = createStructuredSelector({
+    countries : selectCountyObj
+});
+
+export default connect(mapStateToProps)(ContactUs);

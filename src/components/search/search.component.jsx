@@ -56,8 +56,6 @@ class SearchForm extends React.Component {
             serviceTerms
         } = this.props;
 
-        console.log('country' , country);
-
         return(
             <form className="searchForm" onSubmit={this.handleSubmit}>
                 <div className="labelWrap">I/We</div>
