@@ -85,9 +85,9 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
                         <li className="nav-item">
                             <Link className="nav-link" to="/page/how-to-post-ad">HOW TO POST ADS</Link>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link className="nav-link" to="/page/contact-us">CONTACT US</Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </div>
