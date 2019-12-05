@@ -85,7 +85,7 @@ class SearchForm extends React.Component {
                         className="form-control"
                         value={category}
                     >
-                        <option value="">Category</option>
+                        <option value="">All Category</option>
                         {
                             (serviceTerms) ?
                             (serviceTerms.map( serviceTerm => <option key={serviceTerm.ID} value={serviceTerm.name}>{serviceTerm.name}</option> ))
