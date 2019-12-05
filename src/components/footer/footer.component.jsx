@@ -19,7 +19,7 @@ const Footer = ({ footerAbout , socialMedia }) => (
                         <li className="nav-item">
                             <Link className="nav-link" to="/">Home</Link>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                             <Link className="nav-link" to="/page/about">About</Link>
                         </li>
                         <li className="nav-item">
@@ -27,7 +27,7 @@ const Footer = ({ footerAbout , socialMedia }) => (
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/page/contact">Contact</Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
                 <div className="footerBox footerLinks col-md-4 col-12"></div>
