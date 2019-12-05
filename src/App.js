@@ -13,14 +13,15 @@ import {
   setCountries ,  
   setServiceCategory , 
   setFooterAbout,
-  setMainLoading
+  setMainLoading , 
+  setSiteName
 } from './redux/common/common.actions';
 import { setAdvertisements } from './redux/advertisements/advertisements.actions';
 import { validateToken , setMyAds , setUserProfileDetails } from './redux/user/user.actions';
 import { setTestimonialBanner , setTestimonialItems } from './redux/testimonials/testimonials.actions';
 import { setAboutPage , setServicePage , setHowToPostAdPage } from './redux/pages/pages.actions';
 
-import { selectMainLoading } from './redux/common/common.selectors';
+import { selectMainLoading , selectSiteName } from './redux/common/common.selectors';
 
 import MainLoadingScreen from './components/main-loading/main-loading.component';
 import Header from './components/header/header.component';
@@ -53,7 +54,9 @@ class App extends React.Component {
       setUserProfileDetails,
       setAboutPage,
       setServicePage,
-      setHowToPostAdPage
+      setHowToPostAdPage,
+      setSiteName,
+      siteName
     } = this.props;
 
     //Common API
@@ -66,7 +69,8 @@ class App extends React.Component {
 
       setServiceCategory(response.data.serviceCategory);
 
-      setFooterAbout(response.data.footerAbout)
+      setFooterAbout(response.data.footerAbout);
+      setSiteName(response.data.blogName);
     });
 
     let token = null, email = null, userID = null, displayName = null;
@@ -138,6 +142,9 @@ class App extends React.Component {
      3000
     );
 
+    //Set Site title
+    document.title = siteName;
+
   }
 
   render(){
@@ -182,10 +189,12 @@ const mapDispatchToProps = dispatch => ({
   setAboutPage : (about) => dispatch(setAboutPage(about)),
   setServicePage : (services) => dispatch(setServicePage(services)),
   setHowToPostAdPage : (howToPostAd) => dispatch(setHowToPostAdPage(howToPostAd)),
+  setSiteName : (siteName) => dispatch(setSiteName(siteName))
 });
 
 const mapStateToProps = createStructuredSelector({
-  mainLoading : selectMainLoading
+  mainLoading : selectMainLoading,
+  siteName : selectSiteName
 })
 
 export default connect(mapStateToProps , mapDispatchToProps)(App);

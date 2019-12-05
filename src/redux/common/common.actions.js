@@ -45,3 +45,8 @@ export const setMainLoading = () => ({
 export const toggleForgotPasswordHidden = () => ({
     type : commonActionTypes.SET_FORGOT_PASSWORD_MODAL_TOGGLE
 });
+
+export const setSiteName = siteName => ({
+    type : commonActionTypes.SET_SITE_NAME,
+    payload : siteName
+});

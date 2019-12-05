@@ -56,3 +56,8 @@ export const selectForgotPasswordModalHidden = createSelector(
     [selectCommonAPI],
     (commonParams) => commonParams.forgotPasswordModal
 );
+
+export const selectSiteName = createSelector(
+    [selectCommonAPI],
+    (commonParams) => commonParams.siteName
+);

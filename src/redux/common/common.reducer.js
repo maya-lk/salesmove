@@ -11,6 +11,7 @@ const INITIAL_STATE = {
     footerAbout: null,
     mainLoading: true,
     forgotPasswordModal: false,
+    siteName : 'Sales Easy',
 }
 
 const commonReducer = ( state = INITIAL_STATE , action ) => {
@@ -64,6 +65,11 @@ const commonReducer = ( state = INITIAL_STATE , action ) => {
             return{
                 ...state,
                 forgotPasswordModal : !state.forgotPasswordModal
+            }
+        case commonActionTypes.SET_SITE_NAME:
+            return{
+                ...state,
+                siteName : action.payload
             }
         default:
             return state;
