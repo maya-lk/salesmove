@@ -163,7 +163,7 @@ class PostAdComponent extends React.Component {
                 Swal.fire({
                     icon: 'success',
                     title: `${response.data.message}`,
-                    text: 'Your add will be published after reviewing within Short period of Time',
+                    text: 'Your add will be published after reviewing within 24 hours.',
                 });
             }else{
                 Swal.fire({

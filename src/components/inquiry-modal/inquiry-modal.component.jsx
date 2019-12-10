@@ -21,6 +21,7 @@ class InquiryModal extends React.Component {
         this.state = {
             adTitle : this.props.clickedItem.title,
             adID : this.props.clickedItem.ID,
+            userEmail: this.props.clickedItem.userEmail,
             fname : '',
             email : '',
             contactNo : '',
@@ -42,7 +43,7 @@ class InquiryModal extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const { adTitle , adID , fname , email , contactNo , message , quantity , shippingTerms , price, country } = this.state;
+        const { adTitle , adID , fname , email , contactNo , message , quantity , shippingTerms , price, country , userEmail } = this.state;
 
         if( adTitle === '' || adID === '' || fname === '' || email === '' || contactNo === '' || message === '' ){
             this.setState({ errors : 'All fields Required.' });
@@ -58,6 +59,7 @@ class InquiryModal extends React.Component {
             formData.append('shippingTerms',shippingTerms);
             formData.append('price',price);
             formData.append('country',country);
+            formData.append('userEmail',userEmail);
         
             API.post("inquiry", formData ,{
                 headers: {
@@ -79,6 +81,7 @@ class InquiryModal extends React.Component {
                         shippingTerms : '',
                         price: '',
                         country : '',
+                        userEmail : ''
                     });
                 }else{
                     this.setState({ errors : response.data.message });
@@ -151,7 +154,7 @@ class InquiryModal extends React.Component {
                         <div className="form-group">
                             <input 
                                 type="text" 
-                                placeholder="Price"
+                                placeholder="Ex: USD 10"
                                 className="form-control"
                                 name="price"
                                 onChange={this.handleChange}

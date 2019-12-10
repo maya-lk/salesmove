@@ -51,7 +51,7 @@ class SignIn extends React.Component {
                     Swal.fire({
                         icon: 'success',
                         title: '',
-                        text: 'You have Successfully Sign in for Sales Move',
+                        text: 'You have Successfully Sign in for Sales Eazy',
                         confirmButtonText: 'Ok',
                         preConfirm: () => {
                             history.push('/account/my-ads');
