@@ -36,7 +36,7 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
             Swal.fire({
                 icon: 'success',
                 title: '',
-                text: 'You have Successfully Sign Out from Sales Move',
+                text: 'You have Successfully Sign Out from Sales Eazy',
                 confirmButtonText: 'Ok',
                 preConfirm: () => {
                     history.push('/');
@@ -94,7 +94,7 @@ const Header = ({ logo , socialMedia , toggleSigninHidden , toggleSignupHidden ,
             <div className="bottomWrap">
                 <div className="container d-flex justify-content-between">
                     <Link to="/" className="navbar-brand">
-                        <img src={logo} alt="Sales Moves"/>
+                        <img src={logo} alt="Sales Eazy"/>
                     </Link>
                     <div className="naviWrap">
                         {
