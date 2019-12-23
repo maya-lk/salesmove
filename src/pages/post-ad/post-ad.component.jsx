@@ -290,7 +290,7 @@ class PostAdComponent extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label>Shipping/Destination Port</label>
+                            <label>Loading /Destination Port</label>
                             <input 
                                 type="text" 
                                 className="form-control"
